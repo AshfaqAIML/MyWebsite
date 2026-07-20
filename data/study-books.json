@@ -90,6 +90,16 @@
     "source": "/study/books/Python Engineering.pdf"
   },
   {
+    "id": "python-for-absolute-beginner",
+    "title": "Python For Absolute Beginner",
+    "author": "Ishfaq Dar / Curated",
+    "category": "Technical",
+    "tags": ["Python", "Beginner", "Programming"],
+    "description": "A beginner-friendly Python guide covering fundamentals, syntax, and practical exercises for absolute beginners.",
+    "size": "8,006 KB",
+    "source": "/study/books/Python_For_Absolute_Beginner.pdf"
+  },
+  {
     "id": "python-for-backend-development",
     "title": "Python for Backend Development",
     "author": "Ishfaq Dar / Curated",
