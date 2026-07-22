@@ -49,6 +49,13 @@
     "githubUrl": "https://github.com/DarAshfaqDev/Nur-Academy"
   },
   {
+    "title": "YouTube Dev",
+    "description": "A high-performance transcript extraction and automation module for developers. Features a polished API playground, dual-format export to TXT and Word documents, and seamless JSON API integration.",
+    "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Flask", "Python", "YouTube Transcript API"],
+    "liveUrl": "https://my-website-psi-puce-82.vercel.app/youtube-dev",
+    "githubUrl": "https://github.com/DarAshfaqDev/MyWebsite"
+  },
+  {
     "title": "Picnic Memories",
     "description": "A digital museum preserving 12+ years of annual picnic memories between three best friends from Kashmir. Features a visual timeline, gallery mosaic, guestbook, friendship wall, interactive statistics, and then-vs-now comparisons.",
     "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Recharts", "next-themes", "sonner"],

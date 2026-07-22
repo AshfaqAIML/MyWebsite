@@ -49,7 +49,7 @@ export function Header() {
           </a>
 
           <nav className="hidden md:flex items-center gap-1">
-            {navItems.slice(0, 8).map((item) => (
+            {navItems.slice(0, 9).map((item) => (
               <a
                 key={item.href}
                 href={item.href}

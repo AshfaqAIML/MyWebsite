@@ -8,5 +8,6 @@
   { "href": "#books", "label": "Library", "section": "books" },
   { "href": "#articles", "label": "Articles", "section": "articles" },
   { "href": "/picnic", "label": "Picnic", "section": "picnic" },
+  { "href": "/youtube-dev", "label": "YouTube Dev", "section": "youtube-dev" },
   { "href": "#profiles", "label": "Profiles", "section": "profiles" }
 ]

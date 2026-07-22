@@ -17,6 +17,7 @@ import {
   PenTool,
   Cpu,
   Camera,
+  Play,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getProfile, getRoles } from "@/lib/data";
@@ -277,6 +278,12 @@ export function Hero() {
                 <Button variant="outline" size="lg">
                   <Camera className="mr-2 h-4 w-4" />
                   Picnic
+                </Button>
+              </a>
+              <a href="/youtube-dev">
+                <Button variant="default" size="lg" className="bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-500 hover:to-orange-400 text-white border-0">
+                  <Play className="mr-2 h-4 w-4 fill-white" />
+                  YouTube Dev
                 </Button>
               </a>
               <a href="https://code-verse-academy.vercel.app" target="_blank" rel="noopener noreferrer">
