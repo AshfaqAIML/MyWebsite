@@ -100,6 +100,11 @@ export default function YouTubeDevPage() {
   const [copied, setCopied] = useState(false);
   const [activeSnippet, setActiveSnippet] = useState(0);
   const [codeCopied, setCodeCopied] = useState(false);
+  const [backendUrl, setBackendUrl] = useState(() => {
+    if (typeof window !== 'undefined') return localStorage.getItem('ytdev_backend_url') || 'http://localhost:5000';
+    return 'http://localhost:5000';
+  });
+  const [showSettings, setShowSettings] = useState(false);
 
   const heroRef = useRef<HTMLElement>(null);
   const featuresRef = useRef<HTMLElement>(null);
@@ -117,7 +122,7 @@ export default function YouTubeDevPage() {
     setLoading(true);
     setResult(null);
     try {
-      const res = await fetch('/api/youtube/transcript', {
+      const res = await fetch(backendUrl + '/get-transcript', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ video_id: videoId }),
@@ -125,7 +130,7 @@ export default function YouTubeDevPage() {
       const data = await res.json();
       setResult(data);
     } catch {
-      setResult({ success: false, error: 'Network error. Could not reach the transcript service.' });
+      setResult({ success: false, error: 'Could not reach Flask backend at ' + backendUrl + '. Make sure your Python server is running and the URL is correct in Settings.' });
     } finally {
       setLoading(false);
     }
@@ -213,6 +218,28 @@ export default function YouTubeDevPage() {
               </div>
               <p className="mt-3 text-[11px] text-zinc-600">Supports full URLs, shorts, embeds, and raw 11-character video IDs.</p>
 
+              <div className="mt-3">
+                <button onClick={() => setShowSettings(!showSettings)} className="text-[11px] text-zinc-600 hover:text-zinc-400 transition-colors flex items-center gap-1">
+                  <span className={showSettings ? 'rotate-90' : ''} style={{ transition: 'transform 0.2s' }}>{'>'}</span> Backend Settings
+                </button>
+                {showSettings && (
+                  <div className="mt-2 p-3 rounded-lg bg-zinc-950 border border-zinc-800 space-y-2">
+                    <label className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">Flask Server URL</label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text" value={backendUrl}
+                        onChange={(e) => setBackendUrl(e.target.value)}
+                        onBlur={() => localStorage.setItem('ytdev_backend_url', backendUrl)}
+                        className="flex-1 bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-300 font-mono focus:outline-none focus:border-red-500/50 transition-all"
+                        placeholder="http://localhost:5000"
+                      />
+                      <button onClick={() => { localStorage.setItem('ytdev_backend_url', backendUrl); }} className="px-3 py-2 rounded-lg bg-zinc-800 text-zinc-400 text-xs hover:bg-zinc-700 transition-colors">Save</button>
+                    </div>
+                    <p className="text-[10px] text-zinc-700">Your Flask server must have CORS enabled. URL is saved in your browser localStorage.</p>
+                  </div>
+                )}
+              </div>
+
               <AnimatePresence mode="wait">
                 {result && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="mt-4">
@@ -273,14 +300,14 @@ export default function YouTubeDevPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={docsInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl font-bold text-white tracking-tight">API Reference</h2>
-            <p className="mt-4 text-zinc-400">A single POST endpoint. No authentication required for local development.</p>
+            <p className="mt-4 text-zinc-400">A single POST endpoint on your Flask server. No authentication required.</p>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={docsInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.1 }} className="max-w-3xl mx-auto">
             <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
               <div className="px-6 py-4 border-b border-zinc-800 flex items-center gap-3">
                 <span className="bg-emerald-500/10 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-lg">POST</span>
-                <code className="text-sm text-zinc-300 font-mono">/api/youtube/transcript</code>
+                <code className="text-sm text-zinc-300 font-mono">{'{BACKEND_URL}/get-transcript'}</code>
               </div>
               <div className="px-6 py-4 border-b border-zinc-800">
                 <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Request Body</p>
