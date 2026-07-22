@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const FLASK_API_URL = process.env.TRANSCRIPT_API_URL || "http://127.0.0.1:5000";
+function extractVideoId(input: string): string | null {
+  const trimmed = input.trim();
+  if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return trimmed;
+  const patterns = [
+    /youtu\.be\/([a-zA-Z0-9_-]{11})/,
+    /watch\?v=([a-zA-Z0-9_-]{11})/,
+    /shorts\/([a-zA-Z0-9_-]{11})/,
+    /embed\/([a-zA-Z0-9_-]{11})/,
+  ];
+  for (const pattern of patterns) {
+    const match = trimmed.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,31 +28,53 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const response = await fetch(`${FLASK_API_URL}/get-transcript`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ video_id }),
-      signal: AbortSignal.timeout(30000),
-    });
+    const resolvedId = extractVideoId(video_id) || video_id;
 
-    const data = await response.json();
-    return NextResponse.json(data, { status: response.status });
-  } catch (error: any) {
-    if (error?.name === "TimeoutError" || error?.code === "ABORT_ERR") {
+    const { fetchTranscript } = await import("youtube-transcript");
+
+    const transcript = await fetchTranscript(resolvedId);
+
+    if (!transcript || transcript.length === 0) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "Flask backend timed out. Make sure the Python server is running.",
-        },
-        { status: 504 }
+        { success: false, error: "No transcript available for this video." },
+        { status: 404 }
       );
     }
+
+    const fullText = transcript.map((s) => s.text).join(" ");
+
+    return NextResponse.json({
+      success: true,
+      message: fullText,
+      video_id: resolvedId,
+      total_segments: transcript.length,
+      languages: [...new Set(transcript.map((s) => s.lang))],
+    });
+  } catch (error: any) {
+    const msg = error?.message || String(error);
+
+    if (msg.includes("disabled")) {
+      return NextResponse.json(
+        { success: false, error: "Transcripts are disabled for this video." },
+        { status: 403 }
+      );
+    }
+    if (msg.includes("unavailable") || msg.includes("not available")) {
+      return NextResponse.json(
+        { success: false, error: "Video is unavailable or has no captions." },
+        { status: 404 }
+      );
+    }
+    if (msg.includes("Too many")) {
+      return NextResponse.json(
+        { success: false, error: "Rate limited. Please try again in a moment." },
+        { status: 429 }
+      );
+    }
+
     return NextResponse.json(
-      {
-        success: false,
-        error: `Could not reach transcript backend at ${FLASK_API_URL}. Make sure the Python Flask server is running.`,
-      },
-      { status: 502 }
+      { success: false, error: `Failed to fetch transcript: ${msg}` },
+      { status: 500 }
     );
   }
 }

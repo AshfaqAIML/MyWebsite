@@ -46,8 +46,9 @@ interface TranscriptResult {
   success: boolean;
   message?: string;
   error?: string;
-  txt_path?: string;
-  docx_path?: string;
+  video_id?: string;
+  total_segments?: number;
+  languages?: string[];
 }
 
 function FeatureCard({ f, index, isInView }: { f: typeof features[0]; index: number; isInView: boolean }) {
@@ -100,11 +101,6 @@ export default function YouTubeDevPage() {
   const [copied, setCopied] = useState(false);
   const [activeSnippet, setActiveSnippet] = useState(0);
   const [codeCopied, setCodeCopied] = useState(false);
-  const [backendUrl, setBackendUrl] = useState(() => {
-    if (typeof window !== 'undefined') return localStorage.getItem('ytdev_backend_url') || 'http://localhost:5000';
-    return 'http://localhost:5000';
-  });
-  const [showSettings, setShowSettings] = useState(false);
 
   const heroRef = useRef<HTMLElement>(null);
   const featuresRef = useRef<HTMLElement>(null);
@@ -122,7 +118,7 @@ export default function YouTubeDevPage() {
     setLoading(true);
     setResult(null);
     try {
-      const res = await fetch(backendUrl + '/get-transcript', {
+      const res = await fetch('/api/youtube/transcript', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ video_id: videoId }),
@@ -130,7 +126,7 @@ export default function YouTubeDevPage() {
       const data = await res.json();
       setResult(data);
     } catch {
-      setResult({ success: false, error: 'Could not reach Flask backend at ' + backendUrl + '. Make sure your Python server is running and the URL is correct in Settings.' });
+      setResult({ success: false, error: 'Network error. Please try again.' });
     } finally {
       setLoading(false);
     }
@@ -218,52 +214,50 @@ export default function YouTubeDevPage() {
               </div>
               <p className="mt-3 text-[11px] text-zinc-600">Supports full URLs, shorts, embeds, and raw 11-character video IDs.</p>
 
-              <div className="mt-3">
-                <button onClick={() => setShowSettings(!showSettings)} className="text-[11px] text-zinc-600 hover:text-zinc-400 transition-colors flex items-center gap-1">
-                  <span className={showSettings ? 'rotate-90' : ''} style={{ transition: 'transform 0.2s' }}>{'>'}</span> Backend Settings
-                </button>
-                {showSettings && (
-                  <div className="mt-2 p-3 rounded-lg bg-zinc-950 border border-zinc-800 space-y-2">
-                    <label className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">Flask Server URL</label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text" value={backendUrl}
-                        onChange={(e) => setBackendUrl(e.target.value)}
-                        onBlur={() => localStorage.setItem('ytdev_backend_url', backendUrl)}
-                        className="flex-1 bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-300 font-mono focus:outline-none focus:border-red-500/50 transition-all"
-                        placeholder="http://localhost:5000"
-                      />
-                      <button onClick={() => { localStorage.setItem('ytdev_backend_url', backendUrl); }} className="px-3 py-2 rounded-lg bg-zinc-800 text-zinc-400 text-xs hover:bg-zinc-700 transition-colors">Save</button>
-                    </div>
-                    <p className="text-[10px] text-zinc-700">Your Flask server must have CORS enabled. URL is saved in your browser localStorage.</p>
-                  </div>
-                )}
-              </div>
-
               <AnimatePresence mode="wait">
                 {result && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="mt-4">
                     {result.success ? (
-                      <div className="p-4 rounded-xl bg-emerald-950/50 border border-emerald-800/50 text-emerald-300 text-sm space-y-3">
-                        <div className="flex items-start gap-2">
-                          <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-emerald-400" />
-                          <div>
-                            <p className="font-semibold text-emerald-300">Transcript extracted successfully!</p>
-                            <p className="text-emerald-400/80 text-xs mt-1">{result.message}</p>
+                      <div className="space-y-3">
+                        <div className="p-4 rounded-xl bg-emerald-950/50 border border-emerald-800/50 text-emerald-300 text-sm">
+                          <div className="flex items-start gap-2">
+                            <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-emerald-400" />
+                            <div>
+                              <p className="font-semibold text-emerald-300">Transcript extracted!</p>
+                              <p className="text-emerald-400/80 text-xs mt-1">
+                                {result.total_segments} segments found
+                                {result.languages && result.languages.length > 0 && (' in ' + result.languages.join(', '))}
+                                {' '}&middot; Video: {result.video_id}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                        {result.txt_path && (
-                          <div className="text-xs text-emerald-400/60 space-y-1 pl-6">
-                            <p>{'TXT: '}{result.txt_path}</p>
-                            {result.docx_path && <p>{'DOCX: '}{result.docx_path}</p>}
+                        {result.message && (
+                          <div className="rounded-xl bg-zinc-900 border border-zinc-800 overflow-hidden">
+                            <div className="flex items-center justify-between px-4 py-2 border-b border-zinc-800">
+                              <span className="text-xs text-zinc-500 font-medium">Transcript Preview</span>
+                              <div className="flex gap-2">
+                                <button onClick={handleCopyMessage} className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-medium transition-colors">
+                                  {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                                  {copied ? 'Copied' : 'Copy'}
+                                </button>
+                                <button onClick={() => {
+                                  const blob = new Blob([result.message!], { type: 'text/plain' });
+                                  const url = URL.createObjectURL(blob);
+                                  const a = document.createElement('a');
+                                  a.href = url;
+                                  a.download = 'transcript_' + (result.video_id || 'video') + '.txt';
+                                  a.click();
+                                  URL.revokeObjectURL(url);
+                                }} className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-medium transition-colors">
+                                  <FileDown className="h-3 w-3" />
+                                  .txt
+                                </button>
+                              </div>
+                            </div>
+                            <p className="px-4 py-3 text-xs text-zinc-400 leading-relaxed max-h-32 overflow-y-auto">{result.message}</p>
                           </div>
                         )}
-                        <div className="pl-6">
-                          <button onClick={handleCopyMessage} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-900/50 hover:bg-emerald-900 text-emerald-300 text-xs font-medium transition-colors">
-                            {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-                            {copied ? 'Copied' : 'Copy Message'}
-                          </button>
-                        </div>
                       </div>
                     ) : (
                       <div className="p-4 rounded-xl bg-red-950/50 border border-red-800/50 text-red-300 text-sm flex items-start gap-2">
