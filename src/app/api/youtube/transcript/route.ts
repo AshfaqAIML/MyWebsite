@@ -1,4 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  YoutubeTranscript,
+  YoutubeTranscriptError,
+  YoutubeTranscriptDisabledError,
+  YoutubeTranscriptVideoUnavailableError,
+  YoutubeTranscriptNotAvailableError,
+  YoutubeTranscriptNotAvailableLanguageError,
+  YoutubeTranscriptTooManyRequestError,
+} from "youtube-transcript";
 
 function extractVideoId(input: string): string | null {
   const trimmed = input.trim();
@@ -30,9 +39,7 @@ export async function POST(req: NextRequest) {
 
     const resolvedId = extractVideoId(video_id) || video_id;
 
-    const { fetchTranscript } = await import("youtube-transcript");
-
-    const transcript = await fetchTranscript(resolvedId);
+    const transcript = await YoutubeTranscript.fetchTranscript(resolvedId);
 
     if (!transcript || transcript.length === 0) {
       return NextResponse.json(
@@ -51,29 +58,45 @@ export async function POST(req: NextRequest) {
       languages: [...new Set(transcript.map((s) => s.lang))],
     });
   } catch (error: any) {
-    const msg = error?.message || String(error);
-
-    if (msg.includes("disabled")) {
+    if (error instanceof YoutubeTranscriptDisabledError) {
       return NextResponse.json(
         { success: false, error: "Transcripts are disabled for this video." },
         { status: 403 }
       );
     }
-    if (msg.includes("unavailable") || msg.includes("not available")) {
+    if (error instanceof YoutubeTranscriptVideoUnavailableError) {
       return NextResponse.json(
-        { success: false, error: "Video is unavailable or has no captions." },
+        { success: false, error: "This video is unavailable." },
         { status: 404 }
       );
     }
-    if (msg.includes("Too many")) {
+    if (error instanceof YoutubeTranscriptNotAvailableError) {
       return NextResponse.json(
-        { success: false, error: "Rate limited. Please try again in a moment." },
+        { success: false, error: "No captions available for this video." },
+        { status: 404 }
+      );
+    }
+    if (error instanceof YoutubeTranscriptNotAvailableLanguageError) {
+      return NextResponse.json(
+        { success: false, error: "Captions are not available in the requested language." },
+        { status: 404 }
+      );
+    }
+    if (error instanceof YoutubeTranscriptTooManyRequestError) {
+      return NextResponse.json(
+        { success: false, error: "Rate limited by YouTube. Please try again in a moment." },
         { status: 429 }
+      );
+    }
+    if (error instanceof YoutubeTranscriptError) {
+      return NextResponse.json(
+        { success: false, error: error.message || "Failed to fetch transcript." },
+        { status: 500 }
       );
     }
 
     return NextResponse.json(
-      { success: false, error: `Failed to fetch transcript: ${msg}` },
+      { success: false, error: error?.message || "An unexpected error occurred." },
       { status: 500 }
     );
   }
