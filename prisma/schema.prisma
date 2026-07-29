@@ -1,0 +1,215 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  books           Book[]
+  notes           Note[]
+  highlights      Highlight[]
+  bookmarks       Bookmark[]
+  flashcards      Flashcard[]
+  studySessions   StudySession[]
+  readingProgress ReadingProgress[]
+  tags            Tag[]
+  categories      Category[]
+  folders         Folder[]
+}
+
+model Book {
+  id          String   @id @default(uuid())
+  title       String
+  author      String?
+  category    String?
+  description String?
+  fileName    String
+  fileSize    Int?
+  totalPages  Int?
+  isbn        String?
+  publisher   String?
+  year        Int?
+  language    String   @default("en")
+  coverUrl    String?
+  tags        String   @default("[]")
+  metadata    String   @default("{}")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  notes           Note[]
+  highlights      Highlight[]
+  bookmarks       Bookmark[]
+  flashcards      Flashcard[]
+  readingProgress ReadingProgress[]
+  studySessions   StudySession[]
+  folders         BookFolder[]
+}
+
+model Folder {
+  id        String   @id @default(uuid())
+  name      String
+  parentId  String?
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parent  Folder?      @relation("FolderTree", fields: [parentId], references: [id])
+  children Folder[]    @relation("FolderTree")
+  books   BookFolder[]
+  user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model BookFolder {
+  bookId   String
+  folderId String
+  book     Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  folder   Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
+  @@id([bookId, folderId])
+}
+
+model Note {
+  id        String   @id @default(uuid())
+  title     String   @default("Untitled Note")
+  content   String   @default("")
+  page      Int?
+  color     String   @default("blue")
+  tags      String   @default("[]")
+  pinned    Boolean  @default(false)
+  bookId    String
+  userId    String
+  highlightId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  book      Book       @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  highlight Highlight? @relation(fields: [highlightId], references: [id])
+}
+
+model Highlight {
+  id          String   @id @default(uuid())
+  color       String   @default("yellow")
+  type        String   @default("highlight")
+  text        String
+  page        Int
+  x           Float?
+  y           Float?
+  w           Float?
+  h           Float?
+  note        String?
+  tags        String   @default("[]")
+  bookId      String
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notes  Note[]
+  flashcards Flashcard[]
+}
+
+model Bookmark {
+  id        String   @id @default(uuid())
+  page      Int
+  label     String?
+  color     String   @default("blue")
+  bookId    String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Flashcard {
+  id           String   @id @default(uuid())
+  front        String
+  back         String
+  hint         String?
+  tags         String   @default("[]")
+  difficulty   Int      @default(0)
+  nextReview   DateTime @default(now())
+  interval     Int      @default(0)
+  repetitions  Int      @default(0)
+  easeFactor   Float    @default(2.5)
+  bookId       String?
+  highlightId  String?
+  userId       String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  book      Book?       @relation(fields: [bookId], references: [id])
+  highlight Highlight?  @relation(fields: [highlightId], references: [id])
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model StudySession {
+  id         String   @id @default(uuid())
+  duration   Int      @default(0)
+  pagesRead  Int      @default(0)
+  notesAdded Int      @default(0)
+  date       DateTime @default(now())
+  bookId     String?
+  userId     String
+  createdAt  DateTime @default(now())
+
+  book Book? @relation(fields: [bookId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ReadingProgress {
+  id         String   @id @default(uuid())
+  currentPage Int     @default(1)
+  totalPages  Int     @default(0)
+  percentage Float   @default(0)
+  lastPage   Int?
+  completed  Boolean  @default(false)
+  bookId     String
+  userId     String
+  updatedAt  DateTime @updatedAt
+
+  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([bookId, userId])
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String
+  color     String   @default("blue")
+  userId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([name, userId])
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  icon      String?
+  color     String   @default("blue")
+  userId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([name, userId])
+}
