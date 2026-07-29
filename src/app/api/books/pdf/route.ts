@@ -11,6 +11,17 @@ export async function GET(req: NextRequest) {
   }
 
   const fileName = path.basename(fileParam);
+
+  // Serve large PDFs via static CDN to avoid Vercel's 4.5 MB serverless response limit
+  const staticPath = path.join(process.cwd(), "public", "study", "books", fileName);
+  if (fs.existsSync(staticPath)) {
+    const staticUrl = `/study/books/${encodeURIComponent(fileName)}`;
+    if (mode === "download") {
+      return NextResponse.redirect(new URL(staticUrl, req.url), 302);
+    }
+    return NextResponse.redirect(new URL(staticUrl, req.url), 302);
+  }
+
   const filePath = path.join(process.cwd(), "private", "books", fileName);
 
   if (!fs.existsSync(filePath)) {
