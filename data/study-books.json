@@ -148,5 +148,45 @@
     "description": "Exploration of the mind, self-governance, and the principles that shape thought, behavior, and personal mastery.",
     "size": "4,017 KB",
     "source": "/study/books/Psychology Book final.pdf"
+  },
+  {
+    "id": "msbt-psychology-11th",
+    "title": "MSBT Psychology 11th",
+    "author": "MSBT / Curated",
+    "category": "Psychology",
+    "tags": ["Psychology", "Class 11", "MSBT", "Board"],
+    "description": "Maharashtra State Board Psychology textbook for Class 11 covering foundations of psychology, human development, and cognitive processes.",
+    "size": "8,771 KB",
+    "source": "/study/books/MSBT Psychology 11th.pdf"
+  },
+  {
+    "id": "msbt-psychology-12th",
+    "title": "MSBT Psychology 12th",
+    "author": "MSBT / Curated",
+    "category": "Psychology",
+    "tags": ["Psychology", "Class 12", "MSBT", "Board"],
+    "description": "Maharashtra State Board Psychology textbook for Class 12 covering personality, psychological disorders, and social psychology.",
+    "size": "8,440 KB",
+    "source": "/study/books/MSBT Psychology 12th.pdf"
+  },
+  {
+    "id": "ncert-psychology-11th",
+    "title": "NCERT Psychology Class 11th",
+    "author": "NCERT / Curated",
+    "category": "Psychology",
+    "tags": ["Psychology", "Class 11", "NCERT", "CBSE"],
+    "description": "NCERT Psychology textbook for Class 11 covering the science of mind, sensory processes, learning, memory, and motivation.",
+    "size": "18,708 KB",
+    "source": "/study/books/NCERT Psychology_Class_11th.pdf"
+  },
+  {
+    "id": "ncert-psychology-12th",
+    "title": "NCERT Psychology Class 12th",
+    "author": "NCERT / Curated",
+    "category": "Psychology",
+    "tags": ["Psychology", "Class 12", "NCERT", "CBSE"],
+    "description": "NCERT Psychology textbook for Class 12 covering intelligence, personality, psychological disorders, and therapeutic approaches.",
+    "size": "17,679 KB",
+    "source": "/study/books/NCERT Psychology_Class_12th.pdf"
   }
 ]
