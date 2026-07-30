@@ -233,8 +233,8 @@ export default function ReadingPage() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || (e.target as HTMLElement)?.isContentEditable) return;
       switch (e.key.toLowerCase()) {
-        case 'arrowright': case ' ': viewerRef.current?.nextPage(); break;
-        case 'arrowleft': viewerRef.current?.prevPage(); break;
+        case 'arrowright': case ' ': setCurrentPage(p => Math.min(totalPages || bookTotal, p + 1)); break;
+        case 'arrowleft': setCurrentPage(p => Math.max(1, p - 1)); break;
         case 'v': setActiveTool('select'); break;
         case 'h': setActiveTool('highlight'); break;
         case 'u': setActiveTool('underline'); break;
@@ -252,7 +252,7 @@ export default function ReadingPage() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [totalPages, bookTotal]);
 
   const handleFullscreen = useCallback(() => {
     if (!document.fullscreenElement) {
@@ -264,7 +264,7 @@ export default function ReadingPage() {
 
   const handleChapterSelect = useCallback((ch: Chapter) => {
     setCurrentChapter(ch.id);
-    viewerRef.current?.goToPage(ch.pageStart);
+    setCurrentPage(ch.pageStart);
     if (progress) {
       store.saveProgress({ ...progress, currentChapter: ch.id, lastOpened: new Date().toISOString() });
     }
@@ -305,7 +305,7 @@ export default function ReadingPage() {
         annotations={annotations}
         bookmarks={bookmarks}
         currentPage={currentPage}
-        onJumpToPage={(p) => viewerRef.current?.goToPage(p)}
+        onJumpToPage={setCurrentPage}
         onDeleteAnnotation={handleDeleteAnnotation}
         darkMode={darkMode}
       />
@@ -321,7 +321,7 @@ export default function ReadingPage() {
           annotations={[]}
           bookmarks={bookmarks}
           currentPage={currentPage}
-          onJumpToPage={(p) => viewerRef.current?.goToPage(p)}
+          onJumpToPage={setCurrentPage}
           onDeleteAnnotation={() => {}}
           darkMode={darkMode}
         />
@@ -441,7 +441,7 @@ export default function ReadingPage() {
                 onZoomChange={setZoom}
                 currentPage={currentPage}
                 totalPages={totalPages || bookTotal}
-                onPageChange={(p) => viewerRef.current?.goToPage(p)}
+                onPageChange={setCurrentPage}
                 onFitToWidth={() => viewerRef.current?.fitToWidth()}
                 onFitToPage={() => viewerRef.current?.fitToPage()}
                 onFullscreen={handleFullscreen}
