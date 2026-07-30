@@ -12,16 +12,12 @@ export async function GET(req: NextRequest) {
 
   const fileName = path.basename(fileParam);
 
-  // Serve large PDFs via static CDN to avoid Vercel's 4.5 MB serverless response limit
-  const staticPath = path.join(process.cwd(), "public", "study", "books", fileName);
-  if (fs.existsSync(staticPath)) {
-    const staticUrl = `/study/books/${encodeURIComponent(fileName)}`;
-    if (mode === "download") {
-      return NextResponse.redirect(new URL(staticUrl, req.url), 302);
-    }
-    return NextResponse.redirect(new URL(staticUrl, req.url), 302);
+  // For read mode, redirect to Vercel's static CDN to avoid the 4.5 MB serverless response limit
+  if (mode === "read") {
+    return NextResponse.redirect(new URL(`/study/books/${encodeURIComponent(fileName)}`, req.url), 302);
   }
 
+  // For download mode, serve directly (small files only; large downloads fail on Vercel Hobby)
   const filePath = path.join(process.cwd(), "private", "books", fileName);
 
   if (!fs.existsSync(filePath)) {
@@ -37,22 +33,11 @@ export async function GET(req: NextRequest) {
   };
   const contentType = contentTypes[ext] || "application/octet-stream";
 
-  if (mode === "download") {
-    return new NextResponse(fileBuffer, {
-      headers: {
-        "Content-Type": contentType,
-        "Content-Disposition": `attachment; filename="${fileName}"`,
-        "Cache-Control": "no-store",
-        "X-Robots-Tag": "noindex",
-      },
-    });
-  }
-
   return new NextResponse(fileBuffer, {
     headers: {
       "Content-Type": contentType,
-      "Content-Disposition": "inline",
-      "Cache-Control": "private, no-store",
+      "Content-Disposition": `attachment; filename="${fileName}"`,
+      "Cache-Control": "no-store",
       "X-Robots-Tag": "noindex",
     },
   });
