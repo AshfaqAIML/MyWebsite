@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useParams } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft, ChevronRight, BookOpen, Layers, PenSquare,
@@ -17,11 +18,22 @@ import * as store from '@/lib/study/store';
 import { getBookFileUrl, generateChapters, estimateTotalPages, generateId } from '@/lib/study/utils';
 import type { PDFAnnotation, AnnotationTool } from '@/lib/study/pdf-annotations';
 import { ANNOTATION_COLORS } from '@/lib/study/pdf-annotations';
-import PDFViewer from '@/components/study/pdf-viewer';
 import type { PDFViewerHandle } from '@/components/study/pdf-viewer';
 import AnnotationToolbar from '@/components/study/annotation-toolbar';
 import RichEditor from '@/components/study/rich-editor';
 import AnnotationsSidebar from '@/components/study/annotations-sidebar';
+
+const PDFViewer = dynamic(() => import('@/components/study/pdf-viewer'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex-1 flex items-center justify-center bg-[#0f0f13]">
+      <div className="text-center space-y-4">
+        <div className="w-10 h-10 border-2 border-white/20 border-t-white/60 rounded-full animate-spin mx-auto" />
+        <p className="text-sm text-white/40">Loading PDF viewer...</p>
+      </div>
+    </div>
+  ),
+});
 
 const modes: { key: ReadingMode; label: string; icon: any }[] = [
   { key: 'read', label: 'Read', icon: BookOpen },

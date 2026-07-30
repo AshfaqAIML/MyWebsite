@@ -187,7 +187,7 @@ function PDFCanvas({
   }, [activeTool, activeColor, pageNum, onAnnotationCreate]);
 
   return (
-    <div className="relative mx-auto shadow-xl shadow-black/20" style={{ minHeight: '500px' }}>
+    <div className="relative mx-auto shadow-xl shadow-black/20 max-w-full" style={{ minHeight: '500px' }}>
       <canvas ref={canvasRef} className="block" style={{ opacity: rendered ? 1 : 0.3, transition: 'opacity 0.2s' }} />
       <div ref={textLayerRef} className="absolute inset-0" onMouseUp={handleTextSelection} />
       <svg ref={svgRef} className="absolute inset-0"
@@ -236,7 +236,7 @@ const PDFViewer = forwardRef<PDFViewerHandle, PDFViewerProps>(function PDFViewer
   const [error, setError] = useState<string | null>(null);
   const [rotation, setRotation] = useState(0);
 
-  const scale = 0.01 * (zoom + 100);
+  const scale = 0.01 * zoom;
 
   useEffect(() => {
     let cancelled = false;
@@ -306,19 +306,17 @@ const PDFViewer = forwardRef<PDFViewerHandle, PDFViewerProps>(function PDFViewer
   return (
     <div ref={containerRef} className={`flex-1 overflow-y-auto overflow-x-hidden flex items-start justify-center py-8 ${darkMode ? 'bg-[#0f0f13]' : 'bg-zinc-50'} ${containerClassName || ''}`}
       style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 0.3s' }}>
-      <div key={`page-${page}-zoom-${zoom}`} className="animate-pdf-fade space-y-6">
-        <PDFCanvas
-          pageNum={page}
-          pdfDoc={pdfDoc}
-          scale={scale}
-          darkMode={darkMode}
-          annotations={annotations}
-          activeTool={activeTool}
-          activeColor={activeColor}
-          strokeWidth={strokeWidth}
-          onAnnotationCreate={onAnnotationCreate}
-        />
-      </div>
+      <PDFCanvas key={page}
+        pageNum={page}
+        pdfDoc={pdfDoc}
+        scale={scale}
+        darkMode={darkMode}
+        annotations={annotations}
+        activeTool={activeTool}
+        activeColor={activeColor}
+        strokeWidth={strokeWidth}
+        onAnnotationCreate={onAnnotationCreate}
+      />
     </div>
   );
 });
