@@ -158,6 +158,7 @@
     "description": "Maharashtra State Board Psychology textbook for Class 11 covering foundations of psychology, human development, and cognitive processes.",
     "size": "8,771 KB",
     "source": "/study/books/MSBT Psychology 11th.pdf",
+    "pages": 217,
     "chapters": [
       { "title": "Psychology: The Science of Behaviour", "pageStart": 1 },
       { "title": "Human Development", "pageStart": 28 },
@@ -178,6 +179,7 @@
     "description": "Maharashtra State Board Psychology textbook for Class 12 covering personality, psychological disorders, and social psychology.",
     "size": "8,440 KB",
     "source": "/study/books/MSBT Psychology 12th.pdf",
+    "pages": 211,
     "chapters": [
       { "title": "Psychology: A Scientific Discipline", "pageStart": 1 },
       { "title": "Personality", "pageStart": 31 },
@@ -197,6 +199,7 @@
     "description": "NCERT Psychology textbook for Class 11 covering the science of mind, sensory processes, learning, memory, and motivation.",
     "size": "18,708 KB",
     "source": "/study/books/NCERT Psychology_Class_11th.pdf",
+    "pages": 468,
     "chapters": [
       { "title": "What is Psychology?", "pageStart": 1 },
       { "title": "Methods of Enquiry in Psychology", "pageStart": 52 },
@@ -218,6 +221,7 @@
     "description": "NCERT Psychology textbook for Class 12 covering intelligence, personality, psychological disorders, and therapeutic approaches.",
     "size": "17,679 KB",
     "source": "/study/books/NCERT Psychology_Class_12th.pdf",
+    "pages": 442,
     "chapters": [
       { "title": "Variations in Psychological Attributes", "pageStart": 1 },
       { "title": "Self and Personality", "pageStart": 50 },

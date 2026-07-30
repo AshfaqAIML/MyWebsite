@@ -56,7 +56,7 @@ function StatCard({ icon: Icon, value, label }: { icon: any; value: string; labe
 function BookCard({ book, index }: { book: StudyBook; index: number }) {
   const progress = getBookProgress(book.id);
   const progPct = progress?.completionPercentage || 0;
-  const totalPages = estimateTotalPages(book.size);
+  const totalPages = estimateTotalPages(book);
 
   return (
     <Link href={`/study-corner/read/${book.id}`}>

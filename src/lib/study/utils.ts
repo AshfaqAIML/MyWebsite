@@ -6,7 +6,7 @@ export function getBookFileUrl(book: StudyBook, mode: 'read' | 'download' = 'rea
 }
 
 export function generateChapters(book: StudyBook): Chapter[] {
-  const totalPages = estimateTotalPages(book.size);
+  const totalPages = estimateTotalPages(book);
 
   if (book.chapters && book.chapters.length > 0) {
     return book.chapters.map((ch, i) => {
@@ -53,8 +53,9 @@ export function generateChapters(book: StudyBook): Chapter[] {
   }));
 }
 
-export function estimateTotalPages(sizeStr: string): number {
-  const kb = parseInt(sizeStr.replace(/[, KB]/g, ''));
+export function estimateTotalPages(book: { size: string; pages?: number }): number {
+  if (book.pages && book.pages > 0) return book.pages;
+  const kb = parseInt(book.size.replace(/[, KB]/g, ''));
   if (isNaN(kb)) return 100;
   return Math.max(20, Math.round(kb / 40));
 }
