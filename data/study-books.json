@@ -157,7 +157,17 @@
     "tags": ["Psychology", "Class 11", "MSBT", "Board"],
     "description": "Maharashtra State Board Psychology textbook for Class 11 covering foundations of psychology, human development, and cognitive processes.",
     "size": "8,771 KB",
-    "source": "/study/books/MSBT Psychology 11th.pdf"
+    "source": "/study/books/MSBT Psychology 11th.pdf",
+    "chapters": [
+      { "title": "Psychology: The Science of Behaviour", "pageStart": 1 },
+      { "title": "Human Development", "pageStart": 28 },
+      { "title": "Learning", "pageStart": 55 },
+      { "title": "Memory", "pageStart": 82 },
+      { "title": "Motivation", "pageStart": 109 },
+      { "title": "Emotion", "pageStart": 136 },
+      { "title": "Thinking", "pageStart": 163 },
+      { "title": "Intelligence and Creativity", "pageStart": 190 }
+    ]
   },
   {
     "id": "msbt-psychology-12th",
@@ -167,7 +177,16 @@
     "tags": ["Psychology", "Class 12", "MSBT", "Board"],
     "description": "Maharashtra State Board Psychology textbook for Class 12 covering personality, psychological disorders, and social psychology.",
     "size": "8,440 KB",
-    "source": "/study/books/MSBT Psychology 12th.pdf"
+    "source": "/study/books/MSBT Psychology 12th.pdf",
+    "chapters": [
+      { "title": "Psychology: A Scientific Discipline", "pageStart": 1 },
+      { "title": "Personality", "pageStart": 31 },
+      { "title": "Stress and Stress Management", "pageStart": 61 },
+      { "title": "Psychotherapy", "pageStart": 91 },
+      { "title": "Psychological Disorders", "pageStart": 121 },
+      { "title": "Social Psychology", "pageStart": 151 },
+      { "title": "Health Psychology", "pageStart": 181 }
+    ]
   },
   {
     "id": "ncert-psychology-11th",
