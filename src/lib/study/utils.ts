@@ -2,6 +2,9 @@ import { StudyBook, Chapter, Section } from './types';
 
 export function getBookFileUrl(book: StudyBook, mode: 'read' | 'download' = 'read'): string {
   const fileName = book.source.split('/').pop() || book.source;
+  if (mode === 'read') {
+    return `/study/books/${encodeURIComponent(fileName)}`;
+  }
   return `/api/books/pdf?file=${encodeURIComponent(fileName)}&mode=${mode}`;
 }
 

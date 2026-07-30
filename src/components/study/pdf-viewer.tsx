@@ -22,44 +22,24 @@ interface PDFViewerProps {
 }
 
 export interface PDFViewerHandle {
-  nextPage: () => void;
-  prevPage: () => void;
   zoomIn: () => void;
   zoomOut: () => void;
   fitToWidth: () => void;
   fitToPage: () => void;
   rotate: () => void;
-  goToPage: (page: number) => void;
 }
 
-function PDFPage({
-  pageNum,
-  pdfDoc,
-  scale,
-  darkMode,
-  annotations,
-  activeTool,
-  activeColor,
-  strokeWidth,
-  onAnnotationCreate,
-  containerWidth,
+function PDFCanvas({
+  pageNum, pdfDoc, scale, darkMode, annotations, activeTool, activeColor, strokeWidth, onAnnotationCreate,
 }: {
-  pageNum: number;
-  pdfDoc: any;
-  scale: number;
-  darkMode: boolean;
-  annotations: PDFAnnotation[];
-  activeTool: AnnotationTool;
-  activeColor: string;
-  strokeWidth: number;
-  onAnnotationCreate: (a: PDFAnnotation) => void;
-  containerWidth: number;
+  pageNum: number; pdfDoc: any; scale: number; darkMode: boolean;
+  annotations: PDFAnnotation[]; activeTool: AnnotationTool; activeColor: string;
+  strokeWidth: number; onAnnotationCreate: (a: PDFAnnotation) => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const textLayerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
-  const [pageViewport, setPageViewport] = useState<any>(null);
-  const [rendering, setRendering] = useState(false);
+  const [rendered, setRendered] = useState(false);
 
   const pageAnnotations = annotations.filter(a => a.page === pageNum);
 
@@ -67,11 +47,10 @@ function PDFPage({
     let cancelled = false;
     async function render() {
       if (!pdfDoc || !canvasRef.current) return;
-      setRendering(true);
+      setRendered(false);
       try {
         const page = await pdfDoc.getPage(pageNum);
         const viewport = page.getViewport({ scale });
-        setPageViewport(viewport);
 
         const canvas = canvasRef.current;
         canvas.width = viewport.width * devicePixelRatio;
@@ -83,8 +62,7 @@ function PDFPage({
         ctx.scale(devicePixelRatio, devicePixelRatio);
 
         await page.render({
-          canvasContext: ctx,
-          viewport,
+          canvasContext: ctx, viewport,
           background: darkMode ? '#1a1a2e' : '#ffffff',
         }).promise;
 
@@ -98,74 +76,49 @@ function PDFPage({
         textLayer.style.height = `${viewport.height}px`;
 
         const textItems = textContent.items as any[];
-        const textStyles: Record<string, any> = {};
-        if (textContent.styles) {
-          for (const [fontName, style] of Object.entries(textContent.styles)) {
-            textStyles[fontName] = style;
-          }
-        }
-
-        const defaultFontSize = 16;
-        const defaultFontFamily = 'sans-serif';
-
         textItems.forEach((item: any) => {
           const span = document.createElement('span');
           span.textContent = item.str;
-          const fontSize = item.fontSize || defaultFontSize;
-          const fontFamily = item.fontName && textStyles[item.fontName]
-            ? textStyles[item.fontName].fontFamily || defaultFontFamily
-            : defaultFontFamily;
-
-          const wordScale = item.width / (item.str.length * fontSize * 0.5);
-
+          const fontSize = item.fontSize || 16;
+          const fontName = item.fontName;
           span.style.position = 'absolute';
           span.style.left = `${item.transform[4]}px`;
           span.style.top = `${item.transform[5] - fontSize}px`;
           span.style.fontSize = `${fontSize}px`;
-          span.style.fontFamily = fontFamily;
           span.style.color = darkMode ? '#c8c8d8' : '#1a1a2e';
           span.style.whiteSpace = 'pre';
-          span.style.transform = `scaleX(${wordScale})`;
           span.style.transformOrigin = 'left center';
           span.style.opacity = '0.45';
           span.style.pointerEvents = 'auto';
-          span.style.cursor = activeTool === 'highlight' || activeTool === 'underline' || activeTool === 'strikethrough' || activeTool === 'squiggly'
-            ? 'text'
-            : 'default';
-          span.dataset.page = String(pageNum);
-
+          span.style.cursor = 'text';
           textLayer.appendChild(span);
         });
+
+        if (!cancelled) setRendered(true);
       } catch (err) {
-        console.error('PDF render error:', err);
+        console.error('PDF render error for page', pageNum, err);
       }
-      if (!cancelled) setRendering(false);
     }
     render();
     return () => { cancelled = true; };
-  }, [pdfDoc, pageNum, scale, darkMode, activeTool]);
+  }, [pdfDoc, pageNum, scale, darkMode]);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     if (activeTool !== 'pen' && activeTool !== 'eraser') return;
     const svg = svgRef.current;
     if (!svg) return;
     const rect = svg.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
     svg.dataset.drawing = 'true';
-    svg.dataset.points = JSON.stringify([{ x, y }]);
+    svg.dataset.points = JSON.stringify([{ x: e.clientX - rect.left, y: e.clientY - rect.top }]);
   }, [activeTool]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     const svg = svgRef.current;
     if (!svg || svg.dataset.drawing !== 'true') return;
     const rect = svg.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
     const points = JSON.parse(svg.dataset.points || '[]');
-    points.push({ x, y });
+    points.push({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     svg.dataset.points = JSON.stringify(points);
-
     let path = svg.querySelector('.active-drawing') as SVGPathElement;
     if (!path) {
       path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -177,9 +130,7 @@ function PDFPage({
       path.setAttribute('stroke-linejoin', 'round');
       svg.appendChild(path);
     }
-    const d = points.map((p: any, i: number) =>
-      i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`
-    ).join(' ');
+    const d = points.map((p: any, i: number) => i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`).join(' ');
     path.setAttribute('d', d);
   }, [activeColor, strokeWidth]);
 
@@ -189,18 +140,15 @@ function PDFPage({
     svg.dataset.drawing = 'false';
     const path = svg.querySelector('.active-drawing');
     if (path) path.remove();
-
     const pointsStr = svg.dataset.points;
     if (!pointsStr) return;
     const points = JSON.parse(pointsStr);
-    if (points.length < 2) return;
     svg.dataset.points = '';
-
+    if (points.length < 2) return;
     if (activeTool === 'pen') {
       onAnnotationCreate({
         id: `dr_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-        bookId: '', type: 'drawing', color: activeColor,
-        strokeWidth, points, page: pageNum,
+        bookId: '', type: 'drawing', color: activeColor, strokeWidth, points, page: pageNum,
         createdAt: new Date().toISOString(),
       } as any);
     }
@@ -213,17 +161,13 @@ function PDFPage({
     const range = sel.getRangeAt(0);
     const textLayer = textLayerRef.current;
     if (!textLayer || !textLayer.contains(range.commonAncestorContainer)) return;
-
     const text = sel.toString().trim();
     if (!text) return;
-
     const containerRect = textLayer.getBoundingClientRect();
     const rects = range.getClientRects();
     if (rects.length === 0) return;
-
     const firstRect = rects[0];
     const lastRect = rects[rects.length - 1];
-
     const position = {
       page: pageNum,
       x: (firstRect.left - containerRect.left) / (containerRect.width || 1),
@@ -231,210 +175,50 @@ function PDFPage({
       w: (lastRect.right - firstRect.left) / (containerRect.width || 1),
       h: (lastRect.bottom - firstRect.top) / (containerRect.height || 1),
     };
-
     const annotationType = activeTool === 'underline' ? 'underline'
       : activeTool === 'strikethrough' ? 'strikethrough'
-      : activeTool === 'squiggly' ? 'squiggly'
-      : 'highlight';
-
+      : activeTool === 'squiggly' ? 'squiggly' : 'highlight';
     onAnnotationCreate({
       id: `${annotationType[0]}l_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-      bookId: '', type: annotationType, color: activeColor,
-      text, position, page: pageNum,
-      note: '',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      bookId: '', type: annotationType, color: activeColor, text, position, page: pageNum, note: '',
+      createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
     } as any);
-
     sel.removeAllRanges();
   }, [activeTool, activeColor, pageNum, onAnnotationCreate]);
 
-  const viewport = pageViewport;
-
   return (
-    <div
-      className={`relative mx-auto shadow-xl ${darkMode ? 'shadow-black/40' : 'shadow-black/10'} ${darkMode ? 'bg-[#1a1a2e]' : 'bg-white'}`}
-      style={{
-        width: viewport ? `${viewport.width}px` : '100%',
-        minHeight: viewport ? `${viewport.height}px` : '600px',
-      }}
-    >
-      <canvas
-        ref={canvasRef}
-        className="block w-full h-full"
-        style={{ opacity: rendering ? 0.5 : 1, transition: 'opacity 0.2s' }}
-      />
-      <div
-        ref={textLayerRef}
-        className="absolute inset-0 select-auto"
-        style={{ pointerEvents: 'auto' }}
-        onMouseUp={handleTextSelection}
-      />
-      <svg
-        ref={svgRef}
-        className="absolute inset-0 pointer-events-none"
+    <div className="relative mx-auto shadow-xl shadow-black/20" style={{ minHeight: '500px' }}>
+      <canvas ref={canvasRef} className="block" style={{ opacity: rendered ? 1 : 0.3, transition: 'opacity 0.2s' }} />
+      <div ref={textLayerRef} className="absolute inset-0" onMouseUp={handleTextSelection} />
+      <svg ref={svgRef} className="absolute inset-0"
         style={{ pointerEvents: activeTool === 'pen' || activeTool === 'eraser' ? 'auto' : 'none' }}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-      >
+        onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
         {pageAnnotations.map(ann => {
-          if (ann.type === 'highlight') {
-            const a = ann as any;
-            const rect = a.position;
-            return (
-              <rect
-                key={a.id}
-                x={`${rect.x * 100}%`}
-                y={`${rect.y * 100}%`}
-                width={`${rect.w * 100}%`}
-                height={`${rect.h * 100}%`}
-                fill={a.color}
-                opacity={0.4}
-                className="pointer-events-none"
-              />
-            );
-          }
-          if (ann.type === 'underline') {
-            const a = ann as any;
-            const rect = a.position;
-            return (
-              <line
-                key={a.id}
-                x1={`${rect.x * 100}%`}
-                y1={`${(rect.y + rect.h) * 100}%`}
-                x2={`${(rect.x + rect.w) * 100}%`}
-                y2={`${(rect.y + rect.h) * 100}%`}
-                stroke={a.color}
-                strokeWidth={2}
-                className="pointer-events-none"
-              />
-            );
-          }
-          if (ann.type === 'strikethrough') {
-            const a = ann as any;
-            const rect = a.position;
-            return (
-              <line
-                key={a.id}
-                x1={`${rect.x * 100}%`}
-                y1={`${(rect.y + rect.h / 2) * 100}%`}
-                x2={`${(rect.x + rect.w) * 100}%`}
-                y2={`${(rect.y + rect.h / 2) * 100}%`}
-                stroke={a.color}
-                strokeWidth={2}
-                className="pointer-events-none"
-              />
-            );
-          }
-          if (ann.type === 'squiggly') {
-            const a = ann as any;
-            const rect = a.position;
-            const midY = (rect.y + rect.h) * viewport?.height || 0;
-            const wiggle = 3;
-            const segments = Math.max(10, Math.floor((rect.w * (viewport?.width || 100)) / 8));
-            const segW = (rect.w * (viewport?.width || 100)) / segments;
-            const d = Array.from({ length: segments }, (_, i) => {
-              const x = (rect.x * (viewport?.width || 0)) + i * segW;
-              const yOff = i % 2 === 0 ? -wiggle : wiggle;
-              return `${i === 0 ? 'M' : 'L'} ${x} ${midY + yOff}`;
-            }).join(' ');
-            return (
-              <path
-                key={a.id}
-                d={d}
-                fill="none"
-                stroke={a.color}
-                strokeWidth={1.5}
-                className="pointer-events-none"
-              />
-            );
+          if ((ann.type === 'highlight' || ann.type === 'underline' || ann.type === 'strikethrough' || ann.type === 'squiggly') && 'position' in ann) {
+            const a = ann as any; const r = a.position;
+            if (ann.type === 'highlight') return <rect key={a.id} x={`${r.x*100}%`} y={`${r.y*100}%`} width={`${r.w*100}%`} height={`${r.h*100}%`} fill={a.color} opacity={0.4} />;
+            if (ann.type === 'underline') return <line key={a.id} x1={`${r.x*100}%`} y1={`${(r.y+r.h)*100}%`} x2={`${(r.x+r.w)*100}%`} y2={`${(r.y+r.h)*100}%`} stroke={a.color} strokeWidth={2} />;
+            if (ann.type === 'strikethrough') return <line key={a.id} x1={`${r.x*100}%`} y1={`${(r.y+r.h/2)*100}%`} x2={`${(r.x+r.w)*100}%`} y2={`${(r.y+r.h/2)*100}%`} stroke={a.color} strokeWidth={2} />;
           }
           if (ann.type === 'drawing') {
             const a = ann as any;
-            const d = a.points.map((p: any, i: number) =>
-              i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`
-            ).join(' ');
-            return (
-              <path
-                key={a.id}
-                d={d}
-                fill="none"
-                stroke={a.color}
-                strokeWidth={a.strokeWidth || 3}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="pointer-events-none"
-              />
-            );
+            const d = a.points.map((p: any, i: number) => `${i===0?'M':'L'} ${p.x} ${p.y}`).join(' ');
+            return <path key={a.id} d={d} fill="none" stroke={a.color} strokeWidth={a.strokeWidth||3} strokeLinecap="round" strokeLinejoin="round" />;
           }
-          if (ann.type === 'rectangle' || ann.type === 'circle') {
-            const a = ann as any;
-            const rect = a.position;
-            const isCircle = ann.type === 'circle';
-            return isCircle ? (
-              <ellipse
-                key={a.id}
-                cx={`${(rect.x + rect.w / 2) * 100}%`}
-                cy={`${(rect.y + rect.h / 2) * 100}%`}
-                rx={`${(rect.w / 2) * 100}%`}
-                ry={`${(rect.h / 2) * 100}%`}
-                fill="none"
-                stroke={a.color}
-                strokeWidth={a.strokeWidth || 2}
-                className="pointer-events-none"
-              />
-            ) : (
-              <rect
-                key={a.id}
-                x={`${rect.x * 100}%`}
-                y={`${rect.y * 100}%`}
-                width={`${rect.w * 100}%`}
-                height={`${rect.h * 100}%`}
-                fill="none"
-                stroke={a.color}
-                strokeWidth={a.strokeWidth || 2}
-                className="pointer-events-none"
-              />
-            );
+          if ((ann.type === 'rectangle' || ann.type === 'circle') && 'position' in ann) {
+            const a = ann as any; const r = a.position;
+            return ann.type === 'circle'
+              ? <ellipse key={a.id} cx={`${(r.x+r.w/2)*100}%`} cy={`${(r.y+r.h/2)*100}%`} rx={`${(r.w/2)*100}%`} ry={`${(r.h/2)*100}%`} fill="none" stroke={a.color} strokeWidth={a.strokeWidth||2} />
+              : <rect key={a.id} x={`${r.x*100}%`} y={`${r.y*100}%`} width={`${r.w*100}%`} height={`${r.h*100}%`} fill="none" stroke={a.color} strokeWidth={a.strokeWidth||2} />;
           }
           if (ann.type === 'sticky') {
             const a = ann as any;
-            const size = 24;
-            return (
-              <g key={a.id} className="pointer-events-auto cursor-pointer">
-                <rect
-                  x={a.position.x - size / 2}
-                  y={a.position.y - size / 2}
-                  width={size}
-                  height={size}
-                  fill={a.color}
-                  rx={3}
-                  opacity={0.9}
-                />
-                <text
-                  x={a.position.x}
-                  y={a.position.y + 4}
-                  textAnchor="middle"
-                  fontSize={12}
-                  fill="#1a1a1a"
-                >
-                  📌
-                </text>
-              </g>
-            );
+            return <g key={a.id}><rect x={a.position.x-12} y={a.position.y-12} width={24} height={24} fill={a.color} rx={3} opacity={0.9} /><text x={a.position.x} y={a.position.y+4} textAnchor="middle" fontSize={12} fill="#1a1a1a">📌</text></g>;
           }
           return null;
         })}
       </svg>
-      <div
-        className={`absolute bottom-2 right-2 text-[10px] px-1.5 py-0.5 rounded ${
-          darkMode ? 'bg-black/40 text-white/50' : 'bg-white/60 text-black/40'
-        }`}
-      >
-        {pageNum}
-      </div>
+      <div className="absolute bottom-2 right-2 text-[10px] px-1.5 py-0.5 rounded bg-black/30 text-white/50">{pageNum}</div>
     </div>
   );
 }
@@ -451,12 +235,8 @@ const PDFViewer = forwardRef<PDFViewerHandle, PDFViewerProps>(function PDFViewer
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [rotation, setRotation] = useState(0);
-  const pdfjsRef = useRef<any>(null);
-
-  const [renderedPages, setRenderedPages] = useState<number[]>([]);
 
   const scale = 0.01 * (zoom + 100);
-  const effectiveScale = scale;
 
   useEffect(() => {
     let cancelled = false;
@@ -466,16 +246,12 @@ const PDFViewer = forwardRef<PDFViewerHandle, PDFViewerProps>(function PDFViewer
       try {
         const pdfjs = await import('pdfjs-dist');
         pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
-        pdfjsRef.current = pdfjs;
-
         const doc = await pdfjs.getDocument(pdfUrl).promise;
         if (cancelled) return;
         setPdfDoc(doc);
         onTotalPages(doc.numPages);
       } catch (err: any) {
-        if (!cancelled) {
-          setError(err?.message || 'Failed to load PDF');
-        }
+        if (!cancelled) setError(err?.message || 'Failed to load PDF');
       }
       if (!cancelled) setLoading(false);
     }
@@ -483,47 +259,24 @@ const PDFViewer = forwardRef<PDFViewerHandle, PDFViewerProps>(function PDFViewer
     return () => { cancelled = true; };
   }, [pdfUrl]);
 
-  useEffect(() => {
-    if (!totalPages) return;
-    const pages: number[] = [];
-    if (continuousScroll) {
-      const start = Math.max(1, page - 2);
-      const end = Math.min(totalPages, page + 4);
-      for (let i = start; i <= end; i++) pages.push(i);
-    } else {
-      pages.push(page);
-    }
-    setRenderedPages(pages);
-  }, [page, totalPages, continuousScroll]);
-
   useImperativeHandle(ref, () => ({
-    nextPage: () => {
-      if (page < totalPages) onPageChange(page + 1);
-    },
-    prevPage: () => {
-      if (page > 1) onPageChange(page - 1);
-    },
     zoomIn: () => onZoomChange(Math.min(200, zoom + 10)),
     zoomOut: () => onZoomChange(Math.max(25, zoom - 10)),
     fitToWidth: () => {
-      if (containerRef.current && pdfDoc) {
+      if (containerRef.current) {
         const cw = containerRef.current.clientWidth - 40;
-        const fitScale = (cw / 612) * 100;
-        onZoomChange(Math.round(Math.max(25, Math.min(200, fitScale))));
+        onZoomChange(Math.round(Math.max(25, Math.min(200, (cw / 612) * 100))));
       }
     },
     fitToPage: () => {
-      if (containerRef.current && pdfDoc) {
+      if (containerRef.current) {
         const cw = containerRef.current.clientWidth - 40;
         const ch = containerRef.current.clientHeight - 40;
-        const scaleW = (cw / 612) * 100;
-        const scaleH = (ch / 792) * 100;
-        onZoomChange(Math.round(Math.max(25, Math.min(200, Math.min(scaleW, scaleH)))));
+        onZoomChange(Math.round(Math.max(25, Math.min(200, Math.min((cw/612)*100, (ch/792)*100)))));
       }
     },
     rotate: () => setRotation(r => (r + 90) % 360),
-    goToPage: (p: number) => onPageChange(Math.max(1, Math.min(totalPages, p))),
-  }), [page, totalPages, zoom, pdfDoc, onPageChange, onZoomChange, containerRef]);
+  }), [zoom, onZoomChange, containerRef]);
 
   if (loading) {
     return (
@@ -550,32 +303,21 @@ const PDFViewer = forwardRef<PDFViewerHandle, PDFViewerProps>(function PDFViewer
     );
   }
 
-  const containerWidth = containerRef.current?.clientWidth || 800;
-
   return (
-    <div
-      ref={containerRef}
-      className={`flex-1 overflow-y-auto overflow-x-hidden ${
-        continuousScroll ? '' : 'flex items-start justify-center py-8'
-      } ${darkMode ? 'bg-[#0f0f13]' : 'bg-zinc-50'} ${containerClassName || ''}`}
-      style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 0.3s' }}
-    >
-      <div className={`${continuousScroll ? 'space-y-6 py-8 px-4' : 'px-4'}`}>
-        {renderedPages.map(p => (
-          <PDFPage
-            key={`${pdfUrl}-${p}`}
-            pageNum={p}
-            pdfDoc={pdfDoc}
-            scale={effectiveScale}
-            darkMode={darkMode}
-            annotations={annotations}
-            activeTool={activeTool}
-            activeColor={activeColor}
-            strokeWidth={strokeWidth}
-            onAnnotationCreate={onAnnotationCreate}
-            containerWidth={containerWidth}
-          />
-        ))}
+    <div ref={containerRef} className={`flex-1 overflow-y-auto overflow-x-hidden flex items-start justify-center py-8 ${darkMode ? 'bg-[#0f0f13]' : 'bg-zinc-50'} ${containerClassName || ''}`}
+      style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 0.3s' }}>
+      <div key={`page-${page}-zoom-${zoom}`} className="animate-pdf-fade space-y-6">
+        <PDFCanvas
+          pageNum={page}
+          pdfDoc={pdfDoc}
+          scale={scale}
+          darkMode={darkMode}
+          annotations={annotations}
+          activeTool={activeTool}
+          activeColor={activeColor}
+          strokeWidth={strokeWidth}
+          onAnnotationCreate={onAnnotationCreate}
+        />
       </div>
     </div>
   );
