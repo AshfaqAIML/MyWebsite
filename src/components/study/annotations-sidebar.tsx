@@ -4,7 +4,7 @@ import { useState } from 'react';
 import {
   Highlighter, Bookmark, Pen, Square, Circle as CircleIcon,
   StickyNote, MessageSquare, Type, Trash2, Filter,
-  ChevronDown, ChevronRight, Search, Quote, Hash,
+  Search, Quote, Hash, Minus as MinusIcon,
 } from 'lucide-react';
 import type { PDFAnnotation } from '@/lib/study/pdf-annotations';
 
@@ -33,8 +33,6 @@ function AnnotationIcon({ type }: { type: string }) {
     default: return <Highlighter className={props} />;
   }
 }
-
-import { Minus as MinusIcon } from 'lucide-react';
 
 type Tab = 'annotations' | 'bookmarks';
 
