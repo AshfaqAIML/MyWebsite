@@ -438,3 +438,221 @@ html {
   scaleX: 0;
   transform-origin: left;
 }
+
+/* ===== Study Platform Premium Design Tokens ===== */
+
+/* Reader theme variables */
+.reader-light {
+  --reader-bg: #ffffff;
+  --reader-text: #1a1a2e;
+  --reader-border: #e2e8f0;
+  --reader-shadow: rgba(0, 0, 0, 0.06);
+}
+
+.reader-sepia {
+  --reader-bg: #f8f0e3;
+  --reader-text: #5b4636;
+  --reader-border: #e8dcc8;
+  --reader-shadow: rgba(90, 60, 40, 0.08);
+}
+
+.reader-dark {
+  --reader-bg: #0f0f13;
+  --reader-text: #e2e8f0;
+  --reader-border: #1e1e2a;
+  --reader-shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* Study sidebar - glass premium */
+.study-sidebar {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dark .study-sidebar {
+  background: rgba(12, 12, 20, 0.85);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Reader glass header */
+.reader-header-glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dark .reader-header-glass {
+  background: rgba(15, 15, 19, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.reader-dark .reader-header-glass {
+  background: rgba(15, 15, 19, 0.85);
+}
+
+.reader-sepia .reader-header-glass {
+  background: rgba(248, 240, 227, 0.85);
+}
+
+/* Floating toolbar glass */
+.floating-glass {
+  background: rgba(20, 20, 30, 0.92);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.dark .floating-glass {
+  background: rgba(30, 30, 45, 0.92);
+}
+
+/* Book card hover effect */
+.book-card-hover {
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.book-card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+}
+
+.dark .book-card-hover:hover {
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
+}
+
+/* Premium stat card */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stat-card:hover::before {
+  opacity: 0.3;
+}
+
+/* Progress bar premium */
+.progress-bar-premium {
+  height: 3px;
+  border-radius: 99px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.dark .progress-bar-premium {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.progress-bar-premium .fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+}
+
+/* Page transition */
+.page-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+/* Study nav item */
+.nav-item {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.nav-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  border-radius: 0 3px 3px 0;
+  background: #3b82f6;
+  transition: height 0.2s ease;
+}
+
+.nav-item.active::after {
+  height: 60%;
+}
+
+.nav-item.active {
+  background: rgba(59, 130, 246, 0.08);
+  color: #3b82f6;
+}
+
+.dark .nav-item.active {
+  background: rgba(59, 130, 246, 0.15);
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.dark .skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+}
+
+/* Premium scrollbar */
+.premium-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.premium-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.premium-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 99px;
+}
+
+.premium-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.dark .premium-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Focus mode - dim everything except reader */
+.focus-mode .study-sidebar,
+.focus-mode .reader-header-glass,
+.focus-mode .reader-bottom-bar {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.focus-mode .pdf-page-wrapper {
+  box-shadow: none !important;
+}
