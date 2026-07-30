@@ -50,16 +50,16 @@ function PDFCanvas({
       setRendered(false);
       try {
         const page = await pdfDoc.getPage(pageNum);
-        const viewport = page.getViewport({ scale });
+        const dpr = devicePixelRatio;
+        const viewport = page.getViewport({ scale: scale * dpr });
 
         const canvas = canvasRef.current;
-        canvas.width = viewport.width * devicePixelRatio;
-        canvas.height = viewport.height * devicePixelRatio;
-        canvas.style.width = `${viewport.width}px`;
-        canvas.style.height = `${viewport.height}px`;
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        canvas.style.width = `${Math.floor(viewport.width / dpr)}px`;
+        canvas.style.height = `${Math.floor(viewport.height / dpr)}px`;
 
         const ctx = canvas.getContext('2d')!;
-        ctx.scale(devicePixelRatio, devicePixelRatio);
 
         await page.render({
           canvasContext: ctx, viewport,
@@ -67,35 +67,38 @@ function PDFCanvas({
         }).promise;
 
         if (cancelled) return;
-
-        const textContent = await page.getTextContent();
-        const textLayer = textLayerRef.current;
-        if (!textLayer) return;
-        textLayer.innerHTML = '';
-        textLayer.style.width = `${viewport.width}px`;
-        textLayer.style.height = `${viewport.height}px`;
-
-        const textItems = textContent.items as any[];
-        textItems.forEach((item: any) => {
-          const span = document.createElement('span');
-          span.textContent = item.str;
-          const fontSize = item.fontSize || 16;
-          const pdfX = item.transform[4];
-          const pdfY = item.transform[5];
-          span.style.position = 'absolute';
-          span.style.left = `${pdfX * scale}px`;
-          span.style.top = `${viewport.height - pdfY * scale - fontSize * scale}px`;
-          span.style.fontSize = `${fontSize * scale}px`;
-          span.style.color = darkMode ? '#c8c8d8' : '#1a1a2e';
-          span.style.whiteSpace = 'pre';
-          span.style.transformOrigin = 'left top';
-          span.style.opacity = '0.45';
-          span.style.pointerEvents = 'auto';
-          span.style.cursor = 'text';
-          textLayer.appendChild(span);
-        });
-
         if (!cancelled) setRendered(true);
+
+        try {
+          const textContent = await page.getTextContent();
+          const textLayer = textLayerRef.current;
+          if (!textLayer) return;
+          textLayer.innerHTML = '';
+          textLayer.style.width = `${Math.floor(viewport.width / dpr)}px`;
+          textLayer.style.height = `${Math.floor(viewport.height / dpr)}px`;
+
+          const textItems = textContent.items as any[];
+          textItems.forEach((item: any) => {
+            const span = document.createElement('span');
+            span.textContent = item.str;
+            const fontSize = item.fontSize || 16;
+            const pdfX = item.transform[4];
+            const pdfY = item.transform[5];
+            span.style.position = 'absolute';
+            span.style.left = `${pdfX * scale}px`;
+            span.style.top = `${(viewport.height / dpr) - pdfY * scale - fontSize * scale}px`;
+            span.style.fontSize = `${fontSize * scale}px`;
+            span.style.color = darkMode ? '#c8c8d8' : '#1a1a2e';
+            span.style.whiteSpace = 'pre';
+            span.style.transformOrigin = 'left top';
+            span.style.opacity = '0.02';
+            span.style.pointerEvents = 'auto';
+            span.style.cursor = 'text';
+            textLayer.appendChild(span);
+          });
+        } catch (textErr) {
+          console.error('Text layer error for page', pageNum, textErr);
+        }
       } catch (err) {
         console.error('PDF render error for page', pageNum, err);
       }
