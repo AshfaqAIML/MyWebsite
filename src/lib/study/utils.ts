@@ -6,9 +6,32 @@ export function getBookFileUrl(book: StudyBook, mode: 'read' | 'download' = 'rea
 }
 
 export function generateChapters(book: StudyBook): Chapter[] {
-  const words = book.title.split(/\s+/);
-  const chapterCount = Math.min(8, Math.max(3, Math.ceil(words.length / 2)));
   const totalPages = estimateTotalPages(book.size);
+
+  if (book.chapters && book.chapters.length > 0) {
+    return book.chapters.map((ch, i) => {
+      const pageEnd = i < book.chapters!.length - 1
+        ? book.chapters![i + 1].pageStart - 1
+        : totalPages;
+      return {
+        id: `ch_${book.id}_${i + 1}`,
+        bookId: book.id,
+        title: ch.title,
+        number: i + 1,
+        pageStart: ch.pageStart,
+        pageEnd: Math.max(ch.pageStart, pageEnd),
+        sections: [{
+          id: `sec_${book.id}_${i + 1}_1`,
+          chapterId: `ch_${book.id}_${i + 1}`,
+          title: ch.title,
+          number: 1,
+          page: ch.pageStart,
+        }],
+      };
+    });
+  }
+
+  const chapterCount = Math.min(12, Math.max(1, Math.floor(totalPages / 30)));
   const pagesPerChapter = Math.floor(totalPages / chapterCount);
 
   return Array.from({ length: chapterCount }, (_, i) => ({

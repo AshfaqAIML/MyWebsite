@@ -177,7 +177,18 @@
     "tags": ["Psychology", "Class 11", "NCERT", "CBSE"],
     "description": "NCERT Psychology textbook for Class 11 covering the science of mind, sensory processes, learning, memory, and motivation.",
     "size": "18,708 KB",
-    "source": "/study/books/NCERT Psychology_Class_11th.pdf"
+    "source": "/study/books/NCERT Psychology_Class_11th.pdf",
+    "chapters": [
+      { "title": "What is Psychology?", "pageStart": 1 },
+      { "title": "Methods of Enquiry in Psychology", "pageStart": 52 },
+      { "title": "The Bases of Human Behaviour", "pageStart": 104 },
+      { "title": "Human Development", "pageStart": 156 },
+      { "title": "Sensory, Attentional and Perceptual Processes", "pageStart": 208 },
+      { "title": "Learning", "pageStart": 260 },
+      { "title": "Human Memory", "pageStart": 312 },
+      { "title": "Thinking", "pageStart": 364 },
+      { "title": "Motivation and Emotion", "pageStart": 416 }
+    ]
   },
   {
     "id": "ncert-psychology-12th",
@@ -187,6 +198,17 @@
     "tags": ["Psychology", "Class 12", "NCERT", "CBSE"],
     "description": "NCERT Psychology textbook for Class 12 covering intelligence, personality, psychological disorders, and therapeutic approaches.",
     "size": "17,679 KB",
-    "source": "/study/books/NCERT Psychology_Class_12th.pdf"
+    "source": "/study/books/NCERT Psychology_Class_12th.pdf",
+    "chapters": [
+      { "title": "Variations in Psychological Attributes", "pageStart": 1 },
+      { "title": "Self and Personality", "pageStart": 50 },
+      { "title": "Meeting Life Challenges", "pageStart": 99 },
+      { "title": "Psychological Disorders", "pageStart": 148 },
+      { "title": "Therapeutic Approaches", "pageStart": 197 },
+      { "title": "Attitude and Social Cognition", "pageStart": 246 },
+      { "title": "Social Influence and Group Processes", "pageStart": 295 },
+      { "title": "Psychology and Life", "pageStart": 344 },
+      { "title": "Developing Psychological Skills", "pageStart": 393 }
+    ]
   }
 ]

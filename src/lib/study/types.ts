@@ -7,6 +7,7 @@ export interface StudyBook {
   description: string;
   size: string;
   source: string;
+  chapters?: { title: string; pageStart: number }[];
 }
 
 export interface Chapter {

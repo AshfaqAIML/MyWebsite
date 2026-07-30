@@ -214,6 +214,7 @@ export default function ReadingPage() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState(true);
 
+  const totalPages = useMemo(() => book ? estimateTotalPages(book.size) : 0, [book]);
   const chapters = useMemo(() => book ? generateChapters(book) : [], [book]);
 
   useEffect(() => {
@@ -224,7 +225,7 @@ export default function ReadingPage() {
         setCurrentChapter(existing.currentChapter);
       } else {
         const p: ReadingProgress = {
-          bookId: book.id, currentPage: 0, totalPages: estimateTotalPages(book.size),
+          bookId: book.id, currentPage: 0, totalPages,
           currentChapter: null, completedChapters: [], lastOpened: new Date().toISOString(),
           totalReadingTime: 0, completionPercentage: 0,
         };
@@ -394,18 +395,18 @@ export default function ReadingPage() {
             <div className="flex items-center gap-3 text-[11px] text-white/40">
               <span className="flex items-center gap-1">
                 <FileText className="h-3 w-3" />
-                {progress?.currentPage || 0} / {progress?.totalPages || 0}
+                {progress?.currentPage || 0} / {totalPages}
               </span>
               <span className="flex items-center gap-1">
                 <Clock className="h-3 w-3" />
-                {Math.round(progress?.completionPercentage || 0)}%
+                {progress ? Math.round(progress.completionPercentage) : 0}%
               </span>
             </div>
             <div className="flex-1 max-w-md mx-4">
               <div className="h-1 rounded-full bg-white/[0.04] overflow-hidden">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-white/40 to-white/20 transition-all duration-500"
-                  style={{ width: `${progress?.completionPercentage || 0}%` }}
+                  style={{ width: `${progress ? progress.completionPercentage : 0}%` }}
                 />
               </div>
             </div>
