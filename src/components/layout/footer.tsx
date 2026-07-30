@@ -3,8 +3,11 @@
 import { Heart, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getProfile, getSiteConfig } from "@/lib/data";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/study-corner/read")) return null;
   const profile = getProfile();
   const config = getSiteConfig();
 

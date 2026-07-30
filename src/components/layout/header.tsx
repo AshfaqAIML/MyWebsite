@@ -16,7 +16,7 @@ export function Header() {
   const profile = getProfile();
   const pathname = usePathname();
 
-  if (pathname.startsWith("/dashboard")) return null;
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/study-corner/read")) return null;
 
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
