@@ -104,12 +104,20 @@ export interface CareerPlatform {
   logo?: string;
 }
 
+export type FreelancingCategory =
+  | "marketplace"
+  | "network"
+  | "platform"
+  | "remote";
+
 export interface FreelancingPlatform {
   name: string;
   url: string;
   description: string;
   profileUrl?: string;
   logo?: string;
+  category?: FreelancingCategory;
+  featured?: boolean;
 }
 
 export interface Service {

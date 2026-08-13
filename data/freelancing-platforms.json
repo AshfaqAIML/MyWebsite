@@ -2,46 +2,57 @@
   {
     "name": "Fiverr",
     "url": "https://fiverr.com",
-    "description": "Global marketplace for digital services"
+    "description": "Global marketplace for digital services",
+    "category": "marketplace",
+    "featured": true
   },
   {
     "name": "Upwork",
     "url": "https://upwork.com",
-    "description": "World's largest freelance talent marketplace"
+    "description": "World's largest freelance talent marketplace",
+    "category": "marketplace",
+    "featured": true
   },
   {
     "name": "Freelancer",
     "url": "https://freelancer.com",
-    "description": "Global freelancing and crowdsourcing marketplace"
+    "description": "Global freelancing and crowdsourcing marketplace",
+    "category": "marketplace"
   },
   {
     "name": "Toptal",
     "url": "https://toptal.com",
-    "description": "Exclusive network of top freelance talent"
+    "description": "Exclusive network of top freelance talent",
+    "category": "network"
   },
   {
     "name": "Contra",
     "url": "https://contra.com",
-    "description": "Commission-free freelance platform"
+    "description": "Commission-free freelance platform",
+    "category": "platform"
   },
   {
     "name": "PeoplePerHour",
     "url": "https://peopleperhour.com",
-    "description": "UK freelance jobs marketplace"
+    "description": "UK freelance jobs marketplace",
+    "category": "marketplace"
   },
   {
     "name": "Guru",
     "url": "https://guru.com",
-    "description": "Global freelance job platform"
+    "description": "Global freelance job platform",
+    "category": "marketplace"
   },
   {
     "name": "Turing",
     "url": "https://turing.com",
-    "description": "Long-term remote jobs for developers"
+    "description": "Long-term remote jobs for developers",
+    "category": "remote"
   },
   {
     "name": "Arc.dev",
     "url": "https://arc.dev",
-    "description": "Remote developer jobs in top companies"
+    "description": "Remote developer jobs in top companies",
+    "category": "remote"
   }
 ]
