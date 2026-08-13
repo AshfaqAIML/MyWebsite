@@ -63,7 +63,6 @@ function PDFCanvas({
 
         await page.render({
           canvasContext: ctx, viewport,
-          background: darkMode ? '#1a1a2e' : '#ffffff',
         }).promise;
 
         if (cancelled) return;
@@ -191,8 +190,13 @@ function PDFCanvas({
   }, [activeTool, activeColor, pageNum, onAnnotationCreate]);
 
   return (
-    <div className="relative mx-auto shadow-xl shadow-black/20 max-w-full" style={{ minHeight: '500px' }}>
-      <canvas ref={canvasRef} className="block" style={{ opacity: rendered ? 1 : 0.3, transition: 'opacity 0.2s' }} />
+    <div className="relative mx-auto shadow-xl shadow-black/20 max-w-full" style={{ minHeight: '500px', backgroundColor: darkMode ? '#1a1a2e' : '#ffffff' }}>
+      <canvas ref={canvasRef} className="block"
+        style={{
+          opacity: rendered ? 1 : 0.3,
+          transition: 'opacity 0.2s',
+          filter: darkMode ? 'invert(1)' : 'none',
+        }} />
       <div ref={textLayerRef} className="absolute inset-0" onMouseUp={handleTextSelection} />
       <svg ref={svgRef} className="absolute inset-0"
         style={{ pointerEvents: activeTool === 'pen' || activeTool === 'eraser' ? 'auto' : 'none' }}
