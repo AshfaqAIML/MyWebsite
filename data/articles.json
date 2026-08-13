@@ -65,6 +65,7 @@
     "publishedAt": "2026-03-05",
     "readingTime": 16,
     "status": "published",
+    "featured": true,
     "externalUrl": "https://code-verse-academy.vercel.app/blog/sql-interview-patterns-every-analyst-should-know"
   },
   {
@@ -77,6 +78,7 @@
     "publishedAt": "2026-03-10",
     "readingTime": 16,
     "status": "published",
+    "featured": true,
     "externalUrl": "https://code-verse-academy.vercel.app/blog/a-practical-roadmap-for-machine-learning-projects"
   },
   {

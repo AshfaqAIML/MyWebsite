@@ -8,7 +8,8 @@
     "url": "https://doi.org/10.1234/jair.2025.12345",
     "type": "journal",
     "description": "We propose novel semantic chunking strategies that improve retrieval accuracy in RAG systems by up to 23% compared to traditional fixed-size chunking methods.",
-    "status": "published"
+    "status": "published",
+    "featured": true
   },
   {
     "title": "Scalable Microservices Architecture for Real-Time Data Analytics",

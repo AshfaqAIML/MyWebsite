@@ -78,6 +78,7 @@ export interface Article {
   readingTime?: number;
   status?: ArticleStatus;
   externalUrl?: string;
+  featured?: boolean;
 }
 
 export interface Publication {
@@ -88,9 +89,11 @@ export interface Publication {
   year: number;
   doi?: string;
   url?: string;
+  pdfUrl?: string;
   type: "research-paper" | "journal" | "conference" | "thesis" | "report" | "case-study" | "survey-paper";
   description: string;
   status?: ArticleStatus;
+  featured?: boolean;
 }
 
 export interface CareerPlatform {
