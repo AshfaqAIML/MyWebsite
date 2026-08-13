@@ -14,6 +14,7 @@ import type {
   DigitalResource,
   NavItem,
   SiteConfig,
+  Certificate,
 } from "./types";
 
 import siteConfig from "../../data/site-config.json";
@@ -32,6 +33,7 @@ import freelancingPlatformsData from "../../data/freelancing-platforms.json";
 import servicesData from "../../data/services.json";
 import digitalResourcesData from "../../data/digital-resources.json";
 import navigationData from "../../data/navigation.json";
+import certificatesData from "../../data/certificates.json";
 
 export function getSiteConfig(): SiteConfig {
   return siteConfig as SiteConfig;
@@ -128,3 +130,27 @@ export function getDigitalResources(): DigitalResource[] {
 export function getNavigation(): NavItem[] {
   return navigationData as NavItem[];
 }
+
+export function getCertificates(): Certificate[] {
+  return (certificatesData as Certificate[]).sort(
+    (a, b) => (a.displayOrder || 0) - (b.displayOrder || 0)
+  );
+}
+
+export function getFeaturedCertificates(): Certificate[] {
+  return getCertificates().filter((c) => c.featured);
+}
+
+export function getCertificateById(id: string): Certificate | undefined {
+  return getCertificates().find((c) => c.id === id);
+}
+
+export function getCertificateCategories(): string[] {
+  const set = new Set<string>();
+  for (const c of getCertificates()) {
+    for (const cat of c.categories) set.add(cat);
+  }
+  return Array.from(set).sort();
+}
+
+

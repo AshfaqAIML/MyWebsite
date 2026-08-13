@@ -10,5 +10,6 @@
   { "href": "/study", "label": "Study", "section": "study" },
   { "href": "/picnic", "label": "Picnic", "section": "picnic" },
   { "href": "/youtube-dev", "label": "YouTube Dev", "section": "youtube-dev" },
+  { "href": "#certificates", "label": "Certificates", "section": "certificates" },
   { "href": "#profiles", "label": "Profiles", "section": "profiles" }
 ]

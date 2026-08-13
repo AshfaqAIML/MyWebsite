@@ -146,6 +146,29 @@ export interface NavItem {
   section: string;
 }
 
+export type CertificateStatus = "active" | "expired" | "verified";
+
+export interface Certificate {
+  id: string;
+  title: string;
+  issuer: string;
+  issuerLogo?: string;
+  description: string;
+  categories: string[];
+  skills: string[];
+  issueDate?: string;
+  expiryDate?: string | null;
+  credentialId?: string;
+  credentialUrl?: string;
+  certificateImage?: string;
+  certificatePdf?: string;
+  verificationUrl?: string;
+  featured: boolean;
+  status: CertificateStatus;
+  displayOrder: number;
+  tags: string[];
+}
+
 export interface SiteConfig {
   name: string;
   description: string;

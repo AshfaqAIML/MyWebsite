@@ -12,6 +12,7 @@ import { CareerPlatforms } from "@/components/sections/career";
 import { Platforms } from "@/components/sections/freelancing";
 import { Expertise } from "@/components/sections/services";
 import { Contact } from "@/components/sections/contact";
+import { Certificates } from "@/components/certificates/certificates";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
       <Books />
       <Articles />
       <PublicationsSection />
+      <Certificates />
       <CareerPlatforms />
       <Platforms />
       <Expertise />
