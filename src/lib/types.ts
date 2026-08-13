@@ -169,6 +169,27 @@ export interface Certificate {
   tags: string[];
 }
 
+export type ResumeDocumentType =
+  | "resume"
+  | "cv"
+  | "cover-letter"
+  | "portfolio";
+
+export interface ResumeDocument {
+  id: string;
+  title: string;
+  type: ResumeDocumentType;
+  description: string;
+  filePath: string;
+  fileName: string;
+  fileSize: number;
+  fileType: "pdf" | "docx";
+  updatedAt: string;
+  featured: boolean;
+  tags: string[];
+  displayOrder: number;
+}
+
 export interface SiteConfig {
   name: string;
   description: string;

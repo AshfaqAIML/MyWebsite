@@ -13,6 +13,7 @@ import { Platforms } from "@/components/sections/freelancing";
 import { Expertise } from "@/components/sections/services";
 import { Contact } from "@/components/sections/contact";
 import { Certificates } from "@/components/certificates/certificates";
+import { ResumeSection } from "@/components/resume/resume-section";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
       <Books />
       <Articles />
       <PublicationsSection />
+      <ResumeSection />
       <Certificates />
       <CareerPlatforms />
       <Platforms />

@@ -15,6 +15,8 @@ import type {
   NavItem,
   SiteConfig,
   Certificate,
+  ResumeDocument,
+  ResumeDocumentType,
 } from "./types";
 
 import siteConfig from "../../data/site-config.json";
@@ -34,6 +36,7 @@ import servicesData from "../../data/services.json";
 import digitalResourcesData from "../../data/digital-resources.json";
 import navigationData from "../../data/navigation.json";
 import certificatesData from "../../data/certificates.json";
+import resumeDocumentsData from "../../data/resume.json";
 
 export function getSiteConfig(): SiteConfig {
   return siteConfig as SiteConfig;
@@ -153,4 +156,28 @@ export function getCertificateCategories(): string[] {
   return Array.from(set).sort();
 }
 
+export function getResumeDocuments(): ResumeDocument[] {
+  return (resumeDocumentsData as ResumeDocument[]).sort(
+    (a, b) => (a.displayOrder || 0) - (b.displayOrder || 0)
+  );
+}
 
+export function getResumeDocumentById(id: string): ResumeDocument | undefined {
+  return getResumeDocuments().find((d) => d.id === id);
+}
+
+export function getFeaturedResumeDocument(): ResumeDocument | undefined {
+  return getResumeDocuments().find((d) => d.featured);
+}
+
+export function getResumeDocumentTypes(): ResumeDocumentType[] {
+  const set = new Set<ResumeDocumentType>();
+  for (const d of getResumeDocuments()) set.add(d.type);
+  return Array.from(set);
+}
+
+export function formatFileSize(bytes: number): string {
+  if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  if (bytes >= 1024) return `${Math.round(bytes / 1024)} KB`;
+  return `${bytes} B`;
+}
