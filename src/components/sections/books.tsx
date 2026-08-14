@@ -309,13 +309,23 @@ function emitBookmarksChange() {
   bookmarksListeners.forEach((listener) => listener());
 }
 
+let cachedBookmarks: string[] | null = null;
+
 function readBookmarks(): string[] {
   try {
-    if (typeof window === "undefined") return [];
+    if (typeof window === "undefined") return cachedBookmarks ?? [];
     const stored = window.localStorage.getItem(BOOKMARK_KEY);
-    return stored ? (JSON.parse(stored) as string[]) : [];
+    const parsed: string[] = stored ? (JSON.parse(stored) as string[]) : [];
+    if (
+      cachedBookmarks === null ||
+      cachedBookmarks.length !== parsed.length ||
+      cachedBookmarks.some((t, i) => t !== parsed[i])
+    ) {
+      cachedBookmarks = parsed;
+    }
+    return cachedBookmarks;
   } catch {
-    return [];
+    return cachedBookmarks ?? [];
   }
 }
 
