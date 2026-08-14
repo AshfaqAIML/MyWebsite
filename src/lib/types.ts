@@ -124,7 +124,11 @@ export interface Service {
   title: string;
   description: string;
   skills: string[];
+  deliverables: string[];
   pricingModel: string;
+  startingPrice: number;
+  timeline?: string;
+  featured?: boolean;
   portfolio?: string;
 }
 

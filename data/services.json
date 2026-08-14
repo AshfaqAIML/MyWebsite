@@ -1,22 +1,95 @@
 [
   {
     "title": "Web Development",
-    "description": "Building modern, responsive websites and web applications using HTML, CSS, JavaScript, and modern frameworks.",
-    "skills": ["HTML", "CSS", "JavaScript", "Bootstrap", "Tailwind CSS", "React"]
+    "description": "End-to-end web development: modern, responsive, high-performance websites and web apps built with the latest frameworks — from landing pages to full web platforms.",
+    "skills": ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js", "Tailwind CSS", "Node.js"],
+    "deliverables": [
+      "Responsive, mobile-first design",
+      "SEO-ready structure & performance optimization",
+      "CMS or API integrations",
+      "Deployment & ongoing support"
+    ],
+    "pricingModel": "Project-based",
+    "startingPrice": 149,
+    "timeline": "1–3 weeks",
+    "featured": true,
+    "portfolio": "/#projects"
   },
   {
     "title": "Backend Development",
-    "description": "Designing server-side applications, RESTful APIs, and database solutions.",
-    "skills": ["Node.js", "Express", "MongoDB", "REST API", "SQL"]
+    "description": "Robust server-side architecture: RESTful APIs, database design, authentication, and scalable services that power reliable applications.",
+    "skills": ["Node.js", "Express", "Python", "MongoDB", "PostgreSQL", "REST API", "GraphQL", "Firebase"],
+    "deliverables": [
+      "RESTful or GraphQL API",
+      "Database schema & optimization",
+      "Authentication & authorization",
+      "API documentation & testing"
+    ],
+    "pricingModel": "Project-based",
+    "startingPrice": 249,
+    "timeline": "1–4 weeks",
+    "portfolio": "/#projects"
   },
   {
     "title": "UI/UX Design",
-    "description": "Creating intuitive and visually appealing user interfaces with a focus on user experience and accessibility.",
-    "skills": ["Figma", "Responsive Design", "UI/UX Design", "Wireframing"]
+    "description": "User-centered interfaces that convert: intuitive flows, clean visual systems, and accessible designs crafted with attention to detail.",
+    "skills": ["Figma", "Wireframing", "Prototyping", "Design Systems", "Accessibility", "Responsive Design"],
+    "deliverables": [
+      "Wireframes & user flows",
+      "High-fidelity UI mockups",
+      "Interactive prototype",
+      "Design system & handoff files"
+    ],
+    "pricingModel": "Per project",
+    "startingPrice": 99,
+    "timeline": "1–2 weeks",
+    "portfolio": "/#projects"
   },
   {
     "title": "Portfolio Websites",
-    "description": "Professional portfolio websites to showcase your work, skills, and personal brand.",
-    "skills": ["HTML", "CSS", "JavaScript", "Responsive Design", "UI Design"]
+    "description": "A premium personal brand site that gets you hired: polished design, smooth animations, and content structure built to impress.",
+    "skills": ["HTML", "CSS", "JavaScript", "React", "Responsive Design", "SEO", "Motion Design"],
+    "deliverables": [
+      "Custom premium design",
+      "Smooth animations & interactions",
+      "Resume, projects & blog sections",
+      "Hosting & domain setup"
+    ],
+    "pricingModel": "Fixed price",
+    "startingPrice": 129,
+    "timeline": "1–2 weeks",
+    "featured": true,
+    "portfolio": "/#hero"
+  },
+  {
+    "title": "Data Analytics & Dashboards",
+    "description": "Turn raw data into decisions: insightful dashboards, automated reporting, and analysis that tells a clear story.",
+    "skills": ["Python", "SQL", "Excel", "Power BI", "Pandas", "Data Visualization", "ETL"],
+    "deliverables": [
+      "Data cleaning & preparation",
+      "Interactive dashboards",
+      "Automated reports",
+      "Insights summary & recommendations"
+    ],
+    "pricingModel": "Hourly or project",
+    "startingPrice": 199,
+    "timeline": "1–3 weeks",
+    "portfolio": "/#projects"
+  },
+  {
+    "title": "AI & ML Solutions",
+    "description": "Practical AI applied to real problems: custom models, chatbots, automation, and RAG pipelines that save time and unlock value.",
+    "skills": ["Python", "Machine Learning", "LLMs", "RAG", "LangChain", "PyTorch", "OpenAI API", "Streamlit"],
+    "deliverables": [
+      "Model selection & training",
+      "Custom AI chatbot or assistant",
+      "RAG pipelines with your data",
+      "Deployment & integration"
+    ],
+    "pricingModel": "Project-based",
+    "startingPrice": 399,
+    "timeline": "2–6 weeks",
+    "featured": true,
+    "portfolio": "/#projects"
   }
 ]
