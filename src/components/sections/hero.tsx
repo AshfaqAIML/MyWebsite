@@ -150,22 +150,24 @@ export function Hero() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="hidden md:flex justify-center md:justify-end"
+            className="hidden md:block"
           >
-            <div className="relative w-full max-w-sm">
-              <div className="relative overflow-hidden rounded-2xl shadow-2xl shadow-blue-500/10">
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent z-10" />
+            <div className="relative mx-auto max-w-[20rem]">
+              <div className="absolute inset-0 rounded-[2rem] bg-blue-500/20 dark:bg-blue-500/10 blur-3xl" />
+              <div className="absolute inset-0 rounded-[2rem] bg-cyan-400/10 blur-2xl" style={{ animationDelay: "2s" }} />
+              <div className="relative aspect-[3/4] overflow-hidden rounded-[2rem] border border-zinc-200/70 dark:border-white/10 ring-2 ring-blue-500/20 shadow-2xl shadow-blue-500/10 bg-zinc-100 dark:bg-zinc-800">
                 <Image
                   src={profile.photo}
                   alt={profile.name}
                   fill
                   priority
-                  sizes="(max-width: 768px) 0vw, 384px"
-                  className="object-cover object-top bg-zinc-200 dark:bg-zinc-700"
+                  sizes="(max-width: 768px) 0vw, 320px"
+                  className="object-scale-down"
                 />
               </div>
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-400/20 via-purple-500/10 to-pink-500/20 blur-3xl -z-10 rounded-3xl" />
-              <div className="absolute -inset-px rounded-2xl border border-white/10 dark:border-white/5 pointer-events-none" />
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/60 dark:border-zinc-700/50 px-5 py-2 shadow-lg shadow-blue-500/5 backdrop-blur-sm whitespace-nowrap">
+                <span className="text-xs font-semibold gradient-text">{roles[0]}</span>
+              </div>
             </div>
           </motion.div>
 
@@ -189,19 +191,20 @@ export function Hero() {
               transition={{ duration: 0.6 }}
               className="md:hidden flex justify-center my-6"
             >
-              <div className="relative w-56 h-56">
-                <div className="relative overflow-hidden rounded-2xl shadow-2xl shadow-blue-500/10 w-full h-full">
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent z-10" />
+              <div className="relative w-60 h-72">
+                <div className="absolute inset-0 rounded-[2rem] bg-blue-500/20 dark:bg-blue-500/10 blur-3xl" />
+                <div className="relative w-full h-full overflow-hidden rounded-[2rem] border border-zinc-200/70 dark:border-white/10 ring-2 ring-blue-500/20 shadow-2xl shadow-blue-500/10 bg-zinc-100 dark:bg-zinc-800">
                   <Image
                     src={profile.photo}
                     alt={profile.name}
                     fill
-                    sizes="224px"
-                    className="object-cover object-top bg-zinc-200 dark:bg-zinc-700"
+                    sizes="240px"
+                    className="object-scale-down"
                   />
                 </div>
-                <div className="absolute -inset-4 bg-gradient-to-r from-blue-400/20 via-purple-500/10 to-pink-500/20 blur-3xl -z-10 rounded-3xl" />
-                <div className="absolute -inset-px rounded-2xl border border-white/10 dark:border-white/5 pointer-events-none" />
+                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/60 dark:border-zinc-700/50 px-4 py-1.5 shadow-lg shadow-blue-500/5 backdrop-blur-sm whitespace-nowrap">
+                  <span className="text-[11px] font-semibold gradient-text">{roles[0]}</span>
+                </div>
               </div>
             </motion.div>
 
