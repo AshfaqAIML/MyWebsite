@@ -160,10 +160,12 @@ function BookCard({ book, index, variant, onPay, onRead, isBookmarked, onToggleB
 
   return (
     <motion.div
+      layout
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
+      whileHover={{ y: -4 }}
     >
       <Card className={`h-full flex flex-col group card-premium bg-gradient-to-br ${colors.gradient} ${colors.border}`}>
         <CardContent className="p-6 flex flex-col h-full">

@@ -60,10 +60,12 @@ export function Articles() {
   const renderCard = (article: (typeof articles)[number], index: number) => (
     <motion.div
       key={article.slug}
+      layout
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: (index % 3) * 0.05 }}
+      whileHover={{ y: -4 }}
     >
       <Card
         className={`h-full flex flex-col group card-premium ${
@@ -159,6 +161,7 @@ export function Articles() {
       className="bg-zinc-50/50 dark:bg-zinc-900/50"
     >
       <FilterBar
+        id="articles"
         search={search}
         onSearch={setSearch}
         searchPlaceholder="Search articles, tags, topics…"

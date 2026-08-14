@@ -6,6 +6,7 @@ import { getSiteConfig } from "@/lib/data";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SessionProvider } from "@/components/providers/session-provider";
+import { MotionProvider } from "@/components/providers/motion-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -93,11 +94,13 @@ export default function RootLayout({
         </Script>
       </head>
       <body className="min-h-screen flex flex-col antialiased">
-        <SessionProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </SessionProvider>
+        <MotionProvider>
+          <SessionProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </SessionProvider>
+        </MotionProvider>
       </body>
     </html>
   );

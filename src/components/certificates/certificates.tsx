@@ -1,10 +1,11 @@
 "use client";
 
 import * as React from "react";
+import { AnimatePresence } from "framer-motion";
 import { getCertificates, getCertificateCategories } from "@/lib/data";
 import { SectionHeader } from "./section-header";
 import { CertificateCard } from "./certificate-card";
-import { CertificateFilterBar } from "./certificate-filter-bar";
+import { FilterBar } from "@/components/ui/filter-bar";
 import { CertificateDetailModal } from "./certificate-detail-modal";
 import type { Certificate } from "@/lib/types";
 
@@ -46,18 +47,21 @@ export function Certificates() {
           description="Verified certifications and courses spanning AI, machine learning, data engineering, and software development."
         />
 
-        <CertificateFilterBar
-          categories={categories}
-          activeCategory={activeCategory}
-          onCategoryChange={setActiveCategory}
+        <FilterBar
+          id="certificates"
           search={search}
-          onSearchChange={setSearch}
+          onSearch={setSearch}
+          searchPlaceholder="Search certificates, skills, issuers…"
+          options={categories}
+          activeOption={activeCategory}
+          onOptionChange={setActiveCategory}
           resultCount={filtered.length}
           totalCount={certificates.length}
         />
 
         {filtered.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <AnimatePresence mode="popLayout">
             {filtered.map((certificate, index) => (
               <CertificateCard
                 key={certificate.id}
@@ -66,6 +70,7 @@ export function Certificates() {
                 index={index}
               />
             ))}
+          </AnimatePresence>
           </div>
         ) : (
           <div className="text-center py-20 text-zinc-400 dark:text-zinc-500">

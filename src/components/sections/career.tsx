@@ -36,6 +36,7 @@ export function CareerPlatforms() {
       className="bg-zinc-50/50 dark:bg-zinc-900/50"
     >
       <FilterBar
+        id="career"
         search={search}
         onSearch={setSearch}
         searchPlaceholder="Search career platforms…"
@@ -79,6 +80,8 @@ export function CareerPlatforms() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: index * 0.03 }}
+                whileHover={{ y: -3, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className="p-4 rounded-2xl bg-white/60 dark:bg-zinc-900/60 border border-zinc-200/50 dark:border-zinc-700/50 backdrop-blur-sm hover:border-blue-200 dark:hover:border-blue-700 transition-all duration-300 card-premium group flex flex-col items-center text-center gap-2"
               >
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-sm">

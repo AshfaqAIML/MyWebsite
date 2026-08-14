@@ -49,6 +49,7 @@ export function Platforms() {
       className="bg-zinc-50/50 dark:bg-zinc-900/50"
     >
       <FilterBar
+        id="freelancing"
         search={search}
         onSearch={setSearch}
         searchPlaceholder="Search freelancing platforms…"
@@ -86,6 +87,8 @@ export function Platforms() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: index * 0.03 }}
+                whileHover={{ y: -3, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className="relative p-4 rounded-2xl bg-white/60 dark:bg-zinc-900/60 border border-amber-200/60 dark:border-amber-800/40 backdrop-blur-sm hover:border-amber-300 dark:hover:border-amber-700 transition-all duration-300 card-premium group flex flex-col items-center text-center gap-2"
               >
                 <span className="absolute top-2.5 right-2.5 text-amber-500">
@@ -146,6 +149,8 @@ export function Platforms() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: "-50px" }}
                       transition={{ duration: 0.4, delay: index * 0.03 }}
+                      whileHover={{ y: -3, scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       className="p-4 rounded-2xl bg-white/60 dark:bg-zinc-900/60 border border-zinc-200/50 dark:border-zinc-700/50 backdrop-blur-sm hover:border-indigo-200 dark:hover:border-indigo-700 transition-all duration-300 card-premium group flex flex-col items-center text-center gap-2"
                     >
                       <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${categoryColors[platform.category || "marketplace"]} flex items-center justify-center text-white font-bold text-sm`}>
@@ -179,6 +184,8 @@ export function Platforms() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.4, delay: index * 0.03 }}
+              whileHover={{ y: -3, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               className="p-4 rounded-2xl bg-white/60 dark:bg-zinc-900/60 border border-zinc-200/50 dark:border-zinc-700/50 backdrop-blur-sm hover:border-indigo-200 dark:hover:border-indigo-700 transition-all duration-300 card-premium group flex flex-col items-center text-center gap-2"
             >
               <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${categoryColors[platform.category || "marketplace"]} flex items-center justify-center text-white font-bold text-sm`}>

@@ -1,10 +1,12 @@
 "use client";
 
 import * as React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface FilterBarProps {
+  id?: string;
   search: string;
   onSearch: (query: string) => void;
   searchPlaceholder?: string;
@@ -18,6 +20,7 @@ interface FilterBarProps {
 }
 
 export function FilterBar({
+  id = "filter",
   search,
   onSearch,
   searchPlaceholder = "Search…",
@@ -48,18 +51,25 @@ export function FilterBar({
           aria-label={searchPlaceholder}
           className="w-full pl-10 pr-9 py-2.5 rounded-xl text-sm bg-white/70 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 backdrop-blur-xl text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
         />
-        {showSearch && (
-          <button
-            onClick={() => {
-              onSearch("");
-              setShowSearch(false);
-            }}
-            aria-label="Clear search"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        )}
+        <AnimatePresence>
+          {showSearch && (
+            <motion.button
+              key="clear"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              transition={{ duration: 0.15 }}
+              onClick={() => {
+                onSearch("");
+                setShowSearch(false);
+              }}
+              aria-label="Clear search"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+            >
+              <X className="h-4 w-4" />
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
 
       <div
@@ -73,23 +83,43 @@ export function FilterBar({
               key={opt}
               onClick={() => onOptionChange(opt)}
               className={cn(
-                "shrink-0 snap-start px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border whitespace-nowrap",
+                "relative shrink-0 snap-start px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 border whitespace-nowrap",
                 active
-                  ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 border-transparent shadow-sm"
+                  ? "text-white dark:text-zinc-900 border-transparent"
                   : "bg-white/60 dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700"
               )}
             >
-              {opt}
+              {active && (
+                <motion.span
+                  layoutId={`${id}-pill`}
+                  className="absolute inset-0 rounded-full bg-zinc-900 dark:bg-white shadow-sm"
+                  transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                />
+              )}
+              <span className="relative z-10">{opt}</span>
             </button>
           );
         })}
       </div>
 
-      {typeof resultCount === "number" && typeof totalCount === "number" && (
-        <div className="text-center text-xs text-zinc-400 dark:text-zinc-500">
-          Showing <span className="font-semibold text-zinc-600 dark:text-zinc-300">{resultCount}</span> of {totalCount}
-        </div>
-      )}
+      <AnimatePresence mode="wait">
+        {typeof resultCount === "number" && typeof totalCount === "number" && (
+          <motion.div
+            key="count"
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2 }}
+            className="text-center text-xs text-zinc-400 dark:text-zinc-500"
+          >
+            Showing{" "}
+            <span className="font-semibold text-zinc-600 dark:text-zinc-300">
+              {resultCount}
+            </span>{" "}
+            of {totalCount}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

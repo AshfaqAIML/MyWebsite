@@ -37,12 +37,15 @@ export function CertificateCard({ certificate, onOpen, index = 0 }: CertificateC
 
   return (
     <motion.button
+      layout
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: (index % 4) * 0.05 }}
       onClick={() => onOpen(certificate)}
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -4, scale: 1.01 }}
+      whileTap={{ scale: 0.98 }}
       className={cn(
         "group relative w-full text-left rounded-2xl overflow-hidden border transition-shadow duration-300",
         "bg-white/70 dark:bg-zinc-900/60 backdrop-blur-xl",

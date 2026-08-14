@@ -34,10 +34,12 @@ export function Projects() {
         {projects.map((project, index) => (
           <motion.div
             key={project.title}
+            layout
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
+            whileHover={{ y: -4 }}
           >
             <Card className="h-full flex flex-col group hover:border-purple-200 dark:hover:border-purple-700 card-premium overflow-hidden">
               <div className={`h-1.5 w-full bg-gradient-to-r ${projectGradients[index % projectGradients.length]}`} />

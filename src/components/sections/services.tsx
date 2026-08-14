@@ -59,7 +59,8 @@ export function Expertise() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              className={service.featured ? "h-full" : "h-full"}
+              whileHover={{ y: -4 }}
+              className="h-full"
             >
               <Card
                 className={
