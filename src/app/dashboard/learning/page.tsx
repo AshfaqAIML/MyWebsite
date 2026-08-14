@@ -30,12 +30,15 @@ export default function LearningPage() {
 
   React.useEffect(() => {
     const stored = localStorage.getItem("dashboard-learning");
-    if (stored) {
-      setItems(JSON.parse(stored));
-    } else {
-      setItems(codeverseCourses);
-      localStorage.setItem("dashboard-learning", JSON.stringify(codeverseCourses));
-    }
+    const t = setTimeout(() => {
+      if (stored) {
+        setItems(JSON.parse(stored) as LearnItem[]);
+      } else {
+        setItems(codeverseCourses);
+        localStorage.setItem("dashboard-learning", JSON.stringify(codeverseCourses));
+      }
+    }, 0);
+    return () => clearTimeout(t);
   }, []);
 
   React.useEffect(() => {

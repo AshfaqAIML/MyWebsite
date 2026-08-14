@@ -6,20 +6,31 @@ import { useStudyStore } from "@/lib/study-store";
 import { GlassCard } from "@/components/study/shared/glass-card";
 import { EmptyState } from "@/components/study/shared/empty-state";
 import { StatsCardSkeleton, ActivitySkeleton } from "@/components/study/shared/loading-skeleton";
+import type { StudySearchResult } from "@/lib/study-types";
 import { ProgressRing } from "@/components/study/shared/progress-ring";
 import {
   BookOpen, BrainCircuit, Bookmark, FileText, Clock, TrendingUp, Award,
   ArrowUpRight, ChevronRight, Sparkles, Timer, Library, RotateCcw,
   ArrowRight, StickyNote, Highlighter,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 export default function StudyDashboard() {
+  interface SessionRow {
+    id: string;
+    duration: number;
+    pagesRead: number | null;
+    notesAdded: number | null;
+    date: string;
+    book?: { id: string; title: string } | null;
+  }
+
   const { stats, fetchStats, books, fetchBooks, flashcards, fetchFlashcards, loading } = useStudyStore();
-  const [activity, setActivity] = useState<any[]>([]);
+  const [activity, setActivity] = useState<SessionRow[]>([]);
   const [activityLoading, setActivityLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => { const t = setTimeout(() => setMounted(true), 0); return () => clearTimeout(t); }, []);
 
   useEffect(() => {
     if (mounted) {
@@ -34,8 +45,8 @@ export default function StudyDashboard() {
     }
   }, [mounted, fetchStats, fetchBooks, fetchFlashcards]);
 
-  const dueCards = flashcards.filter((c: any) => !c.nextReview || new Date(c.nextReview) <= new Date());
-  const continueBooks = books.filter((b: any) => b.readingProgress && b.readingProgress.percentage > 0 && b.readingProgress.percentage < 100);
+  const dueCards = flashcards.filter((c) => !c.nextReview || new Date(c.nextReview) <= new Date());
+  const continueBooks = books.filter((b) => b.readingProgress && b.readingProgress.percentage > 0 && b.readingProgress.percentage < 100);
 
   return (
     <div className="space-y-8">
@@ -86,7 +97,7 @@ export default function StudyDashboard() {
                 </Link>
               </div>
               <div className="space-y-3">
-                {continueBooks.slice(0, 3).map((book: any) => (
+                {continueBooks.slice(0, 3).map((book) => (
                   <Link
                     key={book.id}
                     href={`/study/reader/${book.id}`}
@@ -99,9 +110,9 @@ export default function StudyDashboard() {
                       <p className="text-sm font-medium truncate">{book.title}</p>
                       <div className="mt-1.5 flex items-center gap-2">
                         <div className="progress-bar-premium flex-1">
-                          <div className="fill" style={{ width: `${book.readingProgress.percentage || 0}%` }} />
+                          <div className="fill" style={{ width: `${book.readingProgress?.percentage || 0}%` }} />
                         </div>
-                        <span className="text-[11px] text-black/40 dark:text-white/40 tabular-nums">{Math.round(book.readingProgress.percentage || 0)}%</span>
+                        <span className="text-[11px] text-black/40 dark:text-white/40 tabular-nums">{Math.round(book.readingProgress?.percentage || 0)}%</span>
                       </div>
                     </div>
                     <ChevronRight className="h-4 w-4 text-black/20 dark:text-white/20 group-hover:text-black/50 dark:group-hover:text-white/50 transition-colors" />
@@ -125,21 +136,17 @@ export default function StudyDashboard() {
               </div>
             ) : (
               <div className="space-y-1">
-                {activity.map((a: any, i: number) => (
+                {activity.map((a, i: number) => (
                   <div key={i} className="flex items-center gap-3 rounded-lg px-2 py-2.5 text-sm">
                     <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500/10">
                       <div className="h-1.5 w-1.5 rounded-full bg-blue-500" />
                     </div>
                     <span className="flex-1 text-black/60 dark:text-white/60">
-                      {a.action === "read" && `Read page ${a.detail || ""}`}
-                      {a.action === "note" && "Added a note"}
-                      {a.action === "highlight" && "Highlighted text"}
-                      {a.action === "bookmark" && "Bookmarked a page"}
-                      {a.action === "flashcard" && "Created a flashcard"}
-                      {!["read","note","highlight","bookmark","flashcard"].includes(a.action) && a.description}
+                      {(a.pagesRead || 0) > 0 ? `Read ${a.pagesRead} page${(a.pagesRead || 0) > 1 ? "s" : ""}` : `Studied ${Math.round(a.duration / 60)} min`}
+                      {a.book?.title ? ` · ${a.book.title}` : ""}
                     </span>
                     <span className="text-xs text-black/30 dark:text-white/30">
-                      {a.createdAt ? new Date(a.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric" }) : ""}
+                      {a.date ? new Date(a.date).toLocaleDateString(undefined, { month: "short", day: "numeric" }) : ""}
                     </span>
                   </div>
                 ))}
@@ -178,7 +185,7 @@ export default function StudyDashboard() {
               </div>
             ) : dueCards.length > 0 ? (
               <div className="space-y-2">
-                {dueCards.slice(0, 3).map((card: any) => (
+                {dueCards.slice(0, 3).map((card) => (
                   <div key={card.id} className="rounded-xl bg-black/[0.02] dark:bg-white/[0.03] p-3 border border-black/[0.04] dark:border-white/[0.06]">
                     <p className="text-sm text-black/80 dark:text-white/80 line-clamp-2">{card.front}</p>
                   </div>
@@ -227,7 +234,7 @@ export default function StudyDashboard() {
   );
 }
 
-function StatCard({ icon: Icon, label, value, color }: { icon: any; label: string; value: string | number; color: string }) {
+function StatCard({ icon: Icon, label, value, color }: { icon: LucideIcon; label: string; value: string | number; color: string }) {
   return (
     <GlassCard className="stat-card p-4">
       <Icon className={`h-4 w-4 ${color} mb-2`} />
@@ -237,7 +244,7 @@ function StatCard({ icon: Icon, label, value, color }: { icon: any; label: strin
   );
 }
 
-function ActionButton({ icon: Icon, label, onClick }: { icon: any; label: string; onClick: () => void }) {
+function ActionButton({ icon: Icon, label, onClick }: { icon: LucideIcon; label: string; onClick: () => void }) {
   return (
     <button
       onClick={onClick}

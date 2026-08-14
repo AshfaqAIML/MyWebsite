@@ -6,6 +6,7 @@ import { GlassCard } from "@/components/study/shared/glass-card";
 import { StatsCardSkeleton } from "@/components/study/shared/loading-skeleton";
 import { ProgressRing } from "@/components/study/shared/progress-ring";
 import { BarChart3, Clock, BookOpen, TrendingUp, Calendar, Award, Timer } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 export default function AnalyticsPage() {
   const { stats, fetchStats, loading } = useStudyStore();
@@ -94,7 +95,7 @@ export default function AnalyticsPage() {
   );
 }
 
-function AnalyticCard({ icon: Icon, label, value }: { icon: any; label: string; value: string | number }) {
+function AnalyticCard({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string | number }) {
   return (
     <GlassCard className="p-4">
       <Icon className="h-4 w-4 text-blue-500 mb-2" />

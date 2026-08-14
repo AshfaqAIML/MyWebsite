@@ -6,14 +6,15 @@ import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft, ChevronRight, BookOpen, Layers, PenSquare,
-  Highlighter, Bookmark, Sparkles, Maximize2, Minimize2,
+  Highlighter, Bookmark as BookmarkIcon, Sparkles, Maximize2, Minimize2,
   Sun, Moon, FileText, Clock, CheckCircle2, ArrowLeft,
   PanelLeftClose, PanelLeft, PanelRightClose, PanelRight,
   Plus, Trash2, Search, Circle, List,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import studyBooks from '../../../../../data/study-books.json';
-import type { StudyBook, ReadingProgress, Chapter, ReadingMode } from '@/lib/study/types';
+import type { StudyBook, ReadingProgress, Chapter, ReadingMode, Note, Bookmark } from '@/lib/study/types';
 import * as store from '@/lib/study/store';
 import { getBookFileUrl, generateChapters, estimateTotalPages, generateId } from '@/lib/study/utils';
 import type { PDFAnnotation, AnnotationTool } from '@/lib/study/pdf-annotations';
@@ -35,7 +36,7 @@ const PDFViewer = dynamic(() => import('@/components/study/pdf-viewer'), {
   ),
 });
 
-const modes: { key: ReadingMode; label: string; icon: any }[] = [
+const modes: { key: ReadingMode; label: string; icon: LucideIcon }[] = [
   { key: 'read', label: 'Read', icon: BookOpen },
   { key: 'study', label: 'Study', icon: PenSquare },
   { key: 'focus', label: 'Focus', icon: Maximize2 },
@@ -71,12 +72,12 @@ function ChapterTree({ chapters, progress, currentChapter, onSelect }: {
 }
 
 function NotesPanel({ bookId }: { bookId: string }) {
-  const [notes, setNotes] = useState<any[]>([]);
+  const [notes, setNotes] = useState<Note[]>([]);
   const [showEditor, setShowEditor] = useState(false);
   const [editNoteId, setEditNoteId] = useState<string | null>(null);
   const [editorContent, setEditorContent] = useState('');
 
-  useEffect(() => { setNotes(store.getNotes(bookId)); }, [bookId]);
+  useEffect(() => { const t = setTimeout(() => setNotes(store.getNotes(bookId)), 0); return () => clearTimeout(t); }, [bookId]);
 
   function handleSave(content: string) {
     if (!content.trim()) return;
@@ -201,34 +202,41 @@ export default function ReadingPage() {
   const [continuousScroll, setContinuousScroll] = useState(false);
 
   const [annotations, setAnnotations] = useState<PDFAnnotation[]>([]);
-  const [bookmarks, setBookmarks] = useState<any[]>([]);
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
 
   const bookTotal = useMemo(() => book ? estimateTotalPages(book) : 0, [book]);
   const chapters = useMemo(() => book ? generateChapters(book) : [], [book]);
 
+  const handleFullscreen = useCallback(() => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().then(() => setFullscreen(true)).catch(() => {});
+    } else {
+      document.exitFullscreen().then(() => setFullscreen(false)).catch(() => {});
+    }
+  }, []);
+
   useEffect(() => {
     if (book) {
       const existing = store.getBookProgress(book.id);
-      if (existing) {
-        setProgress(existing);
-        setCurrentChapter(existing.currentChapter);
-        setCurrentPage(existing.currentPage || 1);
-      } else {
-        const p: ReadingProgress = {
-          bookId: book.id, currentPage: 1, totalPages: bookTotal,
-          currentChapter: null, completedChapters: [], lastOpened: new Date().toISOString(),
-          totalReadingTime: 0, completionPercentage: 0,
-        };
-        store.saveProgress(p);
-        setProgress(p);
-      }
-      setBookmarks(store.getBookmarks(book.id));
-      const sid = store.startSession(book.id);
-      setSessionId(sid);
+      const t = setTimeout(() => {
+        if (existing) {
+          setProgress(existing);
+          setCurrentChapter(existing.currentChapter);
+          setCurrentPage(existing.currentPage || 1);
+        } else {
+          const p: ReadingProgress = {
+            bookId: book.id, currentPage: 1, totalPages: bookTotal,
+            currentChapter: null, completedChapters: [], lastOpened: new Date().toISOString(),
+            totalReadingTime: 0, completionPercentage: 0,
+          };
+          store.saveProgress(p);
+          setProgress(p);
+        }
+        setBookmarks(store.getBookmarks(book.id));
+        setSessionId(store.startSession(book.id));
+      }, 0);
+      return () => { clearTimeout(t); if (sessionId && book) store.endSession(book.id, sessionId, currentPage); };
     }
-    return () => {
-      if (sessionId && book) store.endSession(book.id, sessionId, currentPage);
-    };
   }, [book?.id]);
 
   useEffect(() => {
@@ -238,7 +246,8 @@ export default function ReadingPage() {
       ...progress, currentPage, lastOpened: new Date().toISOString(), completionPercentage: pct,
     };
     store.saveProgress(updated);
-    setProgress(updated);
+    const t = setTimeout(() => setProgress(updated), 0);
+    return () => clearTimeout(t);
   }, [currentPage, totalPages]);
 
   useEffect(() => {
@@ -266,14 +275,6 @@ export default function ReadingPage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [totalPages, bookTotal]);
 
-  const handleFullscreen = useCallback(() => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().then(() => setFullscreen(true)).catch(() => {});
-    } else {
-      document.exitFullscreen().then(() => setFullscreen(false)).catch(() => {});
-    }
-  }, []);
-
   const handleChapterSelect = useCallback((ch: Chapter) => {
     setCurrentChapter(ch.id);
     setCurrentPage(ch.pageStart);
@@ -298,7 +299,7 @@ export default function ReadingPage() {
     if (annotation.type === 'highlight') {
       store.addHighlight(bookId, {
         id: annotation.id, bookId, page: annotation.page,
-        chapterId: currentChapter || '', text: (annotation as any).text || '',
+        chapterId: currentChapter || '', text: annotation.text || '',
         color: annotation.color, note: '',
         createdAt: annotation.createdAt,
       });
@@ -387,7 +388,7 @@ export default function ReadingPage() {
           })}
           <div className="w-px h-4 bg-white/[0.06] mx-1" />
           <button onClick={handleAddBookmark} className="p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/[0.04] transition-colors" title="Add Bookmark (Ctrl+B)">
-            <Bookmark className="h-4 w-4" />
+            <BookmarkIcon className="h-4 w-4" />
           </button>
           <button onClick={() => setContinuousScroll(s => !s)}
             className={`p-1.5 rounded-lg transition-colors ${continuousScroll ? 'text-white bg-white/[0.06]' : 'text-white/40 hover:text-white hover:bg-white/[0.04]'}`}
@@ -524,7 +525,7 @@ export default function ReadingPage() {
                     {[
                       { key: 'notes' as const, icon: PenSquare },
                       { key: 'highlights' as const, icon: Highlighter },
-                      { key: 'bookmarks' as const, icon: Bookmark },
+                      { key: 'bookmarks' as const, icon: BookmarkIcon },
                       { key: 'ai' as const, icon: Sparkles },
                     ].map(item => {
                       const Icon = item.icon;

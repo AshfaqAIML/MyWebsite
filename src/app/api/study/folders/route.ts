@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/study-db";
+import { getErrorMessage } from "@/lib/utils";
 
 export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("userId") || "default";
@@ -13,8 +14,8 @@ export async function POST(req: NextRequest) {
     const { name, parentId, userId = "default" } = body;
     const folder = await prisma.folder.create({ data: { name, parentId, userId } });
     return NextResponse.json(folder, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 500 });
   }
 }
 

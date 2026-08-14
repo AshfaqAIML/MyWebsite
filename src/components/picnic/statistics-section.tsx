@@ -13,6 +13,7 @@ import {
   TrendingUp, Camera, MapPin, DollarSign, Car, Sun, CloudRain,
   UtensilsCrossed, Gamepad2, Flame, Calendar, Video, BookOpen, Mic
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 const COLORS = ['#2D5A27', '#5BA4CF', '#E8751A', '#7CB342', '#F4A261', '#C49A2A'];
 
@@ -160,7 +161,7 @@ export default function StatisticsSection() {
                         fontSize: '12px',
                         boxShadow: '0 4px 12px oklch(0 0 0 / 10%)',
                       }}
-                      formatter={(value: any) => [value != null ? `₹${Number(value).toLocaleString()}` : '₹0', 'Budget']}
+                      formatter={(value) => [value != null ? `₹${Number(value).toLocaleString()}` : '₹0', 'Budget']}
                     />
                     <Bar dataKey="budget" fill="#2D5A27" radius={[6, 6, 0, 0]} />
                   </BarChart>

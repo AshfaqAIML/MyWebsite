@@ -5,6 +5,7 @@ import { useStudyStore } from "@/lib/study-store";
 import { GlassCard } from "@/components/study/shared/glass-card";
 import { EmptyState } from "@/components/study/shared/empty-state";
 import { BrainCircuit, RotateCcw, Check, X as XIcon, ChevronLeft, ChevronRight, BarChart3 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 export default function FlashcardsPage() {
   const { flashcards, fetchFlashcards, loading } = useStudyStore();
@@ -15,7 +16,7 @@ export default function FlashcardsPage() {
 
   useEffect(() => { fetchFlashcards(); }, [fetchFlashcards]);
 
-  const dueCards = flashcards.filter((c: any) => !c.nextReview || new Date(c.nextReview) <= new Date());
+  const dueCards = flashcards.filter((c) => !c.nextReview || new Date(c.nextReview) <= new Date());
   const card = dueCards[currentIndex];
 
   const handleReview = async (quality: "again" | "good" | "easy") => {
@@ -160,7 +161,7 @@ export default function FlashcardsPage() {
   );
 }
 
-function ReviewButton({ icon: Icon, label, color, onClick }: { icon: any; label: string; color: string; onClick: () => void }) {
+function ReviewButton({ icon: Icon, label, color, onClick }: { icon: LucideIcon; label: string; color: string; onClick: () => void }) {
   return (
     <button onClick={onClick} className={`inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-medium text-white transition-all ${color} active:scale-95`}>
       <Icon className="h-4 w-4" /> {label}

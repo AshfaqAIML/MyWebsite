@@ -63,11 +63,15 @@ export function PaymentModal({ open, onClose, bookTitle, pdfUrl, pages }: Paymen
     if (open) {
       document.body.style.overflow = "hidden";
       paymentRef.current?.focus();
-      checkConfirmation();
+      const t = setTimeout(() => checkConfirmation(), 0);
+      return () => clearTimeout(t);
     } else {
       document.body.style.overflow = "";
-      setPendingTxnId("");
-      setSubmittedTxn("");
+      const t = setTimeout(() => {
+        setPendingTxnId("");
+        setSubmittedTxn("");
+      }, 0);
+      return () => clearTimeout(t);
     }
     return () => { document.body.style.overflow = ""; };
   }, [open, checkConfirmation]);

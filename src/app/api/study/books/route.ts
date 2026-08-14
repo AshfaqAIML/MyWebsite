@@ -2,33 +2,42 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/study-db";
 import fs from "fs";
 import path from "path";
+import { getErrorMessage } from "@/lib/utils";
 
 export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("userId") || "default";
   const category = req.nextUrl.searchParams.get("category");
   const search = req.nextUrl.searchParams.get("search");
 
-  const where: any = { userId };
-  if (category && category !== "All") where.category = category;
-  if (search) where.title = { contains: search };
+  const where = {
+    userId,
+    ...(category && category !== "All" ? { category } : {}),
+    ...(search ? { title: { contains: search } } : {}),
+  };
+
+  type BookRow = Awaited<ReturnType<typeof prisma.book.findMany>>[number];
+  type ProgressRow = Awaited<ReturnType<typeof prisma.readingProgress.findMany>>[number];
 
   const books = await prisma.book.findMany({ where, orderBy: { updatedAt: "desc" } });
   const progress = await prisma.readingProgress.findMany({ where: { userId } });
-  const progressMap = Object.fromEntries(progress.map((p: any) => [p.bookId, p]));
+  const progressMap = new Map<string, ProgressRow>(progress.map((p) => [p.bookId, p]));
 
-  const enriched = books.map((b: any) => ({
-    ...b,
-    tags: JSON.parse(b.tags || "[]"),
-    metadata: JSON.parse(b.metadata || "{}"),
-    readingProgress: progressMap[b.id]
-      ? {
-          currentPage: progressMap[b.id].currentPage,
-          totalPages: progressMap[b.id].totalPages,
-          percentage: progressMap[b.id].percentage,
-          completed: progressMap[b.id].completed,
-        }
-      : null,
-  }));
+  const enriched = books.map((b: BookRow) => {
+    const p = progressMap.get(b.id);
+    return {
+      ...b,
+      tags: JSON.parse(b.tags || "[]"),
+      metadata: JSON.parse(b.metadata || "{}"),
+      readingProgress: p
+        ? {
+            currentPage: p.currentPage,
+            totalPages: p.totalPages,
+            percentage: p.percentage,
+            completed: p.completed,
+          }
+        : null,
+    };
+  });
 
   return NextResponse.json(enriched);
 }
@@ -68,8 +77,8 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(book, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 500 });
   }
 }
 
@@ -105,7 +114,7 @@ export async function PATCH(req: NextRequest) {
     });
 
     return NextResponse.json(book);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 500 });
   }
 }

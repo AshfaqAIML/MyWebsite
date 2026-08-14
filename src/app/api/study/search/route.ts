@@ -30,10 +30,10 @@ export async function GET(req: NextRequest) {
   ]);
 
   const results = [
-    ...highlights.map((h: any) => ({ type: "highlight" as const, id: h.id, text: h.text.slice(0, 200), page: h.page, bookId: h.bookId, bookName: h.book.title, createdAt: h.createdAt })),
-    ...notes.map((n: any) => ({ type: "note" as const, id: n.id, text: n.content.slice(0, 200), page: n.page, bookId: n.bookId, bookName: n.book.title, createdAt: n.createdAt })),
-    ...bookmarks.map((b: any) => ({ type: "bookmark" as const, id: b.id, text: b.label || `Page ${b.page}`, page: b.page, bookId: b.bookId, bookName: b.book.title, createdAt: b.createdAt })),
-    ...cards.map((c: any) => ({ type: "flashcard" as const, id: c.id, text: c.front.slice(0, 200), page: null, bookId: c.bookId || "", bookName: c.book?.title || "", createdAt: c.createdAt })),
+    ...highlights.map((h) => ({ type: "highlight" as const, id: h.id, text: h.text.slice(0, 200), page: h.page, bookId: h.bookId, bookName: h.book.title, createdAt: h.createdAt })),
+    ...notes.map((n) => ({ type: "note" as const, id: n.id, text: n.content.slice(0, 200), page: n.page, bookId: n.bookId, bookName: n.book.title, createdAt: n.createdAt })),
+    ...bookmarks.map((b) => ({ type: "bookmark" as const, id: b.id, text: b.label || `Page ${b.page}`, page: b.page, bookId: b.bookId, bookName: b.book.title, createdAt: b.createdAt })),
+    ...cards.map((c) => ({ type: "flashcard" as const, id: c.id, text: c.front.slice(0, 200), page: null, bookId: c.bookId || "", bookName: c.book?.title || "", createdAt: c.createdAt })),
   ];
 
   return NextResponse.json(results);

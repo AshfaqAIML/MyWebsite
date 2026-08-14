@@ -113,9 +113,11 @@ function PDFReader() {
 
   useEffect(() => {
     if (!fileParam) {
-      setError("No file specified");
-      setLoading(false);
-      return;
+      const t = setTimeout(() => {
+        setError("No file specified");
+        setLoading(false);
+      }, 0);
+      return () => clearTimeout(t);
     }
 
     let cancelled = false;

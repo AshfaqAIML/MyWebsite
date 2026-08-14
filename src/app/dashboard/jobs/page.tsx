@@ -52,7 +52,9 @@ export default function JobsPage() {
 
   React.useEffect(() => {
     const stored = localStorage.getItem("dashboard-jobs");
-    if (stored) setJobs(JSON.parse(stored));
+    if (!stored) return;
+    const t = setTimeout(() => setJobs(JSON.parse(stored) as Job[]), 0);
+    return () => clearTimeout(t);
   }, []);
 
   React.useEffect(() => {
@@ -158,7 +160,7 @@ export default function JobsPage() {
 
       {jobs.length === 0 ? (
         <div className="text-center py-16 text-zinc-400">
-          <p>No jobs tracked yet. Click "Add Job" to get started.</p>
+          <p>No jobs tracked yet. Click &quot;Add Job&quot; to get started.</p>
         </div>
       ) : (
         <div className="space-y-3">

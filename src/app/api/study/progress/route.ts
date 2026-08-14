@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/study-db";
+import { getErrorMessage } from "@/lib/utils";
 
 export async function GET(req: NextRequest) {
   const bookId = req.nextUrl.searchParams.get("bookId");
@@ -22,7 +23,7 @@ export async function PUT(req: NextRequest) {
       update: { currentPage, totalPages, percentage, completed, lastPage: currentPage },
     });
     return NextResponse.json(progress);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 500 });
   }
 }

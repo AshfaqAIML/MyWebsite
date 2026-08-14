@@ -1,17 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/study-db";
+import { getErrorMessage } from "@/lib/utils";
 
 export async function GET(req: NextRequest) {
   const bookId = req.nextUrl.searchParams.get("bookId");
   const userId = req.nextUrl.searchParams.get("userId") || "default";
   const page = req.nextUrl.searchParams.get("page");
 
-  const where: any = { userId };
-  if (bookId) where.bookId = bookId;
-  if (page) where.page = parseInt(page);
+  const where = {
+    userId,
+    ...(bookId ? { bookId } : {}),
+    ...(page ? { page: parseInt(page) } : {}),
+  };
 
+  type HighlightRow = Awaited<ReturnType<typeof prisma.highlight.findMany>>[number];
   const highlights = await prisma.highlight.findMany({ where, orderBy: { page: "asc" } });
-  const mapped = highlights.map((h: any) => ({ ...h, tags: JSON.parse(h.tags || "[]") }));
+  const mapped = highlights.map((h: HighlightRow) => ({ ...h, tags: JSON.parse(h.tags || "[]") }));
   return NextResponse.json(mapped);
 }
 
@@ -27,8 +31,8 @@ export async function POST(req: NextRequest) {
       data: { color, type, text, page, x, y, w, h, note, userId, bookId, tags: JSON.stringify(tags || []) },
     });
     return NextResponse.json(highlight, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 500 });
   }
 }
 
@@ -47,8 +51,8 @@ export async function PATCH(req: NextRequest) {
       },
     });
     return NextResponse.json(highlight);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 500 });
   }
 }
 

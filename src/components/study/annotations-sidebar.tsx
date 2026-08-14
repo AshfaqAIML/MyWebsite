@@ -47,8 +47,7 @@ export default function AnnotationsSidebar({
   const filteredAnnotations = annotations.filter(a => {
     if (filterType && a.type !== filterType) return false;
     if (search && 'text' in a) {
-      const ann = a as any;
-      if (!ann.text?.toLowerCase().includes(search.toLowerCase())) return false;
+      if (!a.text?.toLowerCase().includes(search.toLowerCase())) return false;
     }
     return true;
   });
@@ -155,7 +154,7 @@ export default function AnnotationsSidebar({
             ) : (
               <div className="py-2 space-y-0.5">
                 {sortedAnnotations.map(ann => {
-                  const text = (ann as any).text || (ann as any).content || '';
+                  const text = 'text' in ann ? (ann.text || '') : 'content' in ann ? (ann.content || '') : '';
                   return (
                     <button
                       key={ann.id}

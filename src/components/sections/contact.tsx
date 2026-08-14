@@ -12,6 +12,7 @@ export function Contact() {
   const profile = getProfile();
   const [submitted, setSubmitted] = React.useState(false);
   const [sending, setSending] = React.useState(false);
+  const [error, setError] = React.useState("");
   const [formData, setFormData] = React.useState({
     name: "",
     email: "",
@@ -21,6 +22,7 @@ export function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
+    setError("");
 
     try {
       const res = await fetch("/api/contact", {
@@ -35,7 +37,7 @@ export function Contact() {
       setFormData({ name: "", email: "", message: "" });
       setTimeout(() => setSubmitted(false), 4000);
     } catch {
-      alert("Failed to send. Please try again later.");
+      setError("Failed to send. Please try again later.");
     } finally {
       setSending(false);
     }
@@ -115,6 +117,11 @@ export function Contact() {
                     <><Send className="mr-2 h-4 w-4" /> Send Message</>
                   )}
                 </Button>
+                {error && (
+                  <p role="alert" className="text-sm text-red-600 dark:text-red-400 mt-3">
+                    {error}
+                  </p>
+                )}
               </form>
             </CardContent>
           </Card>
@@ -149,7 +156,7 @@ export function Contact() {
               <div className="flex items-center gap-4">
                 <span className="p-2.5 rounded-xl bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400"><MessageCircle className="h-4 w-4" /></span>
                 <div>
-                  <p className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-wider font-medium">Let's Connect</p>
+                  <p className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-wider font-medium">Let&apos;s Connect</p>
                   <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Find me on socials above</p>
                 </div>
               </div>

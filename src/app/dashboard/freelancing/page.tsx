@@ -21,7 +21,9 @@ export default function FreelancingPage() {
 
   React.useEffect(() => {
     const stored = localStorage.getItem("dashboard-freelance");
-    if (stored) setProjects(JSON.parse(stored));
+    if (!stored) return;
+    const t = setTimeout(() => setProjects(JSON.parse(stored) as Project[]), 0);
+    return () => clearTimeout(t);
   }, []);
 
   React.useEffect(() => {
@@ -99,7 +101,7 @@ export default function FreelancingPage() {
           </div>
         ))}
         {projects.length === 0 && !showForm && (
-          <p className="text-center py-16 text-zinc-400">No projects yet. Click "Add Project" to start tracking.</p>
+          <p className="text-center py-16 text-zinc-400">No projects yet. Click &quot;Add Project&quot; to start tracking.</p>
         )}
       </div>
     </div>

@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/study-db";
+import { getErrorMessage } from "@/lib/utils";
 
 export async function GET(req: NextRequest) {
   const bookId = req.nextUrl.searchParams.get("bookId");
   const userId = req.nextUrl.searchParams.get("userId") || "default";
-  const where: any = { userId };
-  if (bookId) where.bookId = bookId;
+  const where = { userId, ...(bookId ? { bookId } : {}) };
   const bookmarks = await prisma.bookmark.findMany({ where, orderBy: { page: "asc" } });
   return NextResponse.json(bookmarks);
 }
@@ -17,8 +17,8 @@ export async function POST(req: NextRequest) {
     if (!bookId || page === undefined) return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     const bookmark = await prisma.bookmark.create({ data: { page, label, color, userId, bookId } });
     return NextResponse.json(bookmark, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 500 });
   }
 }
 
@@ -32,8 +32,8 @@ export async function PATCH(req: NextRequest) {
       data: { ...(label !== undefined && { label }), ...(color !== undefined && { color }) },
     });
     return NextResponse.json(bookmark);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 500 });
   }
 }
 

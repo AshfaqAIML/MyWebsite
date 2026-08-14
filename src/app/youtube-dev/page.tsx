@@ -305,15 +305,15 @@ export default function YouTubeDevPage() {
               </div>
               <div className="px-6 py-4 border-b border-zinc-800">
                 <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Request Body</p>
-                <pre className="text-sm text-zinc-300 font-mono bg-zinc-950 rounded-xl p-4 overflow-x-auto whitespace-pre">{'{'}{'\n'}  "video_id": "dQw4w9WgXcQ"{'\n'}{'}'}</pre>
+                <pre className="text-sm text-zinc-300 font-mono bg-zinc-950 rounded-xl p-4 overflow-x-auto whitespace-pre">{`{\n  "video_id": "dQw4w9WgXcQ"\n}`}</pre>
               </div>
               <div className="px-6 py-4 border-b border-zinc-800">
                 <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Success Response</p>
-                <pre className="text-sm text-emerald-300/80 font-mono bg-zinc-950 rounded-xl p-4 overflow-x-auto whitespace-pre">{'{'}{'\n'}  "success": true,{'\n'}  "message": "Transcript successfully generated and compiled.",{'\n'}  "txt_path": ".../transcript_dQw4w9WgXcQ.txt",{'\n'}  "docx_path": ".../transcript_dQw4w9WgXcQ.docx"{'\n'}{'}'}</pre>
+                <pre className="text-sm text-emerald-300/80 font-mono bg-zinc-950 rounded-xl p-4 overflow-x-auto whitespace-pre">{`{\n  "success": true,\n  "message": "Transcript successfully generated and compiled.",\n  "txt_path": ".../transcript_dQw4w9WgXcQ.txt",\n  "docx_path": ".../transcript_dQw4w9WgXcQ.docx"\n}`}</pre>
               </div>
               <div className="px-6 py-4">
                 <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Error Response</p>
-                <pre className="text-sm text-red-300/80 font-mono bg-zinc-950 rounded-xl p-4 overflow-x-auto whitespace-pre">{'{'}{'\n'}  "success": false,{'\n'}  "error": "No video_id provided"{'\n'}{'}'}</pre>
+                <pre className="text-sm text-red-300/80 font-mono bg-zinc-950 rounded-xl p-4 overflow-x-auto whitespace-pre">{`{\n  "success": false,\n  "error": "No video_id provided"\n}`}</pre>
               </div>
             </div>
 

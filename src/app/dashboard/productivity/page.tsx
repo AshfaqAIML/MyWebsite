@@ -21,7 +21,8 @@ export default function ProductivityPage() {
   React.useEffect(() => {
     const stored = localStorage.getItem("dashboard-tasks");
     if (stored) {
-      setTasks(JSON.parse(stored));
+      const t = setTimeout(() => setTasks(JSON.parse(stored) as Task[]), 0);
+      return () => clearTimeout(t);
     } else {
       const seed: Task[] = [
         { id: "lo-habit-1", text: "Review LifeOS AI daily habit streak", done: false, date: new Date().toISOString().split("T")[0] },
@@ -29,11 +30,17 @@ export default function ProductivityPage() {
         { id: "lo-goal-2", text: "Complete AI coaching session on LifeOS AI", done: false, date: new Date().toISOString().split("T")[0] },
         { id: "lo-habit-2", text: "Log today's habits in LifeOS AI", done: false, date: new Date().toISOString().split("T")[0] },
       ];
-      setTasks(seed);
-      localStorage.setItem("dashboard-tasks", JSON.stringify(seed));
+      const t = setTimeout(() => {
+        setTasks(seed);
+        localStorage.setItem("dashboard-tasks", JSON.stringify(seed));
+      }, 0);
+      return () => clearTimeout(t);
     }
     const savedNote = localStorage.getItem("dashboard-note");
-    if (savedNote) setNote(savedNote);
+    if (savedNote !== null && savedNote !== "") {
+      const t = setTimeout(() => setNote(savedNote ?? ""), 0);
+      return () => clearTimeout(t);
+    }
   }, []);
 
   React.useEffect(() => {

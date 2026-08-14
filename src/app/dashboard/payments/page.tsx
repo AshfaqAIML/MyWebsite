@@ -28,7 +28,9 @@ export default function PaymentsPage() {
 
   React.useEffect(() => {
     const stored = localStorage.getItem("dashboard-payments");
-    if (stored) setPayments(JSON.parse(stored));
+    if (!stored) return;
+    const t = setTimeout(() => setPayments(JSON.parse(stored) as PaymentRecord[]), 0);
+    return () => clearTimeout(t);
   }, []);
 
   React.useEffect(() => {
@@ -233,7 +235,7 @@ export default function PaymentsPage() {
                   </div>
                 </div>
                 <div className="flex gap-2 shrink-0">
-                  <a href={book.pdfUrl || `/api/books/pdf?file=${encodeURIComponent((book as any).source || "")}&mode=download`} target="_blank" rel="noopener noreferrer" download
+                  <a href={book.pdfUrl || `/api/books/pdf?file=${encodeURIComponent(book.source || "")}&mode=download`} target="_blank" rel="noopener noreferrer" download
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-black text-xs font-medium hover:opacity-90 transition-opacity">
                     <Download className="h-3.5 w-3.5" />
                     PDF

@@ -8,6 +8,7 @@ import {
   Layers, Filter, LayoutGrid, List, FileText, CheckCircle2,
   BookMarked, Timer, Star, BrainCircuit,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import studyBooks from '../../../data/study-books.json';
 import type { StudyBook } from '@/lib/study/types';
@@ -23,14 +24,14 @@ const categoryGradients: Record<string, string> = {
   Psychology: 'from-pink-600/30 via-rose-600/20 to-transparent',
 };
 
-const categoryIcons: Record<string, any> = {
+const categoryIcons: Record<string, LucideIcon> = {
   Technical: BrainCircuit,
   'Self-Development': TrendingUp,
   Reference: Library,
   Psychology: Star,
 };
 
-function StatCard({ icon: Icon, value, label }: { icon: any; value: string; label: string }) {
+function StatCard({ icon: Icon, value, label }: { icon: LucideIcon; value: string; label: string }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}

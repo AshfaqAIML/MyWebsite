@@ -1,16 +1,17 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import type { Provider } from "next-auth/providers";
 
-let GoogleProvider: any = null;
+type GoogleProviderFn = (options: { clientId: string; clientSecret: string }) => Provider;
+let GoogleProvider: GoogleProviderFn | null = null;
 try {
-  GoogleProvider = require("next-auth/providers/google").default;
+  const googleModule = await import("next-auth/providers/google");
+  GoogleProvider = (googleModule as { default: GoogleProviderFn }).default;
 } catch {
   // Google provider not available
 }
 
-const googleEnabled = !!(GoogleProvider && process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET);
-
-const providers = [
+const providers: Provider[] = [
   Credentials({
     name: "credentials",
     credentials: {
@@ -32,9 +33,13 @@ const providers = [
   }),
 ];
 
-if (googleEnabled) {
+const googleProvider =
+    GoogleProvider && process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET
+      ? GoogleProvider
+      : null;
+if (googleProvider) {
   providers.push(
-    GoogleProvider({
+    googleProvider({
       clientId: process.env.AUTH_GOOGLE_ID!,
       clientSecret: process.env.AUTH_GOOGLE_SECRET!,
     })

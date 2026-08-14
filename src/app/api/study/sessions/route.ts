@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/study-db";
+import { getErrorMessage } from "@/lib/utils";
 
 export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("userId") || "default";
@@ -21,7 +22,7 @@ export async function POST(req: NextRequest) {
       data: { duration: duration || 0, pagesRead: pagesRead || 0, notesAdded: notesAdded || 0, bookId, userId },
     });
     return NextResponse.json(session, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 500 });
   }
 }

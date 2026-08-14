@@ -8,6 +8,7 @@ import {
   ChevronUp, ChevronDown, Minus as MinusIcon, Plus,
   Expand, Shrink,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import type { AnnotationTool } from '@/lib/study/pdf-annotations';
 import { ANNOTATION_COLORS, DRAWING_COLORS } from '@/lib/study/pdf-annotations';
 
@@ -29,7 +30,7 @@ interface AnnotationToolbarProps {
   darkMode: boolean;
 }
 
-const tools: { key: AnnotationTool; icon: any; label: string; shortcut?: string }[] = [
+const tools: { key: AnnotationTool; icon: LucideIcon; label: string; shortcut?: string }[] = [
   { key: 'select', icon: MousePointer2, label: 'Select', shortcut: 'V' },
   { key: 'highlight', icon: Highlighter, label: 'Highlight', shortcut: 'H' },
   { key: 'underline', icon: Underline, label: 'Underline', shortcut: 'U' },

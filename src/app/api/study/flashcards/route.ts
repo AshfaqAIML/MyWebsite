@@ -1,15 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/study-db";
+import { getErrorMessage } from "@/lib/utils";
 
 export async function GET(req: NextRequest) {
   const bookId = req.nextUrl.searchParams.get("bookId");
   const userId = req.nextUrl.searchParams.get("userId") || "default";
   const dueOnly = req.nextUrl.searchParams.get("dueOnly") === "true";
-  const where: any = { userId };
-  if (bookId) where.bookId = bookId;
-  if (dueOnly) where.nextReview = { lte: new Date() };
+  const where = {
+    userId,
+    ...(bookId ? { bookId } : {}),
+    ...(dueOnly ? { nextReview: { lte: new Date() } } : {}),
+  };
+  type CardRow = Awaited<ReturnType<typeof prisma.flashcard.findMany>>[number];
   const cards = await prisma.flashcard.findMany({ where, orderBy: { nextReview: "asc" } });
-  const mapped = cards.map((c: any) => ({ ...c, tags: JSON.parse(c.tags || "[]") }));
+  const mapped = cards.map((c: CardRow) => ({ ...c, tags: JSON.parse(c.tags || "[]") }));
   return NextResponse.json(mapped);
 }
 
@@ -22,8 +26,8 @@ export async function POST(req: NextRequest) {
       data: { front, back, hint, userId, bookId, highlightId, tags: JSON.stringify(tags || []) },
     });
     return NextResponse.json(card, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 500 });
   }
 }
 
@@ -47,8 +51,8 @@ export async function PATCH(req: NextRequest) {
       },
     });
     return NextResponse.json(card);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 500 });
   }
 }
 

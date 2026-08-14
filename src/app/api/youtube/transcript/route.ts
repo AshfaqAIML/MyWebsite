@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       total_segments: transcript.length,
       languages: [...new Set(transcript.map((s) => s.lang))],
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof YoutubeTranscriptDisabledError) {
       return NextResponse.json(
         { success: false, error: "Transcripts are disabled for this video." },
@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { success: false, error: error?.message || "An unexpected error occurred." },
+      { success: false, error: error instanceof Error ? error.message : "An unexpected error occurred." },
       { status: 500 }
     );
   }

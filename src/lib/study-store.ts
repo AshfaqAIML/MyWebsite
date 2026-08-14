@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { StudyBook, BookHighlight, BookNote, BookBookmark, BookFlashcard, StudyStats } from "@/lib/study-types";
+import type { StudyBook, BookHighlight, BookNote, BookBookmark, BookFlashcard, StudyStats, StudySearchResult } from "@/lib/study-types";
 
 interface StudyStore {
   sidebarOpen: boolean;
@@ -16,7 +16,7 @@ interface StudyStore {
   readerMode: "single" | "continuous";
   readerTheme: "light" | "dark" | "sepia";
   searchQuery: string;
-  searchResults: any[];
+  searchResults: StudySearchResult[];
   loading: boolean;
 
   setSidebarOpen: (open: boolean) => void;
@@ -33,7 +33,7 @@ interface StudyStore {
   setReaderMode: (mode: "single" | "continuous") => void;
   setReaderTheme: (theme: "light" | "dark" | "sepia") => void;
   setSearchQuery: (q: string) => void;
-  setSearchResults: (results: any[]) => void;
+  setSearchResults: (results: StudySearchResult[]) => void;
   setLoading: (loading: boolean) => void;
   toggleSidebar: () => void;
 

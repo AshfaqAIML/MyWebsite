@@ -33,3 +33,7 @@ export function copyToClipboard(text: string): Promise<void> {
   }
   return Promise.reject(new Error("Clipboard API not available"));
 }
+
+export function getErrorMessage(err: unknown): string {
+  return err instanceof Error && err.message ? err.message : "Unknown error";
+}

@@ -95,6 +95,16 @@ export interface StudyActivity {
   date: Date;
 }
 
+export interface StudySearchResult {
+  type: "highlight" | "note" | "bookmark" | "flashcard";
+  id: string;
+  text: string;
+  page: number | null;
+  bookId: string;
+  bookName: string;
+  createdAt: string | Date;
+}
+
 export interface SearchResult {
   type: "highlight" | "note" | "bookmark" | "flashcard";
   id: string;

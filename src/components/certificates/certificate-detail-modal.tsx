@@ -92,7 +92,7 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.25 }}
-            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl premium-scrollbar"
+            className="relative w-full max-w-4xl max-h-[90dvh] overflow-y-auto rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl premium-scrollbar"
           >
             {/* Header */}
             <div className="sticky top-0 z-10 flex items-center justify-between p-5 border-b border-zinc-100 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl">

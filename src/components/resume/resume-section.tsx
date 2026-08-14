@@ -355,7 +355,7 @@ function PreviewDialog({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.25 }}
-        className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl flex flex-col"
+        className="relative w-full max-w-4xl max-h-[90dvh] overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl flex flex-col"
       >
         <div className="sticky top-0 z-10 flex items-center justify-between p-4 sm:p-5 border-b border-zinc-100 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl">
           <div className="min-w-0">
@@ -390,7 +390,7 @@ function PreviewDialog({
           <embed
             src={doc.filePath}
             type="application/pdf"
-            className="w-full h-full min-h-[60vh]"
+            className="w-full h-full min-h-[60dvh]"
           />
         </div>
       </motion.div>

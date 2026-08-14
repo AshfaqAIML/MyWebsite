@@ -24,7 +24,8 @@ export default function ContentPage() {
   React.useEffect(() => {
     const stored = localStorage.getItem("dashboard-content");
     if (stored) {
-      setContent(JSON.parse(stored));
+      const t = setTimeout(() => setContent(JSON.parse(stored)), 0);
+      return () => clearTimeout(t);
     } else {
       const seed = [
         ...publications.map((p) => ({
@@ -55,8 +56,11 @@ export default function ContentPage() {
           date: "2025-01-01",
         })),
       ];
-      setContent(seed);
-      localStorage.setItem("dashboard-content", JSON.stringify(seed));
+      const t = setTimeout(() => {
+        setContent(seed);
+        localStorage.setItem("dashboard-content", JSON.stringify(seed));
+      }, 0);
+      return () => clearTimeout(t);
     }
   }, [publications, articles, books]);
 

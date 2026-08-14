@@ -63,6 +63,7 @@ export interface Book {
   readUrl?: string;
   pdfUrl?: string;
   epubUrl?: string;
+  source?: string;
 }
 
 export type ArticleStatus = "published" | "in-progress" | "coming-soon";

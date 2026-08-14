@@ -1,7 +1,21 @@
 'use client';
 
 import { useRef, useEffect, useState, useCallback, forwardRef, useImperativeHandle } from 'react';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 import type { PDFAnnotation, AnnotationTool } from '@/lib/study/pdf-annotations';
+
+interface TextLayerItem {
+  str: string;
+  transform: number[];
+  width: number;
+  height: number;
+  dir: string;
+  fontName?: string;
+  hasEOL?: boolean;
+  type: string;
+  angle?: number;
+  fontSize?: number;
+}
 
 interface PDFViewerProps {
   pdfUrl: string;
@@ -32,7 +46,7 @@ export interface PDFViewerHandle {
 function PDFCanvas({
   pageNum, pdfDoc, scale, darkMode, annotations, activeTool, activeColor, strokeWidth, onAnnotationCreate,
 }: {
-  pageNum: number; pdfDoc: any; scale: number; darkMode: boolean;
+  pageNum: number; pdfDoc: PDFDocumentProxy; scale: number; darkMode: boolean;
   annotations: PDFAnnotation[]; activeTool: AnnotationTool; activeColor: string;
   strokeWidth: number; onAnnotationCreate: (a: PDFAnnotation) => void;
 }) {
@@ -62,7 +76,7 @@ function PDFCanvas({
         const ctx = canvas.getContext('2d')!;
 
         await page.render({
-          canvasContext: ctx, viewport,
+          canvas, canvasContext: ctx, viewport,
         }).promise;
 
         if (cancelled) return;
@@ -76,8 +90,8 @@ function PDFCanvas({
           textLayer.style.width = `${Math.floor(viewport.width / dpr)}px`;
           textLayer.style.height = `${Math.floor(viewport.height / dpr)}px`;
 
-          const textItems = textContent.items as any[];
-          textItems.forEach((item: any) => {
+          const textItems = textContent.items.filter((item) => "str" in item) as TextLayerItem[];
+          textItems.forEach((item: TextLayerItem) => {
             const span = document.createElement('span');
             span.textContent = item.str;
             const fontSize = item.fontSize || 16;
@@ -133,7 +147,7 @@ function PDFCanvas({
       path.setAttribute('stroke-linejoin', 'round');
       svg.appendChild(path);
     }
-    const d = points.map((p: any, i: number) => i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`).join(' ');
+    const d = points.map((p: { x: number; y: number }, i: number) => i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`).join(' ');
     path.setAttribute('d', d);
   }, [activeColor, strokeWidth]);
 
@@ -153,7 +167,7 @@ function PDFCanvas({
         id: `dr_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
         bookId: '', type: 'drawing', color: activeColor, strokeWidth, points, page: pageNum,
         createdAt: new Date().toISOString(),
-      } as any);
+      });
     }
   }, [activeTool, activeColor, strokeWidth, pageNum, onAnnotationCreate]);
 
@@ -185,7 +199,7 @@ function PDFCanvas({
       id: `${annotationType[0]}l_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
       bookId: '', type: annotationType, color: activeColor, text, position, page: pageNum, note: '',
       createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
-    } as any);
+    });
     sel.removeAllRanges();
   }, [activeTool, activeColor, pageNum, onAnnotationCreate]);
 
@@ -203,25 +217,23 @@ function PDFCanvas({
         onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
         {pageAnnotations.map(ann => {
           if ((ann.type === 'highlight' || ann.type === 'underline' || ann.type === 'strikethrough' || ann.type === 'squiggly') && 'position' in ann) {
-            const a = ann as any; const r = a.position;
-            if (ann.type === 'highlight') return <rect key={a.id} x={`${r.x*100}%`} y={`${r.y*100}%`} width={`${r.w*100}%`} height={`${r.h*100}%`} fill={a.color} opacity={0.4} />;
-            if (ann.type === 'underline') return <line key={a.id} x1={`${r.x*100}%`} y1={`${(r.y+r.h)*100}%`} x2={`${(r.x+r.w)*100}%`} y2={`${(r.y+r.h)*100}%`} stroke={a.color} strokeWidth={2} />;
-            if (ann.type === 'strikethrough') return <line key={a.id} x1={`${r.x*100}%`} y1={`${(r.y+r.h/2)*100}%`} x2={`${(r.x+r.w)*100}%`} y2={`${(r.y+r.h/2)*100}%`} stroke={a.color} strokeWidth={2} />;
+            const r = ann.position;
+            if (ann.type === 'highlight') return <rect key={ann.id} x={`${r.x*100}%`} y={`${r.y*100}%`} width={`${r.w*100}%`} height={`${r.h*100}%`} fill={ann.color} opacity={0.4} />;
+            if (ann.type === 'underline') return <line key={ann.id} x1={`${r.x*100}%`} y1={`${(r.y+r.h)*100}%`} x2={`${(r.x+r.w)*100}%`} y2={`${(r.y+r.h)*100}%`} stroke={ann.color} strokeWidth={2} />;
+            if (ann.type === 'strikethrough') return <line key={ann.id} x1={`${r.x*100}%`} y1={`${(r.y+r.h/2)*100}%`} x2={`${(r.x+r.w)*100}%`} y2={`${(r.y+r.h/2)*100}%`} stroke={ann.color} strokeWidth={2} />;
           }
           if (ann.type === 'drawing') {
-            const a = ann as any;
-            const d = a.points.map((p: any, i: number) => `${i===0?'M':'L'} ${p.x} ${p.y}`).join(' ');
-            return <path key={a.id} d={d} fill="none" stroke={a.color} strokeWidth={a.strokeWidth||3} strokeLinecap="round" strokeLinejoin="round" />;
+            const d = ann.points.map((p, i: number) => `${i===0?'M':'L'} ${p.x} ${p.y}`).join(' ');
+            return <path key={ann.id} d={d} fill="none" stroke={ann.color} strokeWidth={ann.strokeWidth||3} strokeLinecap="round" strokeLinejoin="round" />;
           }
           if ((ann.type === 'rectangle' || ann.type === 'circle') && 'position' in ann) {
-            const a = ann as any; const r = a.position;
+            const r = ann.position;
             return ann.type === 'circle'
-              ? <ellipse key={a.id} cx={`${(r.x+r.w/2)*100}%`} cy={`${(r.y+r.h/2)*100}%`} rx={`${(r.w/2)*100}%`} ry={`${(r.h/2)*100}%`} fill="none" stroke={a.color} strokeWidth={a.strokeWidth||2} />
-              : <rect key={a.id} x={`${r.x*100}%`} y={`${r.y*100}%`} width={`${r.w*100}%`} height={`${r.h*100}%`} fill="none" stroke={a.color} strokeWidth={a.strokeWidth||2} />;
+              ? <ellipse key={ann.id} cx={`${(r.x+r.w/2)*100}%`} cy={`${(r.y+r.h/2)*100}%`} rx={`${(r.w/2)*100}%`} ry={`${(r.h/2)*100}%`} fill="none" stroke={ann.color} strokeWidth={ann.strokeWidth||2} />
+              : <rect key={ann.id} x={`${r.x*100}%`} y={`${r.y*100}%`} width={`${r.w*100}%`} height={`${r.h*100}%`} fill="none" stroke={ann.color} strokeWidth={ann.strokeWidth||2} />;
           }
           if (ann.type === 'sticky') {
-            const a = ann as any;
-            return <g key={a.id}><rect x={a.position.x-12} y={a.position.y-12} width={24} height={24} fill={a.color} rx={3} opacity={0.9} /><text x={a.position.x} y={a.position.y+4} textAnchor="middle" fontSize={12} fill="#1a1a1a">📌</text></g>;
+            return <g key={ann.id}><rect x={ann.position.x-12} y={ann.position.y-12} width={24} height={24} fill={ann.color} rx={3} opacity={0.9} /><text x={ann.position.x} y={ann.position.y+4} textAnchor="middle" fontSize={12} fill="#1a1a1a">📌</text></g>;
           }
           return null;
         })}
@@ -239,7 +251,7 @@ const PDFViewer = forwardRef<PDFViewerHandle, PDFViewerProps>(function PDFViewer
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const [pdfDoc, setPdfDoc] = useState<any>(null);
+  const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [rotation, setRotation] = useState(0);
@@ -258,8 +270,8 @@ const PDFViewer = forwardRef<PDFViewerHandle, PDFViewerProps>(function PDFViewer
         if (cancelled) return;
         setPdfDoc(doc);
         onTotalPages(doc.numPages);
-      } catch (err: any) {
-        if (!cancelled) setError(err?.message || 'Failed to load PDF');
+      } catch (err: unknown) {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Failed to load PDF');
       }
       if (!cancelled) setLoading(false);
     }
@@ -286,7 +298,7 @@ const PDFViewer = forwardRef<PDFViewerHandle, PDFViewerProps>(function PDFViewer
     rotate: () => setRotation(r => (r + 90) % 360),
   }), [zoom, onZoomChange, containerRef]);
 
-  if (loading) {
+  if (!pdfDoc || loading) {
     return (
       <div className={`flex items-center justify-center h-full ${darkMode ? 'bg-[#0f0f13]' : 'bg-zinc-50'}`}>
         <div className="text-center space-y-4">

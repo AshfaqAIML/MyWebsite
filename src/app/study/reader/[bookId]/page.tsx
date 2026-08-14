@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
+import type { PDFDocumentProxy } from "pdfjs-dist";
+import type { StudyBook, BookHighlight, BookNote, BookBookmark, BookFlashcard, StudySearchResult } from "@/lib/study-types";
 import {
   PanelLeftClose, PanelLeft, PanelRightClose, PanelRight, Bookmark, FileText, Highlighter, StickyNote,
   BrainCircuit, Search, ChevronLeft, ChevronRight, Sun, Moon, Monitor,
@@ -35,10 +37,10 @@ export default function StudyReaderPage() {
   const router = useRouter();
   const bookId = params.bookId as string;
 
-  const [book, setBook] = useState<any>(null);
+  const [book, setBook] = useState<StudyBook | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [pdfDoc, setPdfDoc] = useState<any>(null);
+  const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);
   const [pageNum, setPageNum] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [scale, setScale] = useState(1.2);
@@ -46,17 +48,17 @@ export default function StudyReaderPage() {
   const [leftSidebar, setLeftSidebar] = useState(true);
   const [rightSidebar, setRightSidebar] = useState(true);
   const [sidebarTab, setSidebarTab] = useState<SidebarTab>("highlights");
-  const [highlights, setHighlights] = useState<any[]>([]);
-  const [notes, setNotes] = useState<any[]>([]);
-  const [bookmarks, setBookmarks] = useState<any[]>([]);
-  const [cards, setCards] = useState<any[]>([]);
+  const [highlights, setHighlights] = useState<BookHighlight[]>([]);
+  const [notes, setNotes] = useState<BookNote[]>([]);
+  const [bookmarks, setBookmarks] = useState<BookBookmark[]>([]);
+  const [cards, setCards] = useState<BookFlashcard[]>([]);
   const [selColor, setSelColor] = useState("yellow");
   const [showNoteModal, setShowNoteModal] = useState(false);
   const [noteText, setNoteText] = useState("");
   const [notePage, setNotePage] = useState(0);
   const [noteHighlightId, setNoteHighlightId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<StudySearchResult[]>([]);
   const [fullscreen, setFullscreen] = useState(false);
   const [focusMode, setFocusMode] = useState(false);
   const [floatToolbar, setFloatToolbar] = useState<{ x: number; y: number; text: string } | null>(null);
@@ -101,9 +103,6 @@ export default function StudyReaderPage() {
         case "ArrowRight": goPage(pageNum + 1); break;
         case "ArrowLeft": goPage(pageNum - 1); break;
         case "f": case "F": toggleFullscreen(); break;
-        case "b": case "B": addBookmark(); break;
-        case "s": case "S": setRightSidebar(true); setSidebarTab("search"); break;
-        case "Escape": setFloatToolbar(null); break;
       }
     };
     window.addEventListener("keydown", handler);
@@ -115,7 +114,7 @@ export default function StudyReaderPage() {
       try {
         const res = await fetch("/api/study/books?userId=default");
         const books = await res.json();
-        const b = books.find((x: any) => x.id === bookId);
+        const b = books.find((x: StudyBook) => x.id === bookId);
         if (!b) { setError("Book not found"); setLoading(false); return; }
         setBook(b);
 
@@ -140,7 +139,7 @@ export default function StudyReaderPage() {
         setCards(await fcRes.json());
 
         setLoading(false);
-      } catch (e: any) { setError(e.message); setLoading(false); }
+      } catch (e: unknown) { setError(e instanceof Error ? e.message : "Failed to load book"); setLoading(false); }
     };
     load();
   }, [bookId]);
@@ -201,6 +200,7 @@ export default function StudyReaderPage() {
     document.addEventListener("mouseup", handleMouseUp);
 
     for (const item of textContent.items) {
+      if (!("transform" in item)) continue;
       const tx = item.transform;
       const m = multMatrix(vt, [tx[0], tx[1], tx[2], tx[3], tx[4], tx[5]]);
       if (m[4] + m[0] < 0 || m[5] + m[3] < 0) continue;
@@ -259,7 +259,7 @@ export default function StudyReaderPage() {
     setNotes((prev) => prev.filter((n) => n.id !== id));
   };
 
-  const createFlashcard = async (highlight: any) => {
+  const createFlashcard = async (highlight: BookHighlight) => {
     const res = await fetch("/api/study/flashcards", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ bookId, front: highlight.text, back: "", highlightId: highlight.id, userId: "default" }),
@@ -273,6 +273,19 @@ export default function StudyReaderPage() {
     const res = await fetch(`/api/study/search?q=${encodeURIComponent(q)}&userId=default`);
     setSearchResults(await res.json());
   };
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      switch (e.key) {
+        case "b": case "B": addBookmark(); break;
+        case "s": case "S": setRightSidebar(true); setSidebarTab("search"); break;
+        case "Escape": setFloatToolbar(null); break;
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [pageNum, addBookmark, setRightSidebar, setSidebarTab]);
 
   if (loading) {
     return (
@@ -466,7 +479,7 @@ export default function StudyReaderPage() {
               {sidebarTab === "search" && (
                 <div className="p-3 space-y-2">
                   <input value={searchQuery} onChange={(e) => doSearch(e.target.value)} placeholder="Search highlights, notes..." className="w-full rounded-xl border border-black/[0.06] dark:border-white/[0.1] bg-transparent px-3 py-2.5 text-sm outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10" />
-                  {searchResults.map((r: any) => (
+                  {searchResults.map((r: StudySearchResult) => (
                     <div key={r.id} onClick={() => r.page && goPage(r.page)} className="cursor-pointer rounded-xl p-3 border border-black/[0.04] dark:border-white/[0.06] hover:bg-white/60 dark:hover:bg-white/[0.04] transition-colors">
                       <p className="text-[11px] font-medium text-blue-600 dark:text-blue-400 mb-0.5 capitalize">{r.type}</p>
                       <p className="text-xs text-black/60 dark:text-white/60 line-clamp-2">{r.text}</p>

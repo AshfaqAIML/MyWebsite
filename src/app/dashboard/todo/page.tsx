@@ -43,7 +43,9 @@ export default function TodoPage() {
 
   React.useEffect(() => {
     const stored = localStorage.getItem("dashboard-todos");
-    if (stored) setTodos(JSON.parse(stored));
+    if (!stored) return;
+    const t = setTimeout(() => setTodos(JSON.parse(stored) as Todo[]), 0);
+    return () => clearTimeout(t);
   }, []);
 
   React.useEffect(() => {

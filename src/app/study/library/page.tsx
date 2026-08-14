@@ -20,7 +20,7 @@ export default function LibraryPage() {
   useEffect(() => { fetchBooks(); }, [fetchBooks]);
 
   const filtered = useMemo(() => {
-    return books.filter((b: any) => {
+    return books.filter((b) => {
       const matchSearch = !search || b.title.toLowerCase().includes(search.toLowerCase()) || b.author?.toLowerCase().includes(search.toLowerCase());
       const matchCat = category === "All" || b.category === category;
       return matchSearch && matchCat;
@@ -97,7 +97,7 @@ export default function LibraryPage() {
         </GlassCard>
       ) : view === "grid" ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filtered.map((book: any) => (
+          {filtered.map((book) => (
             <Link
               key={book.id}
               href={`/study/reader/${book.id}`}
@@ -126,7 +126,7 @@ export default function LibraryPage() {
         </div>
       ) : (
         <div className="space-y-2">
-          {filtered.map((book: any) => (
+          {filtered.map((book) => (
             <Link
               key={book.id}
               href={`/study/reader/${book.id}`}
