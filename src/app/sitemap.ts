@@ -24,10 +24,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const studyBookRoutes: MetadataRoute.Sitemap = (
     studyBooksData as StudyBook[]
-  ).flatMap((book) => [
-    { url: `${base}/study/reader/${book.id}`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.6 },
-    { url: `${base}/study-corner/read/${book.id}`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.6 },
-  ]);
+  ).map((book) => ({
+    url: `${base}/study-corner/read/${book.id}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
 
   return [...staticRoutes, ...studyBookRoutes];
 }
