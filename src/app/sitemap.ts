@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/study/library`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { url: `${base}/study/flashcards`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { url: `${base}/study/analytics`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${base}/study/settings`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/books/read`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/picnic`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/youtube-dev`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
@@ -23,12 +24,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const studyBookRoutes: MetadataRoute.Sitemap = (
     studyBooksData as StudyBook[]
-  ).map((book) => ({
-    url: `${base}/study-corner/read/${book.id}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  ).flatMap((book) => [
+    { url: `${base}/study/reader/${book.id}`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.6 },
+    { url: `${base}/study-corner/read/${book.id}`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.6 },
+  ]);
 
   return [...staticRoutes, ...studyBookRoutes];
 }
