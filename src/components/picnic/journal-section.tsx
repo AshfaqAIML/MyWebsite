@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 import { picnics, stories } from '@/lib/picnic-seed-data';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -50,11 +51,14 @@ export default function JournalSection() {
               <Card className="border-border/50 shadow-sm hover:shadow-lg transition-shadow overflow-hidden">
                 <div className="flex flex-col sm:flex-row">
                   <div className="sm:w-40 h-32 sm:h-auto shrink-0 overflow-hidden">
-                    <img
+<Image
                       src={picnic.heroImageUrl}
                       alt={picnic.title}
-                      className="w-full h-full object-cover"
+                      width={400}
+                      height={229}
                       loading="lazy"
+                      sizes="(max-width: 640px) 100vw, 160px"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="flex-1 p-4 sm:p-5">

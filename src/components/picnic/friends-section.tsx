@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 import { friends as friendsData } from '@/lib/picnic-seed-data';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -61,11 +62,13 @@ export default function FriendsSection() {
               >
                 {/* Avatar */}
                 <div className="relative h-64 sm:h-72 overflow-hidden">
-                  <img
+<Image
                     src={friend.avatarUrl}
                     alt={friend.name}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                    fill
                     loading="lazy"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="img-overlay absolute inset-0" />
                   <div className="absolute top-4 left-4">
@@ -131,7 +134,7 @@ export default function FriendsSection() {
           {selectedFriend && (
             <>
               <div className="relative h-56 overflow-hidden">
-                <img src={selectedFriend.avatarUrl} alt={selectedFriend.name} className="w-full h-full object-cover object-top" />
+                <Image src={selectedFriend.avatarUrl} alt={selectedFriend.name} fill sizes="(max-width: 768px) 100vw, 640px" className="object-cover object-top" />
                 <div className="img-overlay absolute inset-0" />
                 <div className="absolute bottom-4 left-5">
                   <h2 className="text-3xl font-bold text-white">{selectedFriend.name}</h2>

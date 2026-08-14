@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { BadgeCheck, ExternalLink, Award } from "lucide-react";
 import type { Certificate } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -55,11 +56,13 @@ export function CertificateCard({ certificate, onOpen, index = 0 }: CertificateC
       {/* Preview */}
       <div className="relative aspect-[4/3] bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-800 dark:to-zinc-900 overflow-hidden">
         {certificateImage ? (
-          <img
+          <Image
             src={certificateImage}
             alt={title}
+            fill
             loading="lazy"
-            className="absolute inset-0 w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">

@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Search, MapPin, Calendar, X, Image, BookOpen, Users } from 'lucide-react';
+import NextImage from 'next/image';
 
 interface SearchResult {
   type: 'picnic' | 'photo' | 'story' | 'friend';
@@ -169,8 +170,7 @@ export default function SearchSection() {
                 <Card key={r.id} className="border-border/50 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
                   <CardContent className="p-3 flex items-center gap-3">
                     {r.imageUrl && (
-                      <img src={r.imageUrl} alt={r.title} className="w-12 h-12 rounded-lg object-cover shrink-0" />
-                    )}
+                      <NextImage src={r.imageUrl} alt={r.title} width={48} height={48} className="w-12 h-12 rounded-lg object-cover shrink-0" />                    )}
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">{r.title}</p>
                       <p className="text-xs text-muted-foreground truncate">{r.subtitle}</p>

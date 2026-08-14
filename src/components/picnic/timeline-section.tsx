@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 import { picnics } from '@/lib/picnic-seed-data';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -136,11 +137,13 @@ function TimelineCard({
         >
           {/* Image */}
           <div className="relative h-40 sm:h-48 overflow-hidden">
-            <img
+<Image
               src={picnic.heroImageUrl}
               alt={picnic.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              fill
               loading="lazy"
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="object-cover group-hover:scale-105 transition-transform duration-700"
             />
             <div className="img-overlay absolute inset-0" />
             <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
@@ -196,7 +199,7 @@ function PicnicDetail({ picnic }: { picnic: typeof picnics[0] }) {
     <>
       {/* Hero image */}
       <div className="relative h-56 sm:h-72 overflow-hidden">
-        <img src={picnic.heroImageUrl} alt={picnic.title} className="w-full h-full object-cover" />
+        <Image src={picnic.heroImageUrl} alt={picnic.title} fill loading="lazy" sizes="(max-width: 768px) 100vw, 640px" className="object-cover" />
         <div className="img-overlay absolute inset-0" />
         <div className="absolute bottom-4 left-4 right-4">
           <div className="flex items-center gap-2 mb-2">

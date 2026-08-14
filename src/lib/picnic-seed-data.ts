@@ -401,18 +401,18 @@ export const picnics = [
 ];
 
 export const galleryPhotos = [
-  { id: "g1", url: "/picnic-images/gallery/campfire.png", caption: "Stories by the campfire – 2017 Gurez", year: 2017, category: "campfire", tags: ["campfire", "night", "friends"] },
-  { id: "g2", url: "/picnic-images/gallery/food.png", caption: "Our traditional Kashmiri feast – 2020", year: 2020, category: "food", tags: ["food", "wazwan", "kashmiri"] },
-  { id: "g3", url: "/picnic-images/gallery/hiking.png", caption: "The legendary trek to Bangus – 2019", year: 2019, category: "travel", tags: ["hiking", "trek", "mountains"] },
-  { id: "g4", url: "/picnic-images/gallery/sunrise.png", caption: "Sunrise at Dal Lake – 2020", year: 2020, category: "sunrise", tags: ["sunrise", "dal-lake", "morning"] },
-  { id: "g5", url: "/picnic-images/gallery/selfie.png", caption: "Summit selfie at Sinthan Top – 2021", year: 2021, category: "selfies", tags: ["selfie", "summit", "adventure"] },
-  { id: "g6", url: "/picnic-images/gallery/rain.png", caption: "Dancing in the rain – Yusmarg 2017", year: 2017, category: "rain", tags: ["rain", "monsoon", "umbrella"] },
-  { id: "g7", url: "/picnic-images/gallery/bridge.png", caption: "Crossing the stream – Doodhpathri 2016", year: 2016, category: "travel", tags: ["bridge", "stream", "nature"] },
-  { id: "g8", url: "/picnic-images/gallery/sunset-silhouette.png", caption: "Golden hour at Gurez – 2018", year: 2018, category: "sunset", tags: ["sunset", "silhouette", "mountains"] },
-  { id: "g9", url: "/picnic-images/hero/kashmir-valley.png", caption: "The valley that binds us", year: 2018, category: "nature", tags: ["kashmir", "valley", "mountains"] },
-  { id: "g10", url: "/picnic-images/hero/gulmarg-meadows.png", caption: "Gulmarg meadows in bloom", year: 2014, category: "nature", tags: ["gulmarg", "meadows", "flowers"] },
-  { id: "g11", url: "/picnic-images/picnics/2013-pahalgam.png", caption: "Where it all began – Pahalgam 2013", year: 2013, category: "nature", tags: ["pahalgam", "beginning", "river"] },
-  { id: "g12", url: "/picnic-images/picnics/2015-sonmarg.png", caption: "Glacier adventure – Sonmarg 2015", year: 2015, category: "nature", tags: ["sonmarg", "glacier", "adventure"] },
+  { id: "g1", url: "/picnic-images/gallery/campfire.png", width: 1344, height: 768, caption: "Stories by the campfire – 2017 Gurez", year: 2017, category: "campfire", tags: ["campfire", "night", "friends"] },
+  { id: "g2", url: "/picnic-images/gallery/food.png", width: 1344, height: 768, caption: "Our traditional Kashmiri feast – 2020", year: 2020, category: "food", tags: ["food", "wazwan", "kashmiri"] },
+  { id: "g3", url: "/picnic-images/gallery/hiking.png", width: 1344, height: 768, caption: "The legendary trek to Bangus – 2019", year: 2019, category: "travel", tags: ["hiking", "trek", "mountains"] },
+  { id: "g4", url: "/picnic-images/gallery/sunrise.png", width: 1344, height: 768, caption: "Sunrise at Dal Lake – 2020", year: 2020, category: "sunrise", tags: ["sunrise", "dal-lake", "morning"] },
+  { id: "g5", url: "/picnic-images/gallery/selfie.png", width: 864, height: 1152, caption: "Summit selfie at Sinthan Top – 2021", year: 2021, category: "selfies", tags: ["selfie", "summit", "adventure"] },
+  { id: "g6", url: "/picnic-images/gallery/rain.png", width: 1344, height: 768, caption: "Dancing in the rain – Yusmarg 2017", year: 2017, category: "rain", tags: ["rain", "monsoon", "umbrella"] },
+  { id: "g7", url: "/picnic-images/gallery/bridge.png", width: 1344, height: 768, caption: "Crossing the stream – Doodhpathri 2016", year: 2016, category: "travel", tags: ["bridge", "stream", "nature"] },
+  { id: "g8", url: "/picnic-images/gallery/sunset-silhouette.png", width: 1344, height: 768, caption: "Golden hour at Gurez – 2018", year: 2018, category: "sunset", tags: ["sunset", "silhouette", "mountains"] },
+  { id: "g9", url: "/picnic-images/hero/kashmir-valley.png", width: 1344, height: 768, caption: "The valley that binds us", year: 2018, category: "nature", tags: ["kashmir", "valley", "mountains"] },
+  { id: "g10", url: "/picnic-images/hero/gulmarg-meadows.png", width: 1152, height: 864, caption: "Gulmarg meadows in bloom", year: 2014, category: "nature", tags: ["gulmarg", "meadows", "flowers"] },
+  { id: "g11", url: "/picnic-images/picnics/2013-pahalgam.png", width: 1344, height: 768, caption: "Where it all began – Pahalgam 2013", year: 2013, category: "nature", tags: ["pahalgam", "beginning", "river"] },
+  { id: "g12", url: "/picnic-images/picnics/2015-sonmarg.png", width: 1344, height: 768, caption: "Glacier adventure – Sonmarg 2015", year: 2015, category: "nature", tags: ["sonmarg", "glacier", "adventure"] },
 ];
 
 export const quotes = [

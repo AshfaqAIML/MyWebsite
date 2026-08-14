@@ -15,6 +15,7 @@ import RandomMemoryButton from '@/components/picnic/random-memory';
 import SearchSection from '@/components/picnic/search-section';
 import Footer from '@/components/picnic/footer';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 import { useRef } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Compass, Sparkles } from 'lucide-react';
@@ -71,7 +72,7 @@ function OnThisDay() {
             </p>
             <p className="text-xs text-muted-foreground mt-0.5 truncate">{todaysMemory.title}</p>
           </div>
-          <img src={todaysMemory.heroImageUrl} alt="" className="w-16 h-16 rounded-xl object-cover shrink-0" />
+          <Image src={todaysMemory.heroImageUrl} alt="" width={64} height={64} className="w-16 h-16 rounded-xl object-cover shrink-0" />
         </div>
       </motion.div>
     </div>
@@ -161,7 +162,7 @@ function TravelMapPlaceholder() {
               className="flex items-center gap-3 p-3 rounded-xl bg-card border border-border/50 shadow-sm hover:shadow-md transition-all hover:border-primary/20 group cursor-pointer"
             >
               <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0">
-                <img src={picnic.heroImageUrl} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                <Image src={picnic.heroImageUrl} alt="" fill loading="lazy" sizes="56px" className="object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">

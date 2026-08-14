@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Play, Sparkles, Camera, TreePine, Mountain } from 'lucide-react';
 
@@ -54,10 +55,13 @@ export default function HeroSection() {
           transition={{ duration: 2 }}
           className="absolute inset-0"
         >
-          <img
+          <Image
             src={heroImages[currentBg]}
             alt="Kashmir landscape"
-            className="w-full h-full object-cover"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
           />
         </motion.div>
       </AnimatePresence>

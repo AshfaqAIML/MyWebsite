@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { X, Download, Heart, Shield, Lock, CheckCircle, Clock, Loader2, ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 interface PaymentModalProps {
   open: boolean;
@@ -136,7 +137,8 @@ export function PaymentModal({ open, onClose, bookTitle, pdfUrl, pages }: Paymen
 
         <div className="px-6 pb-6">
           <div className="bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl p-5 mb-5">
-            <img src="/upi-qr.jpeg" alt="UPI QR Code"
+            <Image src="/upi-qr.jpeg" alt="UPI QR Code"
+              width={192} height={267}
               className="w-48 h-48 mx-auto rounded-xl shadow-sm object-cover"
               onError={(e) => {
                 const target = e.currentTarget;
@@ -155,7 +157,7 @@ export function PaymentModal({ open, onClose, bookTitle, pdfUrl, pages }: Paymen
           <div className="space-y-2.5 mb-5">
             <a href={upiLink} target="_blank" rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-black text-sm font-medium hover:opacity-90 transition-opacity">
-              <img src="https://img.icons8.com/color/20/google-pay-india.png" alt="" className="h-5 w-5" />
+              <Image src="https://img.icons8.com/color/20/google-pay-india.png" alt="" width={20} height={20} className="h-5 w-5" />
               Pay ₹{price} via UPI
             </a>
             {confirmed ? (

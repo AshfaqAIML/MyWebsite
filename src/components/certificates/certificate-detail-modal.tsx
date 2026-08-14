@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import {
   X,
   FileText,
@@ -119,10 +120,12 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
               {/* Preview */}
               <div className="relative aspect-[4/3] md:aspect-square md:aspect-auto bg-zinc-100 dark:bg-zinc-800">
                 {certificate.certificateImage ? (
-                  <img
+                  <Image
                     src={certificate.certificateImage}
                     alt={certificate.title}
-                    className="w-full h-full object-contain p-6"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-contain p-6"
                   />
                 ) : (
                   <div className="relative w-full h-full">

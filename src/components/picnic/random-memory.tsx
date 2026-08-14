@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import NextImage from 'next/image';
 import { picnics, stories, galleryPhotos } from '@/lib/picnic-seed-data';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -100,7 +101,7 @@ function PhotoMemory({ photo }: { photo: typeof galleryPhotos[0] }) {
   return (
     <div>
       <div className="relative h-64 overflow-hidden">
-        <img src={photo.url} alt={photo.caption} className="w-full h-full object-cover" />
+        <NextImage src={photo.url} alt={photo.caption} fill loading="lazy" sizes="(max-width: 768px) 100vw, 640px" className="object-cover" />
         <div className="img-overlay absolute inset-0" />
         <Badge className="absolute top-4 left-4 bg-white/20 text-white border-0 backdrop-blur-sm">
           <Camera className="w-3 h-3 mr-1" /> Photo
@@ -137,7 +138,7 @@ function PicnicMemory({ picnic }: { picnic: typeof picnics[0] }) {
   return (
     <div>
       <div className="relative h-48 overflow-hidden">
-        <img src={picnic.heroImageUrl} alt={picnic.title} className="w-full h-full object-cover" />
+        <NextImage src={picnic.heroImageUrl} alt={picnic.title} fill loading="lazy" sizes="(max-width: 768px) 100vw, 640px" className="object-cover" />
         <div className="img-overlay absolute inset-0" />
         <div className="absolute bottom-3 left-4">
           <span className="text-2xl font-bold text-white">{picnic.year}</span>

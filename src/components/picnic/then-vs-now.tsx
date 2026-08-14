@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { picnics } from '@/lib/picnic-seed-data';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -95,10 +96,12 @@ export default function ThenVsNow() {
             <CardContent className="p-0 relative">
               <div className="relative h-[400px] sm:h-[500px] overflow-hidden">
                 {/* "Now" image (full width behind) */}
-                <img
+                <Image
                   src={current.now.url}
                   alt={current.now.label}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
                 />
                 
                 {/* "Then" image (clipped by slider) */}
@@ -106,11 +109,12 @@ export default function ThenVsNow() {
                   className="absolute inset-0 overflow-hidden"
                   style={{ width: `${sliderValue[0]}%` }}
                 >
-                  <img
+<Image
                     src={current.then.url}
                     alt={current.then.label}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    style={{ width: `${10000 / sliderValue[0]}%`, maxWidth: 'none' }}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
                   />
                 </div>
 

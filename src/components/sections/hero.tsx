@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   ArrowDown,
   Globe,
@@ -154,10 +155,13 @@ export function Hero() {
             <div className="relative w-full max-w-sm">
               <div className="relative overflow-hidden rounded-2xl shadow-2xl shadow-blue-500/10">
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent z-10" />
-                <img
+                <Image
                   src={profile.photo}
                   alt={profile.name}
-                  className="w-full h-[75vh] object-cover object-top bg-zinc-200 dark:bg-zinc-700"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 0vw, 384px"
+                  className="object-cover object-top bg-zinc-200 dark:bg-zinc-700"
                 />
               </div>
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-400/20 via-purple-500/10 to-pink-500/20 blur-3xl -z-10 rounded-3xl" />
@@ -188,10 +192,12 @@ export function Hero() {
               <div className="relative w-56 h-56">
                 <div className="relative overflow-hidden rounded-2xl shadow-2xl shadow-blue-500/10 w-full h-full">
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent z-10" />
-                  <img
+                  <Image
                     src={profile.photo}
                     alt={profile.name}
-                    className="w-full h-full object-cover object-top bg-zinc-200 dark:bg-zinc-700"
+                    fill
+                    sizes="224px"
+                    className="object-cover object-top bg-zinc-200 dark:bg-zinc-700"
                   />
                 </div>
                 <div className="absolute -inset-4 bg-gradient-to-r from-blue-400/20 via-purple-500/10 to-pink-500/20 blur-3xl -z-10 rounded-3xl" />

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { galleryPhotos } from '@/lib/picnic-seed-data';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -139,11 +140,14 @@ export default function GallerySection() {
                   className="group relative rounded-2xl overflow-hidden bg-card border border-border/50 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300"
                   onClick={() => setLightboxIndex(index)}
                 >
-                  <img
+<Image
                     src={photo.url}
                     alt={photo.caption}
-                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
+                    width={photo.width}
+                    height={photo.height}
                     loading="lazy"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   {/* Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -190,9 +194,11 @@ export default function GallerySection() {
           <DialogTitle className="sr-only">Photo Viewer</DialogTitle>
           {lightboxIndex !== null && filteredPhotos[lightboxIndex] && (
             <div className="relative">
-              <img
+              <Image
                 src={filteredPhotos[lightboxIndex].url}
                 alt={filteredPhotos[lightboxIndex].caption}
+                width={filteredPhotos[lightboxIndex].width}
+                height={filteredPhotos[lightboxIndex].height}
                 className="w-full max-h-[80vh] object-contain"
               />
               {/* Controls */}
