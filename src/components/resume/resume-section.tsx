@@ -326,9 +326,9 @@ export function ResumeSection() {
                   <button
                     onClick={() => setPreview(null)}
                     aria-label="Close"
-                    className="p-2 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                    className="p-2.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                   >
-                    <FileText className="h-4 w-4 rotate-0" />
+                    <FileText className="h-5 w-5 rotate-0" />
                     <span className="sr-only">Close</span>
                   </button>
                 </div>

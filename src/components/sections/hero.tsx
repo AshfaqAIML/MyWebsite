@@ -236,7 +236,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap items-center gap-3 md:justify-start justify-center"
+              className="flex flex-col w-full items-stretch gap-3 sm:flex-row sm:flex-wrap md:justify-start justify-center [&_a]:w-full sm:[&_a]:w-auto [&_a]:justify-center"
             >
               <a href="#about">
                 <Button variant="default" size="lg">

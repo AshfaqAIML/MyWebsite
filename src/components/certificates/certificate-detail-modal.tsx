@@ -81,7 +81,7 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
               <button
                 onClick={onClose}
                 aria-label="Close"
-                className="p-2 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                className="p-2.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -89,7 +89,7 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
 
             <div className="grid md:grid-cols-2 gap-0">
               {/* Preview */}
-              <div className="relative aspect-square md:aspect-auto bg-zinc-100 dark:bg-zinc-800">
+              <div className="relative aspect-[4/3] md:aspect-square md:aspect-auto bg-zinc-100 dark:bg-zinc-800">
                 {certificate.certificateImage ? (
                   <img
                     src={certificate.certificateImage}
@@ -102,7 +102,7 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
                       <embed
                         src={certificate.certificatePdf}
                         type="application/pdf"
-                        className="w-full h-full min-h-[420px]"
+                        className="w-full h-full min-h-[280px] sm:min-h-[420px]"
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full">

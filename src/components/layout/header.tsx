@@ -16,8 +16,6 @@ export function Header() {
   const profile = getProfile();
   const pathname = usePathname();
 
-  if (pathname.startsWith("/dashboard") || pathname.startsWith("/study-corner/read")) return null;
-
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -28,6 +26,8 @@ export function Header() {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
+
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/study-corner/read")) return null;
 
   return (
     <header
@@ -48,7 +48,7 @@ export function Header() {
             <span className="text-zinc-400 dark:text-zinc-500">.</span>
           </a>
 
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1">
             {navItems.slice(0, 9).map((item) => (
               <a
                 key={item.href}
@@ -61,7 +61,7 @@ export function Header() {
             <ThemeToggle className="ml-2" />
           </nav>
 
-          <div className="flex items-center gap-3 md:hidden">
+          <div className="flex items-center gap-3 lg:hidden">
             <ThemeToggle />
             <Button
               variant="ghost"
@@ -86,7 +86,7 @@ export function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden border-t border-zinc-200/50 dark:border-zinc-700/50 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl"
+            className="lg:hidden border-t border-zinc-200/50 dark:border-zinc-700/50 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl max-h-[calc(100dvh-4rem)] overflow-y-auto premium-scrollbar"
           >
             <nav className="container mx-auto px-4 py-4 space-y-1">
               {navItems.map((item) => (
