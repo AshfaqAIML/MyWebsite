@@ -82,6 +82,8 @@ export function FilterBar({
             <button
               key={opt}
               onClick={() => onOptionChange(opt)}
+              aria-pressed={active}
+              aria-label={active ? `${opt} (active)` : opt}
               className={cn(
                 "relative shrink-0 snap-start px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 border whitespace-nowrap",
                 active

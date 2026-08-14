@@ -284,66 +284,116 @@ export function ResumeSection() {
 
       {/* Preview modal */}
       <AnimatePresence>
-        {preview && (
-          <motion.div
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            role="dialog"
-            aria-modal="true"
-            aria-label={preview.title}
-          >
-            <div
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-              onClick={() => setPreview(null)}
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.25 }}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl flex flex-col"
-            >
-              <div className="sticky top-0 z-10 flex items-center justify-between p-4 sm:p-5 border-b border-zinc-100 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl">
-                <div className="min-w-0">
-                  <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 truncate">
-                    {preview.title}
-                  </h3>
-                  <p className="text-xs text-zinc-400 dark:text-zinc-500">
-                    {TYPE_META[preview.type].label} · PDF ·{" "}
-                    {formatFileSize(preview.fileSize)}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <a
-                    href={preview.filePath}
-                    download={preview.fileName}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:opacity-90 transition-opacity"
-                  >
-                    <Download className="h-3.5 w-3.5" /> Download
-                  </a>
-                  <button
-                    onClick={() => setPreview(null)}
-                    aria-label="Close"
-                    className="p-2.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                  >
-                    <FileText className="h-5 w-5 rotate-0" />
-                    <span className="sr-only">Close</span>
-                  </button>
-                </div>
-              </div>
-              <div className="flex-1 overflow-hidden bg-zinc-100 dark:bg-zinc-800">
-                <embed
-                  src={preview.filePath}
-                  type="application/pdf"
-                  className="w-full h-full min-h-[60vh]"
-                />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
+        {preview && <PreviewDialog doc={preview} onClose={() => setPreview(null)} />}
       </AnimatePresence>
     </section>
+  );
+}
+
+function PreviewDialog({
+  doc,
+  onClose,
+}: {
+  doc: ResumeDocument;
+  onClose: () => void;
+}) {
+  const dialogRef = React.useRef<HTMLDivElement>(null);
+  const closeButtonRef = React.useRef<HTMLButtonElement>(null);
+
+  React.useEffect(() => {
+    const previouslyFocused = document.activeElement as HTMLElement;
+    closeButtonRef.current?.focus();
+
+    const trapFocus = (e: KeyboardEvent) => {
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handler);
+    window.addEventListener("keydown", trapFocus);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handler);
+      window.removeEventListener("keydown", trapFocus);
+      document.body.style.overflow = "";
+      previouslyFocused?.focus();
+    };
+  }, [doc, onClose]);
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={doc.title}
+    >
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <motion.div
+        ref={dialogRef}
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ duration: 0.25 }}
+        className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl flex flex-col"
+      >
+        <div className="sticky top-0 z-10 flex items-center justify-between p-4 sm:p-5 border-b border-zinc-100 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl">
+          <div className="min-w-0">
+            <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 truncate">
+              {doc.title}
+            </h3>
+            <p className="text-xs text-zinc-400 dark:text-zinc-500">
+              {TYPE_META[doc.type].label} · PDF ·{" "}
+              {formatFileSize(doc.fileSize)}
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <a
+              href={doc.filePath}
+              download={doc.fileName}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:opacity-90 transition-opacity"
+            >
+              <Download className="h-3.5 w-3.5" /> Download
+            </a>
+            <button
+              ref={closeButtonRef}
+              onClick={onClose}
+              aria-label="Close"
+              className="p-2.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            >
+              <FileText className="h-5 w-5 rotate-0" />
+              <span className="sr-only">Close</span>
+            </button>
+          </div>
+        </div>
+        <div className="flex-1 overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+          <embed
+            src={doc.filePath}
+            type="application/pdf"
+            className="w-full h-full min-h-[60vh]"
+          />
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }

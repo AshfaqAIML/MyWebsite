@@ -68,6 +68,8 @@ export function Header() {
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
               aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav"
             >
               {isOpen ? (
                 <X className="h-5 w-5" />
@@ -88,7 +90,7 @@ export function Header() {
             transition={{ duration: 0.2 }}
             className="lg:hidden border-t border-zinc-200/50 dark:border-zinc-700/50 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl max-h-[calc(100dvh-4rem)] overflow-y-auto premium-scrollbar"
           >
-            <nav className="container mx-auto px-4 py-4 space-y-1">
+            <nav id="mobile-nav" className="container mx-auto px-4 py-4 space-y-1" aria-label="Mobile navigation">
               {navItems.map((item) => (
                 <a
                   key={item.href}

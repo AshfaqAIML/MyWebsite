@@ -390,6 +390,8 @@ function BookFilterBar({
             <button
               key={opt}
               onClick={() => onFilterChange(opt)}
+              aria-pressed={active}
+              aria-label={active ? `${opt} (active)` : opt}
               className={cn(
                 "shrink-0 snap-start px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border whitespace-nowrap",
                 active

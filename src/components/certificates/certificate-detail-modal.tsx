@@ -22,16 +22,42 @@ interface CertificateDetailModalProps {
 
 export function CertificateDetailModal({ certificate, onClose }: CertificateDetailModalProps) {
   const [copied, setCopied] = React.useState(false);
+  const dialogRef = React.useRef<HTMLDivElement>(null);
+  const closeButtonRef = React.useRef<HTMLButtonElement>(null);
 
   React.useEffect(() => {
+    if (!certificate) return;
+    const previouslyFocused = document.activeElement as HTMLElement;
+    closeButtonRef.current?.focus();
+
+    const trapFocus = (e: KeyboardEvent) => {
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", handler);
-    document.body.style.overflow = certificate ? "hidden" : "";
+    window.addEventListener("keydown", trapFocus);
+    document.body.style.overflow = "hidden";
     return () => {
       window.removeEventListener("keydown", handler);
+      window.removeEventListener("keydown", trapFocus);
       document.body.style.overflow = "";
+      previouslyFocused?.focus();
     };
   }, [certificate, onClose]);
 
@@ -60,6 +86,7 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
             onClick={onClose}
           />
           <motion.div
+            ref={dialogRef}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -79,6 +106,7 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
                 </span>
               </div>
               <button
+                ref={closeButtonRef}
                 onClick={onClose}
                 aria-label="Close"
                 className="p-2.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"

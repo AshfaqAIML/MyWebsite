@@ -94,7 +94,15 @@ function SkillBar({ name, level, delay, color }: { name: string; level?: number;
           <span className="text-xs text-zinc-400 dark:text-zinc-500 font-mono">{level}%</span>
         )}
       </div>
-      <div className="h-2 rounded-full bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
+      <div
+        ref={barRef}
+        className="h-2 w-full rounded-full bg-zinc-200 dark:bg-zinc-700 overflow-hidden"
+        role="progressbar"
+        aria-label={`${name} proficiency`}
+        aria-valuenow={level || 0}
+        aria-valuemin={0}
+        aria-valuemax={100}
+      >
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${width}%` }}
