@@ -27,6 +27,20 @@ export const metadata: Metadata = {
   },
   description: config.description,
   metadataBase: new URL(config.url),
+  alternates: {
+    canonical: config.url,
+  },
+  keywords: [
+    "Ishfaq Dar",
+    "Full Stack Developer",
+    "Web Developer",
+    "UI/UX Designer",
+    "Data Analyst",
+    "Data Scientist",
+    "Backend Engineer",
+    "Kashmir Developer",
+    "Portfolio",
+  ],
   openGraph: {
     type: "website",
     locale: "en_US",
