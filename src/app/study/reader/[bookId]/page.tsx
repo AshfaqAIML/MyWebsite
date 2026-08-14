@@ -45,6 +45,19 @@ export default function StudyReaderPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [scale, setScale] = useState(1.2);
   const [theme, setTheme] = useState<Theme>("light");
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      const stored = localStorage.getItem("study-reader-theme");
+      if (stored === "dark" || stored === "sepia") setTheme(stored);
+    }, 0);
+    return () => clearTimeout(t);
+  }, []);
+
+  const applyTheme = (t: Theme) => {
+    setTheme(t);
+    localStorage.setItem("study-reader-theme", t);
+  };
   const [leftSidebar, setLeftSidebar] = useState(true);
   const [rightSidebar, setRightSidebar] = useState(true);
   const [sidebarTab, setSidebarTab] = useState<SidebarTab>("highlights");
@@ -333,7 +346,7 @@ export default function StudyReaderPage() {
           </button>
           <div className="flex gap-0.5 ml-1">
             {(["light", "sepia", "dark"] as Theme[]).map((t) => (
-              <button key={t} onClick={() => setTheme(t)} className={`p-1.5 rounded-lg transition-colors ${theme === t ? "bg-black/[0.06] dark:bg-white/[0.1]" : "hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"}`} title={t}>
+              <button key={t} onClick={() => applyTheme(t)} className={`p-1.5 rounded-lg transition-colors ${theme === t ? "bg-black/[0.06] dark:bg-white/[0.1]" : "hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"}`} title={t}>
                 {t === "light" ? <Sun className="h-3.5 w-3.5" /> : t === "dark" ? <Moon className="h-3.5 w-3.5" /> : <Monitor className="h-3.5 w-3.5" />}
               </button>
             ))}
