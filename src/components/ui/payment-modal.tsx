@@ -123,7 +123,7 @@ export function PaymentModal({ open, onClose, bookTitle, pdfUrl, pages }: Paymen
       <div ref={paymentRef} tabIndex={-1} onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl overflow-hidden outline-none">
         <button onClick={onClose} className="absolute top-4 right-4 p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors z-10">
-          <X className="h-4 w-4 text-zinc-500" />
+          <X className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
         </button>
 
         <div className="p-6 text-center">
@@ -131,10 +131,10 @@ export function PaymentModal({ open, onClose, bookTitle, pdfUrl, pages }: Paymen
             <Heart className="h-7 w-7 text-amber-600 dark:text-amber-400" />
           </div>
           <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">Support My Work</h2>
-          <p className="text-sm text-zinc-500 mb-1">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">
             You&apos;re about to download <strong className="text-zinc-700 dark:text-zinc-300">{bookTitle}</strong>.
           </p>
-          <p className="text-xs text-zinc-400 mb-6">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-6">
             Your contribution helps me create more quality content. Suggested contribution: <strong className="text-zinc-600 dark:text-zinc-400">₹{price}</strong>
           </p>
         </div>
@@ -149,9 +149,9 @@ export function PaymentModal({ open, onClose, bookTitle, pdfUrl, pages }: Paymen
                 target.style.display = "none";
                 target.nextElementSibling?.classList.remove("hidden");
               }} />
-            <p className="text-xs text-zinc-400 text-center mt-3 hidden">QR code not available. Use UPI ID below.</p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 text-center mt-3 hidden">QR code not available. Use UPI ID below.</p>
             <div className="mt-3 text-center">
-              <p className="text-xs text-zinc-500 mb-1">Or pay via UPI</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Or pay via UPI</p>
               <p className="text-sm font-mono font-semibold text-zinc-800 dark:text-zinc-200 bg-white dark:bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 inline-block select-all">
                 {UPI_ID}
               </p>
@@ -171,7 +171,7 @@ export function PaymentModal({ open, onClose, bookTitle, pdfUrl, pages }: Paymen
                 Download PDF (Payment Confirmed ✓)
               </a>
             ) : (
-              <div className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl border-2 border-zinc-300 dark:border-zinc-600 bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 text-sm font-medium cursor-not-allowed select-none">
+              <div className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl border-2 border-zinc-300 dark:border-zinc-600 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 text-sm font-medium cursor-not-allowed select-none">
                 <Lock className="h-4 w-4" />
                 Download PDF after Payment
               </div>
@@ -180,12 +180,12 @@ export function PaymentModal({ open, onClose, bookTitle, pdfUrl, pages }: Paymen
 
           <div className="border-t border-zinc-200 dark:border-zinc-700 pt-5">
             <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-200 mb-1">Payment Verification</h3>
-            <p className="text-xs text-zinc-500 mb-4">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-4">
               After making a UPI payment, enter your transaction ID to verify and unlock download access.
             </p>
 
             <div className="bg-zinc-50 dark:bg-zinc-800/50 rounded-xl p-3 mb-4">
-              <p className="text-xs text-zinc-500 mb-1">Pay via UPI</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Pay via UPI</p>
               <p className="text-sm font-mono font-semibold text-zinc-800 dark:text-zinc-200 bg-white dark:bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 inline-block select-all">
                 {UPI_ID}
               </p>
@@ -251,7 +251,7 @@ export function PaymentModal({ open, onClose, bookTitle, pdfUrl, pages }: Paymen
           </div>
 
           <a href="/dashboard/payments" target="_blank" rel="noopener noreferrer"
-            className="mt-4 flex items-center justify-center gap-1.5 text-[10px] text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
+            className="mt-4 flex items-center justify-center gap-1.5 text-[10px] text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
             <ExternalLink className="h-3 w-3" />
             Manage payments in Dashboard
           </a>

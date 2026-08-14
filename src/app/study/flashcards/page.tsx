@@ -91,15 +91,15 @@ export default function FlashcardsPage() {
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="text-center">
               <p className="text-2xl font-bold text-emerald-500">{Object.values(reviewed).filter((v) => v === "easy").length}</p>
-              <p className="text-xs text-black/40 dark:text-white/40">Easy</p>
+              <p className="text-xs text-black/60 dark:text-white/60">Easy</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-blue-500">{Object.values(reviewed).filter((v) => v === "good").length}</p>
-              <p className="text-xs text-black/40 dark:text-white/40">Good</p>
+              <p className="text-xs text-black/60 dark:text-white/60">Good</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-rose-500">{Object.values(reviewed).filter((v) => v === "again").length}</p>
-              <p className="text-xs text-black/40 dark:text-white/40">Again</p>
+              <p className="text-xs text-black/60 dark:text-white/60">Again</p>
             </div>
           </div>
           <button onClick={resetSession} className="inline-flex items-center gap-2 rounded-xl bg-black px-5 py-2.5 text-sm font-medium text-white dark:bg-white dark:text-black hover:opacity-90 transition-all">
@@ -109,7 +109,7 @@ export default function FlashcardsPage() {
       ) : (
         <div className="max-w-2xl mx-auto space-y-6">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-black/40 dark:text-white/40">{currentIndex + 1} of {dueCards.length}</span>
+            <span className="text-black/60 dark:text-white/60">{currentIndex + 1} of {dueCards.length}</span>
             <div className="flex gap-1">
               {dueCards.slice(0, dueCards.length).map((_, i) => (
                 <div key={i} className={`h-1.5 w-6 rounded-full transition-colors ${i < currentIndex ? "bg-blue-500" : i === currentIndex ? "bg-blue-500/60" : "bg-black/[0.06] dark:bg-white/[0.06]"}`} />
@@ -130,9 +130,9 @@ export default function FlashcardsPage() {
                   {flipped ? card?.back || card?.front : card?.front}
                 </p>
                 {flipped && card?.hint && (
-                  <p className="mt-4 text-sm text-black/40 dark:text-white/40 italic">{card.hint}</p>
+                  <p className="mt-4 text-sm text-black/60 dark:text-white/60 italic">{card.hint}</p>
                 )}
-                <p className="mt-8 text-xs text-black/30 dark:text-white/30">
+                <p className="mt-8 text-xs text-black/55 dark:text-white/50">
                   {flipped ? "Click to flip back" : "Click to reveal answer"}
                 </p>
               </div>
@@ -147,7 +147,7 @@ export default function FlashcardsPage() {
             </div>
           )}
 
-          <div className="flex justify-between text-sm text-black/30 dark:text-white/30">
+          <div className="flex justify-between text-sm text-black/55 dark:text-white/50">
             <button onClick={() => { setCurrentIndex(Math.max(0, currentIndex - 1)); setFlipped(false); }} disabled={currentIndex === 0} className="disabled:opacity-20 hover:text-black/60 dark:hover:text-white/60 transition-colors">
               <ChevronLeft className="h-4 w-4 inline" /> Previous
             </button>

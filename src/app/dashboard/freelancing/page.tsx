@@ -45,7 +45,7 @@ export default function FreelancingPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Freelancing</h1>
-          <p className="text-sm text-zinc-500 mt-1">Track freelance projects, proposals, and income.</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Track freelance projects, proposals, and income.</p>
         </div>
         <button onClick={() => setShowForm(!showForm)}
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-black text-sm font-medium hover:opacity-90 transition-opacity">
@@ -97,11 +97,11 @@ export default function FreelancingPage() {
                 "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400"
               }`}>{project.status}</span>
             </div>
-            <p className="text-xs text-zinc-500">{project.platform} · {project.client} · ${project.value}</p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">{project.platform} · {project.client} · ${project.value}</p>
           </div>
         ))}
         {projects.length === 0 && !showForm && (
-          <p className="text-center py-16 text-zinc-400">No projects yet. Click &quot;Add Project&quot; to start tracking.</p>
+          <p className="text-center py-16 text-zinc-500 dark:text-zinc-400">No projects yet. Click &quot;Add Project&quot; to start tracking.</p>
         )}
       </div>
     </div>

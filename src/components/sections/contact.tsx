@@ -140,7 +140,7 @@ export function Contact() {
                 <div className="flex items-center gap-4">
                   <span className="p-2.5 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">{item.icon}</span>
                   <div>
-                    <p className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-wider font-medium">{item.label}</p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-medium">{item.label}</p>
                     {item.href ? (
                       <a href={item.href} className="text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{item.value}</a>
                     ) : (
@@ -156,7 +156,7 @@ export function Contact() {
               <div className="flex items-center gap-4">
                 <span className="p-2.5 rounded-xl bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400"><MessageCircle className="h-4 w-4" /></span>
                 <div>
-                  <p className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-wider font-medium">Let&apos;s Connect</p>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-medium">Let&apos;s Connect</p>
                   <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Find me on socials above</p>
                 </div>
               </div>

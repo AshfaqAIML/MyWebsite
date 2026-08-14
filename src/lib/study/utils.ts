@@ -113,7 +113,7 @@ export function getCategoryColor(category: string): string {
     Reference: 'from-violet-500/20 to-purple-500/20 border-violet-500/20 text-violet-400',
     Psychology: 'from-pink-500/20 to-rose-500/20 border-pink-500/20 text-pink-400',
   };
-  return colors[category] || 'from-zinc-500/20 to-zinc-500/20 border-zinc-500/20 text-zinc-400';
+  return colors[category] || 'from-zinc-500/20 to-zinc-500/20 border-zinc-500/20 text-zinc-500 dark:text-zinc-400';
 }
 
 export function getCategoryBadgeColor(category: string): string {
@@ -123,5 +123,5 @@ export function getCategoryBadgeColor(category: string): string {
     Reference: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
     Psychology: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
   };
-  return colors[category] || 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20';
+  return colors[category] || 'bg-zinc-500/10 text-zinc-500 dark:text-zinc-400 border-zinc-500/20';
 }

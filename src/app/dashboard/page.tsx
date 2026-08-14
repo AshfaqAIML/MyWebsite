@@ -6,7 +6,7 @@ export default function DashboardHome() {
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Overview</h1>
-        <p className="text-sm text-zinc-500 mt-1">Your personal operating system at a glance.</p>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Your personal operating system at a glance.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
@@ -31,7 +31,7 @@ export default function DashboardHome() {
                 <div className="w-2 h-2 rounded-full bg-blue-500 mt-1.5 shrink-0" />
                 <div>
                   <p className="text-sm text-zinc-700 dark:text-zinc-300">{item.text}</p>
-                  <p className="text-xs text-zinc-400 mt-0.5">{item.time}</p>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">{item.time}</p>
                 </div>
               </div>
             ))}

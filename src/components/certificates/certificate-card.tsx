@@ -66,7 +66,7 @@ export function CertificateCard({ certificate, onOpen, index = 0 }: CertificateC
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
-            <Award className="h-12 w-12 text-zinc-400/60" />
+            <Award className="h-12 w-12 text-zinc-500 dark:text-zinc-400/60" />
           </div>
         )}
 
@@ -121,7 +121,7 @@ export function CertificateCard({ certificate, onOpen, index = 0 }: CertificateC
         )}
 
         <div className="flex items-center justify-between pt-2 border-t border-zinc-100 dark:border-zinc-800">
-          <span className="text-[11px] text-zinc-400 dark:text-zinc-500">
+          <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
             {categories?.[0] || "General"}
             {date ? ` · ${date}` : ""}
           </span>

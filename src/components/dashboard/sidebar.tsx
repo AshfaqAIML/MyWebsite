@@ -77,7 +77,7 @@ export function DashboardSidebar() {
         <Link
           href="/"
           onClick={() => setMobileOpen(false)}
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
         >
           <Home className="h-4 w-4 shrink-0" />
           Public Site
@@ -121,7 +121,7 @@ export function DashboardSidebar() {
             onClick={() => setMobileOpen(false)}
             className="lg:hidden absolute top-4 right-4 p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800"
           >
-            <X className="h-5 w-5 text-zinc-500" />
+            <X className="h-5 w-5 text-zinc-500 dark:text-zinc-400" />
           </button>
         )}
         {sidebarContent}

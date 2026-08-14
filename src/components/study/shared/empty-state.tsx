@@ -15,10 +15,10 @@ export function EmptyState({ icon: Icon, title, description, action, className }
   return (
     <div className={cn("flex flex-col items-center justify-center py-16 px-6", className)}>
       <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] ring-1 ring-black/[0.04] dark:ring-white/[0.06]">
-        <Icon className="h-7 w-7 text-black/30 dark:text-white/30" />
+        <Icon className="h-7 w-7 text-black/55 dark:text-white/50" />
       </div>
       <h3 className="text-lg font-semibold text-black/80 dark:text-white/80">{title}</h3>
-      <p className="mt-1.5 max-w-sm text-center text-sm text-black/40 dark:text-white/40">{description}</p>
+      <p className="mt-1.5 max-w-sm text-center text-sm text-black/60 dark:text-white/60">{description}</p>
       {action && (
         <button
           onClick={action.onClick}

@@ -112,7 +112,7 @@ export default function StudyDashboard() {
                         <div className="progress-bar-premium flex-1">
                           <div className="fill" style={{ width: `${book.readingProgress?.percentage || 0}%` }} />
                         </div>
-                        <span className="text-[11px] text-black/40 dark:text-white/40 tabular-nums">{Math.round(book.readingProgress?.percentage || 0)}%</span>
+                        <span className="text-[11px] text-black/60 dark:text-white/60 tabular-nums">{Math.round(book.readingProgress?.percentage || 0)}%</span>
                       </div>
                     </div>
                     <ChevronRight className="h-4 w-4 text-black/20 dark:text-white/20 group-hover:text-black/50 dark:group-hover:text-white/50 transition-colors" />
@@ -132,7 +132,7 @@ export default function StudyDashboard() {
               <ActivitySkeleton />
             ) : activity.length === 0 ? (
               <div className="py-8 text-center">
-                <p className="text-sm text-black/40 dark:text-white/40">No activity yet. Start reading to see your activity here.</p>
+                <p className="text-sm text-black/60 dark:text-white/60">No activity yet. Start reading to see your activity here.</p>
               </div>
             ) : (
               <div className="space-y-1">
@@ -145,7 +145,7 @@ export default function StudyDashboard() {
                       {(a.pagesRead || 0) > 0 ? `Read ${a.pagesRead} page${(a.pagesRead || 0) > 1 ? "s" : ""}` : `Studied ${Math.round(a.duration / 60)} min`}
                       {a.book?.title ? ` · ${a.book.title}` : ""}
                     </span>
-                    <span className="text-xs text-black/30 dark:text-white/30">
+                    <span className="text-xs text-black/55 dark:text-white/50">
                       {a.date ? new Date(a.date).toLocaleDateString(undefined, { month: "short", day: "numeric" }) : ""}
                     </span>
                   </div>
@@ -175,7 +175,7 @@ export default function StudyDashboard() {
                 <BrainCircuit className="h-4 w-4 text-purple-500" />
                 <h2 className="text-sm font-semibold">Flashcards</h2>
               </div>
-              <span className="text-xs text-black/40 dark:text-white/40">{dueCards.length} due</span>
+              <span className="text-xs text-black/60 dark:text-white/60">{dueCards.length} due</span>
             </div>
             {loading ? (
               <div className="space-y-2">
@@ -199,7 +199,7 @@ export default function StudyDashboard() {
               </div>
             ) : (
               <div className="py-6 text-center">
-                <p className="text-sm text-black/40 dark:text-white/40">No cards due for review</p>
+                <p className="text-sm text-black/60 dark:text-white/60">No cards due for review</p>
               </div>
             )}
           </GlassCard>
@@ -210,7 +210,7 @@ export default function StudyDashboard() {
               <ProgressRing value={(stats?.totalBooks ?? 0) > 0 ? Math.min(((stats?.booksCompleted ?? 0) / (stats?.totalBooks ?? 1)) * 100, 100) : 0} size={48} />
               <div>
                 <p className="text-sm font-medium">Reading Goal</p>
-                <p className="text-xs text-black/40 dark:text-white/40">
+                <p className="text-xs text-black/60 dark:text-white/60">
                   {stats?.booksCompleted ?? 0} of {stats?.totalBooks ?? 0} books completed
                 </p>
               </div>
@@ -239,7 +239,7 @@ function StatCard({ icon: Icon, label, value, color }: { icon: LucideIcon; label
     <GlassCard className="stat-card p-4">
       <Icon className={`h-4 w-4 ${color} mb-2`} />
       <p className="text-xl font-bold tabular-nums">{value}</p>
-      <p className="text-xs text-black/40 dark:text-white/40 mt-0.5">{label}</p>
+      <p className="text-xs text-black/60 dark:text-white/60 mt-0.5">{label}</p>
     </GlassCard>
   );
 }

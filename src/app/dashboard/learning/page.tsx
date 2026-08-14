@@ -62,7 +62,7 @@ export default function LearningPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Learning Tracker</h1>
-          <p className="text-sm text-zinc-500 mt-1">Track books, courses, articles, and certifications.</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Track books, courses, articles, and certifications.</p>
         </div>
         <button onClick={() => setShowForm(!showForm)}
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-black text-sm font-medium hover:opacity-90">
@@ -78,7 +78,7 @@ export default function LearningPage() {
                 <BookOpen className="h-4 w-4 text-blue-600" />
                 Connected: CodeVerse Academy
               </h3>
-              <p className="text-xs text-zinc-500 mt-1 max-w-lg">{codeverse.description.slice(0, 200)}...</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 max-w-lg">{codeverse.description.slice(0, 200)}...</p>
             </div>
             <a href={codeverse.liveUrl} target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition-colors">
@@ -144,7 +144,7 @@ export default function LearningPage() {
           <div key={item.id} className="p-4 rounded-xl border border-zinc-200/50 dark:border-zinc-700/50 bg-white dark:bg-zinc-900 flex items-center justify-between">
             <div>
               <h3 className="font-medium text-sm text-zinc-900 dark:text-zinc-100">{item.title}</h3>
-              <p className="text-xs text-zinc-500">{item.type} · {item.platform}</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">{item.type} · {item.platform}</p>
             </div>
             <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
               item.status === "completed" ? "bg-green-100 text-green-700" :
@@ -154,7 +154,7 @@ export default function LearningPage() {
           </div>
         ))}
         {items.length === 0 && !showForm && (
-          <p className="text-center py-16 text-zinc-400">No learning items yet.</p>
+          <p className="text-center py-16 text-zinc-500 dark:text-zinc-400">No learning items yet.</p>
         )}
       </div>
     </div>

@@ -30,7 +30,7 @@ const PDFViewer = dynamic(() => import('@/components/study/pdf-viewer'), {
     <div className="flex-1 flex items-center justify-center bg-[#0f0f13]">
       <div className="text-center space-y-4">
         <div className="w-10 h-10 border-2 border-white/20 border-t-white/60 rounded-full animate-spin mx-auto" />
-        <p className="text-sm text-white/40">Loading PDF viewer...</p>
+        <p className="text-sm text-white/60">Loading PDF viewer...</p>
       </div>
     </div>
   ),
@@ -50,7 +50,7 @@ function ChapterTree({ chapters, progress, currentChapter, onSelect }: {
   const ansi = (active: boolean, completed: boolean) =>
     active ? 'bg-white/[0.08] text-white' :
     completed ? 'text-white/60 hover:bg-white/[0.03] hover:text-white/80' :
-    'text-white/40 hover:bg-white/[0.03] hover:text-white/60';
+    'text-white/60 hover:bg-white/[0.03] hover:text-white/60';
 
   return (
     <div className="space-y-0.5">
@@ -63,7 +63,7 @@ function ChapterTree({ chapters, progress, currentChapter, onSelect }: {
             <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${completed ? 'bg-emerald-500' : active ? 'bg-white' : 'bg-white/20'}`} />
             <span className="truncate flex-1">{ch.title}</span>
             {completed && <CheckCircle2 className="h-3 w-3 text-emerald-500/70 shrink-0" />}
-            <span className="text-[10px] text-white/30 shrink-0">p.{ch.pageStart}</span>
+            <span className="text-[10px] text-white/50 shrink-0">p.{ch.pageStart}</span>
           </button>
         );
       })}
@@ -112,14 +112,14 @@ function NotesPanel({ bookId }: { bookId: string }) {
               {editNoteId ? 'Update' : 'Save'}
             </button>
             <button onClick={() => { setShowEditor(false); setEditorContent(''); setEditNoteId(null); }}
-              className="px-3 py-1.5 rounded-lg text-xs text-white/40 hover:text-white/60 transition-colors">
+              className="px-3 py-1.5 rounded-lg text-xs text-white/60 hover:text-white/60 transition-colors">
               Cancel
             </button>
           </div>
         </div>
       ) : (
         <button onClick={() => setShowEditor(true)}
-          className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg border border-dashed border-white/[0.08] text-white/40 hover:text-white/60 hover:border-white/[0.15] transition-all text-xs">
+          className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg border border-dashed border-white/[0.08] text-white/60 hover:text-white/60 hover:border-white/[0.15] transition-all text-xs">
           <Plus className="h-3.5 w-3.5" />
           New Note
         </button>
@@ -130,16 +130,16 @@ function NotesPanel({ bookId }: { bookId: string }) {
             <div className="prose prose-invert prose-sm max-w-none text-xs text-white/70 leading-relaxed line-clamp-4"
               dangerouslySetInnerHTML={{ __html: note.content }} />
             <div className="flex items-center justify-between mt-2">
-              <span className="text-[10px] text-white/30">
+              <span className="text-[10px] text-white/50">
                 {new Date(note.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })}
               </span>
               <div className="flex items-center gap-1">
                 <button onClick={() => { setEditNoteId(note.id); setEditorContent(note.content); setShowEditor(true); }}
-                  className="opacity-0 group-hover:opacity-100 text-white/30 hover:text-white/60 transition-all text-[10px] px-1.5 py-0.5 rounded">
+                  className="opacity-0 group-hover:opacity-100 text-white/50 hover:text-white/60 transition-all text-[10px] px-1.5 py-0.5 rounded">
                   Edit
                 </button>
                 <button onClick={() => { store.removeNote(bookId, note.id); setNotes(store.getNotes(bookId)); }}
-                  className="opacity-0 group-hover:opacity-100 text-white/30 hover:text-red-400 transition-all">
+                  className="opacity-0 group-hover:opacity-100 text-white/50 hover:text-red-400 transition-all">
                   <Trash2 className="h-3 w-3" />
                 </button>
               </div>
@@ -147,7 +147,7 @@ function NotesPanel({ bookId }: { bookId: string }) {
           </div>
         ))}
         {notes.length === 0 && !showEditor && (
-          <p className="text-xs text-white/30 text-center py-6">No notes yet</p>
+          <p className="text-xs text-white/50 text-center py-6">No notes yet</p>
         )}
       </div>
     </div>
@@ -158,16 +158,16 @@ function AIPanel() {
   return (
     <div className="space-y-4">
       <div className="p-4 rounded-xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/[0.06]">
-        <Sparkles className="h-5 w-5 text-white/40 mb-3" />
+        <Sparkles className="h-5 w-5 text-white/60 mb-3" />
         <h3 className="text-sm font-medium text-white/70 mb-1">AI Study Assistant</h3>
-        <p className="text-xs text-white/40 leading-relaxed">
+        <p className="text-xs text-white/60 leading-relaxed">
           AI-powered summaries, explanations, quiz generation, flashcard creation, and concept mapping coming soon.
         </p>
       </div>
       <div className="space-y-2">
         {['Summarize Chapter', 'Generate Quiz', 'Explain Concept', 'Create Flashcards'].map(feature => (
           <button key={feature}
-            className="w-full text-left px-3 py-2 rounded-lg text-xs text-white/40 hover:text-white/60 hover:bg-white/[0.03] transition-all">
+            className="w-full text-left px-3 py-2 rounded-lg text-xs text-white/60 hover:text-white/60 hover:bg-white/[0.03] transition-all">
             {feature}
           </button>
         ))}
@@ -326,7 +326,7 @@ export default function ReadingPage() {
     bookmarks: () => (
       <div className="space-y-2">
         <button onClick={handleAddBookmark}
-          className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg border border-dashed border-white/[0.08] text-white/40 hover:text-white/60 hover:border-white/[0.15] transition-all text-xs">
+          className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg border border-dashed border-white/[0.08] text-white/60 hover:text-white/60 hover:border-white/[0.15] transition-all text-xs">
           <Plus className="h-3.5 w-3.5" />
           Add Bookmark
         </button>
@@ -349,7 +349,7 @@ export default function ReadingPage() {
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
         <div className="text-center">
           <p className="text-white/60 mb-4">Book not found</p>
-          <Link href="/study-corner" className="text-sm text-white/40 hover:text-white transition-colors">Back to Library</Link>
+          <Link href="/study-corner" className="text-sm text-white/60 hover:text-white transition-colors">Back to Library</Link>
         </div>
       </div>
     );
@@ -363,14 +363,14 @@ export default function ReadingPage() {
         readingMode === 'focus' ? 'opacity-0 hover:opacity-100 transition-opacity' : 'bg-zinc-950/80 backdrop-blur-xl'
       }`}>
         <div className="flex items-center gap-2">
-          <Link href="/study-corner" className="p-1.5 rounded-lg hover:bg-white/[0.04] text-white/40 hover:text-white transition-colors">
+          <Link href="/study-corner" className="p-1.5 rounded-lg hover:bg-white/[0.04] text-white/60 hover:text-white transition-colors">
             <ArrowLeft className="h-4 w-4" />
           </Link>
           <div className="w-px h-4 bg-white/[0.06] mx-1" />
           <div className="flex items-center gap-2 text-sm">
             <span className="text-white/80 font-medium truncate max-w-[200px]">{book.title}</span>
-            <span className="text-white/30 text-xs">—</span>
-            <span className="text-white/40 text-xs">{book.author}</span>
+            <span className="text-white/50 text-xs">—</span>
+            <span className="text-white/60 text-xs">{book.author}</span>
           </div>
         </div>
         <div className="flex items-center gap-1">
@@ -379,7 +379,7 @@ export default function ReadingPage() {
             return (
               <button key={m.key} onClick={() => setReadingMode(m.key)}
                 className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 ${
-                  readingMode === m.key ? 'bg-white/[0.08] text-white' : 'text-white/40 hover:text-white/60 hover:bg-white/[0.03]'
+                  readingMode === m.key ? 'bg-white/[0.08] text-white' : 'text-white/60 hover:text-white/60 hover:bg-white/[0.03]'
                 }`}>
                 <Icon className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">{m.label}</span>
@@ -387,18 +387,18 @@ export default function ReadingPage() {
             );
           })}
           <div className="w-px h-4 bg-white/[0.06] mx-1" />
-          <button onClick={handleAddBookmark} className="p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/[0.04] transition-colors" title="Add Bookmark (Ctrl+B)">
+          <button onClick={handleAddBookmark} className="p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/[0.04] transition-colors" title="Add Bookmark (Ctrl+B)">
             <BookmarkIcon className="h-4 w-4" />
           </button>
           <button onClick={() => setContinuousScroll(s => !s)}
-            className={`p-1.5 rounded-lg transition-colors ${continuousScroll ? 'text-white bg-white/[0.06]' : 'text-white/40 hover:text-white hover:bg-white/[0.04]'}`}
+            className={`p-1.5 rounded-lg transition-colors ${continuousScroll ? 'text-white bg-white/[0.06]' : 'text-white/60 hover:text-white hover:bg-white/[0.04]'}`}
             title="Toggle Continuous Scroll">
             <List className="h-4 w-4" />
           </button>
-          <button onClick={() => setDarkMode(!darkMode)} className="p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/[0.04] transition-colors">
+          <button onClick={() => setDarkMode(!darkMode)} className="p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/[0.04] transition-colors">
             {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
-          <button onClick={handleFullscreen} className="p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/[0.04] transition-colors" title="Full Screen (Ctrl+F)">
+          <button onClick={handleFullscreen} className="p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/[0.04] transition-colors" title="Full Screen (Ctrl+F)">
             {fullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
           </button>
         </div>
@@ -419,7 +419,7 @@ export default function ReadingPage() {
                     <Layers className="h-3.5 w-3.5" />
                     Chapters
                   </span>
-                  <button onClick={() => setLeftOpen(false)} className="text-white/30 hover:text-white transition-colors">
+                  <button onClick={() => setLeftOpen(false)} className="text-white/50 hover:text-white transition-colors">
                     <PanelLeftClose className="h-3.5 w-3.5" />
                   </button>
                 </div>
@@ -433,7 +433,7 @@ export default function ReadingPage() {
 
         {!leftOpen && (
           <button onClick={() => setLeftOpen(true)}
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-lg bg-zinc-900 border border-white/[0.06] text-white/40 hover:text-white transition-colors">
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-lg bg-zinc-900 border border-white/[0.06] text-white/60 hover:text-white transition-colors">
             <PanelLeft className="h-4 w-4" />
           </button>
         )}
@@ -486,7 +486,7 @@ export default function ReadingPage() {
           <div className={`shrink-0 h-10 border-t border-white/[0.04] flex items-center justify-between px-4 ${
             readingMode === 'focus' ? 'opacity-0 hover:opacity-100 transition-opacity' : 'bg-zinc-950/80 backdrop-blur-xl'
           }`}>
-            <div className="flex items-center gap-3 text-[11px] text-white/40">
+            <div className="flex items-center gap-3 text-[11px] text-white/60">
               <span className="flex items-center gap-1">
                 <FileText className="h-3 w-3" />
                 {currentPage} / {totalPages || bookTotal}
@@ -531,13 +531,13 @@ export default function ReadingPage() {
                       const Icon = item.icon;
                       return (
                         <button key={item.key} onClick={() => setRightPanel(item.key)}
-                          className={`p-1.5 rounded-lg transition-colors ${rightPanel === item.key ? 'bg-white/[0.08] text-white' : 'text-white/30 hover:text-white/60 hover:bg-white/[0.03]'}`}>
+                          className={`p-1.5 rounded-lg transition-colors ${rightPanel === item.key ? 'bg-white/[0.08] text-white' : 'text-white/50 hover:text-white/60 hover:bg-white/[0.03]'}`}>
                           <Icon className="h-3.5 w-3.5" />
                         </button>
                       );
                     })}
                   </div>
-                  <button onClick={() => setRightOpen(false)} className="text-white/30 hover:text-white transition-colors">
+                  <button onClick={() => setRightOpen(false)} className="text-white/50 hover:text-white transition-colors">
                     <PanelRightClose className="h-3.5 w-3.5" />
                   </button>
                 </div>
@@ -551,7 +551,7 @@ export default function ReadingPage() {
 
         {!rightOpen && (
           <button onClick={() => { setRightOpen(true); setRightPanel('notes'); }}
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-lg bg-zinc-900 border border-white/[0.06] text-white/40 hover:text-white transition-colors">
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-lg bg-zinc-900 border border-white/[0.06] text-white/60 hover:text-white transition-colors">
             <PanelRight className="h-4 w-4" />
           </button>
         )}

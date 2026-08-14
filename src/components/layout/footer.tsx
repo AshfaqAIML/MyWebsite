@@ -22,7 +22,7 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-bold mb-2">
               <span className="gradient-text">{profile.name}</span>
-              <span className="text-zinc-400 dark:text-zinc-500">.</span>
+              <span className="text-zinc-500 dark:text-zinc-400">.</span>
             </h3>
             <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-xs">
               {profile.tagline}
@@ -78,10 +78,10 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-zinc-200/50 dark:border-zinc-700/50 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-xs text-zinc-400 dark:text-zinc-500">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">
             &copy; {new Date().getFullYear()} {profile.name}. All rights reserved.
           </p>
-          <p className="text-xs text-zinc-400 dark:text-zinc-500 flex items-center gap-3">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 flex items-center gap-3">
             <span className="flex items-center gap-1">Built with <Heart className="h-3 w-3 text-red-500 fill-red-500" /> using Next.js</span>
             <span className="text-zinc-300 dark:text-zinc-600">|</span>
             <a href="/dashboard/login" className="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">Dashboard</a>

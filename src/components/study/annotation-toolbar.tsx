@@ -77,8 +77,8 @@ export default function AnnotationToolbar({
                   ? 'bg-white/[0.12] text-white'
                   : 'bg-black/10 text-black'
                 : darkMode
-                  ? 'text-white/40 hover:text-white/60 hover:bg-white/[0.04]'
-                  : 'text-black/40 hover:text-black/60 hover:bg-black/5'
+                  ? 'text-white/60 hover:text-white/60 hover:bg-white/[0.04]'
+                  : 'text-black/60 hover:text-black/60 hover:bg-black/5'
             }`}
           >
             <Icon className="h-3.5 w-3.5" />
@@ -102,8 +102,8 @@ export default function AnnotationToolbar({
                   ? 'bg-white/[0.12] text-white'
                   : 'bg-black/10 text-black'
                 : darkMode
-                  ? 'text-white/40 hover:text-white/60 hover:bg-white/[0.04]'
-                  : 'text-black/40 hover:text-black/60 hover:bg-black/5'
+                  ? 'text-white/60 hover:text-white/60 hover:bg-white/[0.04]'
+                  : 'text-black/60 hover:text-black/60 hover:bg-black/5'
             }`}
           >
             <Icon className="h-3.5 w-3.5" />
@@ -119,7 +119,7 @@ export default function AnnotationToolbar({
         className={`p-1.5 rounded-lg transition-all ${
           activeTool === 'textbox'
             ? darkMode ? 'bg-white/[0.12] text-white' : 'bg-black/10 text-black'
-            : darkMode ? 'text-white/40 hover:text-white/60 hover:bg-white/[0.04]' : 'text-black/40 hover:text-black/60 hover:bg-black/5'
+            : darkMode ? 'text-white/60 hover:text-white/60 hover:bg-white/[0.04]' : 'text-black/60 hover:text-black/60 hover:bg-black/5'
         }`}
       >
         <Type className="h-3.5 w-3.5" />
@@ -149,7 +149,7 @@ export default function AnnotationToolbar({
               />
             ))}
             <div className={`col-span-4 mt-1 pt-1 border-t ${darkMode ? 'border-white/[0.06]' : 'border-black/10'}`}>
-              <p className={`text-[10px] mb-1 ${darkMode ? 'text-white/30' : 'text-black/30'}`}>Drawing Colors</p>
+              <p className={`text-[10px] mb-1 ${darkMode ? 'text-white/50' : 'text-black/55'}`}>Drawing Colors</p>
               <div className="grid grid-cols-6 gap-1">
                 {DRAWING_COLORS.map(c => (
                   <button
@@ -170,14 +170,14 @@ export default function AnnotationToolbar({
         <div className="flex items-center gap-1 ml-1">
           <button
             onClick={() => onStrokeWidthChange(Math.max(1, strokeWidth - 1))}
-            className={`p-1 rounded ${darkMode ? 'hover:bg-white/[0.04] text-white/40' : 'hover:bg-black/5 text-black/40'}`}
+            className={`p-1 rounded ${darkMode ? 'hover:bg-white/[0.04] text-white/60' : 'hover:bg-black/5 text-black/60'}`}
           >
             <MinusIcon className="h-3 w-3" />
           </button>
           <span className={`text-[10px] w-4 text-center ${darkMode ? 'text-white/50' : 'text-black/50'}`}>{strokeWidth}</span>
           <button
             onClick={() => onStrokeWidthChange(Math.min(12, strokeWidth + 1))}
-            className={`p-1 rounded ${darkMode ? 'hover:bg-white/[0.04] text-white/40' : 'hover:bg-black/5 text-black/40'}`}
+            className={`p-1 rounded ${darkMode ? 'hover:bg-white/[0.04] text-white/60' : 'hover:bg-black/5 text-black/60'}`}
           >
             <Plus className="h-3 w-3" />
           </button>
@@ -186,13 +186,13 @@ export default function AnnotationToolbar({
 
       <div className={`w-px h-6 mx-1 ${darkMode ? 'bg-white/[0.06]' : 'bg-black/10'}`} />
 
-      <button onClick={onFitToWidth} title="Fit to Width" className={`p-1.5 rounded-lg ${darkMode ? 'text-white/40 hover:text-white/60 hover:bg-white/[0.04]' : 'text-black/40 hover:text-black/60 hover:bg-black/5'}`}>
+      <button onClick={onFitToWidth} title="Fit to Width" className={`p-1.5 rounded-lg ${darkMode ? 'text-white/60 hover:text-white/60 hover:bg-white/[0.04]' : 'text-black/60 hover:text-black/60 hover:bg-black/5'}`}>
         <Shrink className="h-3.5 w-3.5" />
       </button>
-      <button onClick={onFitToPage} title="Fit to Page" className={`p-1.5 rounded-lg ${darkMode ? 'text-white/40 hover:text-white/60 hover:bg-white/[0.04]' : 'text-black/40 hover:text-black/60 hover:bg-black/5'}`}>
+      <button onClick={onFitToPage} title="Fit to Page" className={`p-1.5 rounded-lg ${darkMode ? 'text-white/60 hover:text-white/60 hover:bg-white/[0.04]' : 'text-black/60 hover:text-black/60 hover:bg-black/5'}`}>
         <Expand className="h-3.5 w-3.5" />
       </button>
-      <button onClick={onFullscreen} title="Full Screen" className={`p-1.5 rounded-lg ${darkMode ? 'text-white/40 hover:text-white/60 hover:bg-white/[0.04]' : 'text-black/40 hover:text-black/60 hover:bg-black/5'}`}>
+      <button onClick={onFullscreen} title="Full Screen" className={`p-1.5 rounded-lg ${darkMode ? 'text-white/60 hover:text-white/60 hover:bg-white/[0.04]' : 'text-black/60 hover:text-black/60 hover:bg-black/5'}`}>
         <Expand className="h-3.5 w-3.5" />
       </button>
 
@@ -223,7 +223,7 @@ export default function AnnotationToolbar({
       <div className="flex items-center gap-1">
         <button
           onClick={() => onZoomChange(Math.max(25, zoom - 10))}
-          className={`p-1 rounded ${darkMode ? 'hover:bg-white/[0.04] text-white/40' : 'hover:bg-black/5 text-black/40'}`}
+          className={`p-1 rounded ${darkMode ? 'hover:bg-white/[0.04] text-white/60' : 'hover:bg-black/5 text-black/60'}`}
         >
           <MinusIcon className="h-3 w-3" />
         </button>
@@ -232,7 +232,7 @@ export default function AnnotationToolbar({
         </span>
         <button
           onClick={() => onZoomChange(Math.min(200, zoom + 10))}
-          className={`p-1 rounded ${darkMode ? 'hover:bg-white/[0.04] text-white/40' : 'hover:bg-black/5 text-black/40'}`}
+          className={`p-1 rounded ${darkMode ? 'hover:bg-white/[0.04] text-white/60' : 'hover:bg-black/5 text-black/60'}`}
         >
           <Plus className="h-3 w-3" />
         </button>

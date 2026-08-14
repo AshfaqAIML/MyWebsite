@@ -90,7 +90,7 @@ export default function TodoPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">To-Do List</h1>
-          <p className="text-sm text-zinc-500 mt-1">Track future work — project modifications, articles, research, and more.</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Track future work — project modifications, articles, research, and more.</p>
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
@@ -104,11 +104,11 @@ export default function TodoPage() {
       <div className="grid grid-cols-4 gap-3 mb-6">
         <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-700/50 text-center">
           <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">{stats.total}</p>
-          <p className="text-xs text-zinc-500">Total</p>
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">Total</p>
         </div>
         <div className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200/50 dark:border-zinc-700/50 text-center">
-          <p className="text-2xl font-bold text-zinc-600 dark:text-zinc-300">{stats.pending}</p>
-          <p className="text-xs text-zinc-500">Pending</p>
+          <p className="text-2xl font-bold text-zinc-600 dark:text-zinc-400 dark:text-zinc-300">{stats.pending}</p>
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">Pending</p>
         </div>
         <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-900/10 border border-amber-200/50 dark:border-amber-700/30 text-center">
           <p className="text-2xl font-bold text-amber-700 dark:text-amber-400">{stats.inProgress}</p>
@@ -180,7 +180,7 @@ export default function TodoPage() {
       )}
 
       {filtered.length === 0 ? (
-        <div className="text-center py-16 text-zinc-400">
+        <div className="text-center py-16 text-zinc-500 dark:text-zinc-400">
           <p>{todos.length === 0 ? "No tasks yet. Click \"Add Task\" to get started." : "No tasks match this filter."}</p>
         </div>
       ) : (
@@ -199,7 +199,7 @@ export default function TodoPage() {
               </button>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className={`font-medium text-sm ${todo.status === "done" ? "line-through text-zinc-400 dark:text-zinc-500" : "text-zinc-900 dark:text-zinc-100"}`}>
+                  <h3 className={`font-medium text-sm ${todo.status === "done" ? "line-through text-zinc-500 dark:text-zinc-400" : "text-zinc-900 dark:text-zinc-100"}`}>
                     {todo.title}
                   </h3>
                   <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${categoryConfig[todo.category].color}`}>
@@ -210,7 +210,7 @@ export default function TodoPage() {
                 {todo.description && (
                   <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-1.5">{todo.description}</p>
                 )}
-                <div className="flex items-center gap-3 text-[11px] text-zinc-400">
+                <div className="flex items-center gap-3 text-[11px] text-zinc-500 dark:text-zinc-400">
                   <span>Created: {todo.createdAt}</span>
                   {todo.dueDate && <span>Due: {todo.dueDate}</span>}
                 </div>

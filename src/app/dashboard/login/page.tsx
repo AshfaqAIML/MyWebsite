@@ -46,7 +46,7 @@ export default function LoginPage() {
           <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
             Dashboard
           </h1>
-          <p className="text-sm text-zinc-500 mt-1">Sign in to access your personal dashboard</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Sign in to access your personal dashboard</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -79,7 +79,7 @@ export default function LoginPage() {
           <div className="flex justify-end -mt-2">
             <Link
               href="/dashboard/login/forgot-password"
-              className="text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors py-1"
+              className="text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors py-1"
             >
               Forgot password?
             </Link>
@@ -101,7 +101,7 @@ export default function LoginPage() {
             <div className="w-full border-t border-zinc-200 dark:border-zinc-700" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white dark:bg-zinc-900 px-2 text-zinc-400">
+            <span className="bg-white dark:bg-zinc-900 px-2 text-zinc-500 dark:text-zinc-400">
               Or continue with
             </span>
           </div>

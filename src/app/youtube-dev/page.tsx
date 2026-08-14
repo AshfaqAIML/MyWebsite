@@ -63,7 +63,7 @@ function FeatureCard({ f, index, isInView }: { f: typeof features[0]; index: num
         <f.icon className="h-5 w-5" />
       </div>
       <h3 className="text-lg font-semibold text-white mb-2">{f.title}</h3>
-      <p className="text-zinc-400 text-sm leading-relaxed">{f.desc}</p>
+      <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed">{f.desc}</p>
     </motion.div>
   );
 }
@@ -79,13 +79,13 @@ function SnippetTabs({ active, onChange, code, onCopy, copied }: {
             <button
               key={s.label}
               onClick={() => onChange(i)}
-              className={["px-3 py-1.5 text-xs font-medium rounded-lg transition-colors", active === i ? 'bg-red-600 text-white' : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'].join(' ')}
+              className={["px-3 py-1.5 text-xs font-medium rounded-lg transition-colors", active === i ? 'bg-red-600 text-white' : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-300 hover:bg-zinc-800'].join(' ')}
             >
               {s.label}
             </button>
           ))}
         </div>
-        <button onClick={onCopy} className="flex items-center gap-1.5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors">
+        <button onClick={onCopy} className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-300 transition-colors">
           {copied ? <><Check className="h-3 w-3" /> Copied</> : <><Copy className="h-3 w-3" /> Copy</>}
         </button>
       </div>
@@ -158,7 +158,7 @@ export default function YouTubeDevPage() {
               YouTube Dev
             </span>
           </div>
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-500 dark:text-zinc-400">
             <a href="#features" className="hover:text-white transition-colors">Features</a>
             <a href="#playground" className="hover:text-white transition-colors">Playground</a>
             <a href="#docs" className="hover:text-white transition-colors">Docs</a>
@@ -167,7 +167,7 @@ export default function YouTubeDevPage() {
             <a href="#playground" className="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded-xl shadow-lg shadow-red-600/20 transition-colors">
               Get Started
             </a>
-            <Link href="/" className="text-zinc-500 hover:text-white transition-colors">
+            <Link href="/" className="text-zinc-500 dark:text-zinc-400 hover:text-white transition-colors">
               <X className="h-5 w-5" />
             </Link>
           </div>
@@ -189,7 +189,7 @@ export default function YouTubeDevPage() {
               {'YouTube Transcripts '}
               <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">At Scale</span>
             </h1>
-            <p className="mt-6 text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-6 text-lg sm:text-xl text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
               A high-performance processing module built for developers. Parse video subtitles, format data, and export directly to TXT and Word documents.
             </p>
           </motion.div>
@@ -212,7 +212,7 @@ export default function YouTubeDevPage() {
                   {loading ? (<><Loader2 className="h-4 w-4 animate-spin" /> Processing...</>) : (<>Process <ArrowRight className="h-4 w-4" /></>)}
                 </button>
               </div>
-              <p className="mt-3 text-[11px] text-zinc-600">Supports full URLs, shorts, embeds, and raw 11-character video IDs.</p>
+              <p className="mt-3 text-[11px] text-zinc-600 dark:text-zinc-400">Supports full URLs, shorts, embeds, and raw 11-character video IDs.</p>
 
               <AnimatePresence mode="wait">
                 {result && (
@@ -235,7 +235,7 @@ export default function YouTubeDevPage() {
                         {result.message && (
                           <div className="rounded-xl bg-zinc-900 border border-zinc-800 overflow-hidden">
                             <div className="flex items-center justify-between px-4 py-2 border-b border-zinc-800">
-                              <span className="text-xs text-zinc-500 font-medium">Transcript Preview</span>
+                              <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Transcript Preview</span>
                               <div className="flex gap-2">
                                 <button onClick={handleCopyMessage} className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-medium transition-colors">
                                   {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
@@ -255,7 +255,7 @@ export default function YouTubeDevPage() {
                                 </button>
                               </div>
                             </div>
-                            <p className="px-4 py-3 text-xs text-zinc-400 leading-relaxed max-h-32 overflow-y-auto">{result.message}</p>
+                            <p className="px-4 py-3 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed max-h-32 overflow-y-auto">{result.message}</p>
                           </div>
                         )}
                       </div>
@@ -280,7 +280,7 @@ export default function YouTubeDevPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={featuresInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl font-bold text-white tracking-tight">Engineered for Reliability</h2>
-            <p className="mt-4 text-zinc-400">Everything you need to integrate robust transcript harvesting pipelines into your application stack.</p>
+            <p className="mt-4 text-zinc-500 dark:text-zinc-400">Everything you need to integrate robust transcript harvesting pipelines into your application stack.</p>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((f, i) => (
@@ -294,7 +294,7 @@ export default function YouTubeDevPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={docsInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl font-bold text-white tracking-tight">API Reference</h2>
-            <p className="mt-4 text-zinc-400">A single POST endpoint on your Flask server. No authentication required.</p>
+            <p className="mt-4 text-zinc-500 dark:text-zinc-400">A single POST endpoint on your Flask server. No authentication required.</p>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={docsInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.1 }} className="max-w-3xl mx-auto">
@@ -304,15 +304,15 @@ export default function YouTubeDevPage() {
                 <code className="text-sm text-zinc-300 font-mono">{'{BACKEND_URL}/get-transcript'}</code>
               </div>
               <div className="px-6 py-4 border-b border-zinc-800">
-                <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Request Body</p>
+                <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">Request Body</p>
                 <pre className="text-sm text-zinc-300 font-mono bg-zinc-950 rounded-xl p-4 overflow-x-auto whitespace-pre">{`{\n  "video_id": "dQw4w9WgXcQ"\n}`}</pre>
               </div>
               <div className="px-6 py-4 border-b border-zinc-800">
-                <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Success Response</p>
+                <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">Success Response</p>
                 <pre className="text-sm text-emerald-300/80 font-mono bg-zinc-950 rounded-xl p-4 overflow-x-auto whitespace-pre">{`{\n  "success": true,\n  "message": "Transcript successfully generated and compiled.",\n  "txt_path": ".../transcript_dQw4w9WgXcQ.txt",\n  "docx_path": ".../transcript_dQw4w9WgXcQ.docx"\n}`}</pre>
               </div>
               <div className="px-6 py-4">
-                <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Error Response</p>
+                <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">Error Response</p>
                 <pre className="text-sm text-red-300/80 font-mono bg-zinc-950 rounded-xl p-4 overflow-x-auto whitespace-pre">{`{\n  "success": false,\n  "error": "No video_id provided"\n}`}</pre>
               </div>
             </div>
@@ -330,13 +330,13 @@ export default function YouTubeDevPage() {
 
       <footer className="border-t border-zinc-900 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-zinc-500 text-sm">
+          <div className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400 text-sm">
             <Play className="h-4 w-4 fill-zinc-500" />
             <span>YouTube Dev Module</span>
             <span className="text-zinc-700 mx-1">|</span>
             <span>{'\u00A9'} {new Date().getFullYear()}</span>
           </div>
-          <Link href="/" className="text-sm text-zinc-600 hover:text-white transition-colors flex items-center gap-1">
+          <Link href="/" className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-white transition-colors flex items-center gap-1">
             {'Back to Portfolio '}<ArrowRight className="h-3 w-3" />
           </Link>
         </div>

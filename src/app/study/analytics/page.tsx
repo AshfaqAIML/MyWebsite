@@ -87,7 +87,7 @@ export default function AnalyticsPage() {
           <div className="flex flex-col items-center justify-center py-4">
             <ProgressRing value={(stats?.totalBooks ?? 0) > 0 ? Math.min(((stats?.booksCompleted ?? 0) / (stats?.totalBooks ?? 1)) * 100, 100) : 0} size={80} strokeWidth={4} />
             <p className="mt-4 text-lg font-bold">{stats?.booksCompleted ?? 0} / {stats?.totalBooks ?? 0}</p>
-            <p className="text-sm text-black/40 dark:text-white/40">books completed</p>
+            <p className="text-sm text-black/60 dark:text-white/60">books completed</p>
           </div>
         </GlassCard>
       </div>
@@ -100,7 +100,7 @@ function AnalyticCard({ icon: Icon, label, value }: { icon: LucideIcon; label: s
     <GlassCard className="p-4">
       <Icon className="h-4 w-4 text-blue-500 mb-2" />
       <p className="text-xl font-bold tabular-nums">{value}</p>
-      <p className="text-xs text-black/40 dark:text-white/40 mt-0.5">{label}</p>
+      <p className="text-xs text-black/60 dark:text-white/60 mt-0.5">{label}</p>
     </GlassCard>
   );
 }

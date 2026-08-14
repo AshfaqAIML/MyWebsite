@@ -89,7 +89,7 @@ export default function JobsPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Job Tracker</h1>
-          <p className="text-sm text-zinc-500 mt-1">Track your job applications and opportunities.</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Track your job applications and opportunities.</p>
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
@@ -103,7 +103,7 @@ export default function JobsPage() {
       <div className="grid grid-cols-5 gap-3 mb-6">
         <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-700/50 text-center">
           <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">{stats.total}</p>
-          <p className="text-xs text-zinc-500">Total</p>
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">Total</p>
         </div>
         <div className="p-4 rounded-xl bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-200/50 dark:border-yellow-700/30 text-center">
           <p className="text-2xl font-bold text-yellow-700 dark:text-yellow-400">{stats.applied}</p>
@@ -159,7 +159,7 @@ export default function JobsPage() {
       )}
 
       {jobs.length === 0 ? (
-        <div className="text-center py-16 text-zinc-400">
+        <div className="text-center py-16 text-zinc-500 dark:text-zinc-400">
           <p>No jobs tracked yet. Click &quot;Add Job&quot; to get started.</p>
         </div>
       ) : (
@@ -173,13 +173,13 @@ export default function JobsPage() {
                     {statusLabels[job.status]}
                   </span>
                 </div>
-                <p className="text-xs text-zinc-500">{job.company} · {job.location} · {job.platform}</p>
-                {job.salary && <p className="text-xs text-zinc-400 mt-0.5">{job.salary}</p>}
+                <p className="text-xs text-zinc-500 dark:text-zinc-400">{job.company} · {job.location} · {job.platform}</p>
+                {job.salary && <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">{job.salary}</p>}
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 {job.jobUrl && (
                   <a href={job.jobUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800">
-                    <ExternalLink className="h-4 w-4 text-zinc-400" />
+                    <ExternalLink className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
                   </a>
                 )}
                 <button onClick={() => deleteJob(job.id)} className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20">

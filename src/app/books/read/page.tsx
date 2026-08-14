@@ -38,11 +38,11 @@ function AuthPrompt({ onClose }: { onClose: () => void }) {
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={onClose}>
       <div onClick={(e) => e.stopPropagation()} className="relative w-full max-w-sm bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl overflow-hidden p-6">
         <button onClick={onClose} className="absolute top-4 right-4 p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
-          <X className="h-4 w-4 text-zinc-500" />
+          <X className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
         </button>
         <div className="text-center mb-6">
           <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">Welcome back</h2>
-          <p className="text-sm text-zinc-500 mt-1">Sign in to continue your journey</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Sign in to continue your journey</p>
         </div>
         <form onSubmit={handleEmailSignIn} className="space-y-3.5">
           <div>
@@ -57,7 +57,7 @@ function AuthPrompt({ onClose }: { onClose: () => void }) {
           </div>
           <div className="flex justify-end">
             <button type="button" onClick={() => { onClose(); window.location.href = "/dashboard/login/forgot-password"; }}
-              className="text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">Forgot password?</button>
+              className="text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">Forgot password?</button>
           </div>
           {error && <p className="text-xs text-red-500">{error}</p>}
           <button type="submit" disabled={loading || !email || !password}
@@ -70,7 +70,7 @@ function AuthPrompt({ onClose }: { onClose: () => void }) {
             <div className="w-full border-t border-zinc-200 dark:border-zinc-700" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white dark:bg-zinc-900 px-2 text-zinc-400">Or</span>
+            <span className="bg-white dark:bg-zinc-900 px-2 text-zinc-500 dark:text-zinc-400">Or</span>
           </div>
         </div>
         <button onClick={handleGoogleSignIn} type="button"
@@ -83,7 +83,7 @@ function AuthPrompt({ onClose }: { onClose: () => void }) {
           </svg>
           Continue with Google
         </button>
-        <p className="text-center mt-4 text-xs text-zinc-400">
+        <p className="text-center mt-4 text-xs text-zinc-500 dark:text-zinc-400">
           Don&apos;t have an account?{" "}
           <button type="button" onClick={() => { onClose(); window.location.href = "/dashboard/login"; }}
             className="text-blue-500 hover:text-blue-600 transition-colors font-medium">Sign up</button>

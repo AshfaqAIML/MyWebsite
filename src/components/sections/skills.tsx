@@ -91,7 +91,7 @@ function SkillBar({ name, level, delay, color }: { name: string; level?: number;
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{name}</span>
         {level && (
-          <span className="text-xs text-zinc-400 dark:text-zinc-500 font-mono">{level}%</span>
+          <span className="text-xs text-zinc-500 dark:text-zinc-400 font-mono">{level}%</span>
         )}
       </div>
       <div

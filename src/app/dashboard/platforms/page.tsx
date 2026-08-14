@@ -42,7 +42,7 @@ export default function PlatformsPage() {
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Platforms</h1>
-        <p className="text-sm text-zinc-500 mt-1">Quick access to your infrastructure dashboards.</p>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Quick access to your infrastructure dashboards.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -63,9 +63,9 @@ export default function PlatformsPage() {
                   <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">
                     {platform.name}
                   </h2>
-                  <ExternalLink className="h-3.5 w-3.5 text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors" />
+                  <ExternalLink className="h-3.5 w-3.5 text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors" />
                 </div>
-                <p className="text-sm text-zinc-500 mt-1">{platform.description}</p>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">{platform.description}</p>
               </div>
             </div>
           </a>

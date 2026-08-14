@@ -45,7 +45,7 @@ export function Header() {
             className="text-lg font-bold"
           >
             <span className="gradient-text">{profile.name.split(" ")[0]}</span>
-            <span className="text-zinc-400 dark:text-zinc-500">.</span>
+            <span className="text-zinc-500 dark:text-zinc-400">.</span>
           </a>
 
           <nav className="hidden lg:flex items-center gap-1">

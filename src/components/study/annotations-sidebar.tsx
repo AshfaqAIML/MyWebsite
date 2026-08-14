@@ -59,7 +59,7 @@ export default function AnnotationsSidebar({
   const ansiBg = darkMode ? 'bg-[#0f0f13]' : 'bg-white';
   const ansiBorder = darkMode ? 'border-white/[0.06]' : 'border-black/10';
   const ansiText = darkMode ? 'text-white' : 'text-black';
-  const ansiMuted = darkMode ? 'text-white/40' : 'text-black/40';
+  const ansiMuted = darkMode ? 'text-white/60' : 'text-black/60';
 
   return (
     <div className={`h-full flex flex-col ${ansiBg}`}>
@@ -121,7 +121,7 @@ export default function AnnotationsSidebar({
                         className={`flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-[10px] transition-colors ${
                           filterType === type
                             ? darkMode ? 'bg-white/[0.08] text-white' : 'bg-black/10 text-black'
-                            : darkMode ? 'text-white/40 hover:text-white/60' : 'text-black/40 hover:text-black/60'
+                            : darkMode ? 'text-white/60 hover:text-white/60' : 'text-black/60 hover:text-black/60'
                         }`}
                       >
                         <AnnotationIcon type={type} />
@@ -131,7 +131,7 @@ export default function AnnotationsSidebar({
                     <button
                       onClick={() => setFilterType(null)}
                       className={`col-span-2 text-[10px] px-2 py-1 rounded-lg ${
-                        darkMode ? 'text-white/30 hover:text-white/50' : 'text-black/30 hover:text-black/50'
+                        darkMode ? 'text-white/50 hover:text-white/50' : 'text-black/55 hover:text-black/50'
                       }`}
                     >
                       Clear filter

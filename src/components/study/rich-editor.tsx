@@ -33,7 +33,7 @@ function MenuButton({ onClick, active, children, title }: {
       className={`p-1.5 rounded-lg transition-colors ${
         active
           ? 'bg-white/[0.12] text-white'
-          : 'text-white/40 hover:text-white/60 hover:bg-white/[0.04]'
+          : 'text-white/60 hover:text-white/60 hover:bg-white/[0.04]'
       }`}
     >
       {children}

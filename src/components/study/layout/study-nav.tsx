@@ -27,7 +27,7 @@ export function StudyNav() {
               "nav-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
               active
                 ? "nav-item active text-blue-600 dark:text-blue-400"
-                : "text-black/50 hover:text-black/80 hover:bg-black/[0.03] dark:text-white/40 dark:hover:text-white/70 dark:hover:bg-white/[0.04]",
+                : "text-black/50 hover:text-black/80 hover:bg-black/[0.03] dark:text-white/60 dark:hover:text-white/70 dark:hover:bg-white/[0.04]",
             )}
           >
             <Icon className="h-4 w-4" />

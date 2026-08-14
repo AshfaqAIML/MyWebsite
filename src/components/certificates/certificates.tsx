@@ -73,7 +73,7 @@ export function Certificates() {
           </AnimatePresence>
           </div>
         ) : (
-          <div className="text-center py-20 text-zinc-400 dark:text-zinc-500">
+          <div className="text-center py-20 text-zinc-500 dark:text-zinc-400">
             <p className="text-sm">No certificates match your filters.</p>
           </div>
         )}

@@ -37,7 +37,7 @@ export function FilterBar({
   return (
     <div className={cn("space-y-4 mb-10", className)}>
       <div className="relative max-w-lg mx-auto">
-        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500 dark:text-zinc-400" />
         <input
           type="text"
           value={search}
@@ -64,7 +64,7 @@ export function FilterBar({
                 setShowSearch(false);
               }}
               aria-label="Clear search"
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
             >
               <X className="h-4 w-4" />
             </motion.button>
@@ -112,10 +112,10 @@ export function FilterBar({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.2 }}
-            className="text-center text-xs text-zinc-400 dark:text-zinc-500"
+            className="text-center text-xs text-zinc-500 dark:text-zinc-400"
           >
             Showing{" "}
-            <span className="font-semibold text-zinc-600 dark:text-zinc-300">
+            <span className="font-semibold text-zinc-600 dark:text-zinc-400 dark:text-zinc-300">
               {resultCount}
             </span>{" "}
             of {totalCount}

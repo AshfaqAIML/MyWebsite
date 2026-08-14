@@ -46,7 +46,7 @@ function StatCard({ icon: Icon, value, label }: { icon: LucideIcon; value: strin
           </div>
           <div>
             <p className="text-lg font-semibold text-white tracking-tight">{value}</p>
-            <p className="text-[11px] text-white/40 font-medium">{label}</p>
+            <p className="text-[11px] text-white/60 font-medium">{label}</p>
           </div>
         </div>
       </div>
@@ -79,7 +79,7 @@ function BookCard({ book, index }: { book: StudyBook; index: number }) {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-medium text-white/80 truncate leading-tight">{book.title}</p>
-                  <p className="text-[10px] text-white/40 mt-0.5 truncate">{book.author}</p>
+                  <p className="text-[10px] text-white/60 mt-0.5 truncate">{book.author}</p>
                 </div>
               </div>
             </div>
@@ -104,7 +104,7 @@ function BookCard({ book, index }: { book: StudyBook; index: number }) {
                 className="h-full rounded-full bg-gradient-to-r from-white/30 to-white/10"
               />
             </div>
-            <div className="flex items-center justify-between text-[11px] text-white/40">
+            <div className="flex items-center justify-between text-[11px] text-white/60">
               <div className="flex items-center gap-3">
                 <span className="flex items-center gap-1">
                   <FileText className="h-3 w-3" />
@@ -115,7 +115,7 @@ function BookCard({ book, index }: { book: StudyBook; index: number }) {
                   {book.size}
                 </span>
               </div>
-              <div className="flex items-center gap-1 text-white/30 group-hover:text-white/60 transition-colors">
+              <div className="flex items-center gap-1 text-white/50 group-hover:text-white/60 transition-colors">
                 <span className="text-[10px]">Open</span>
                 <ArrowUpRight className="h-3 w-3" />
               </div>
@@ -162,13 +162,13 @@ export default function StudyCornerPage() {
             </div>
             <div>
               <h1 className="text-sm font-semibold text-white">Study Corner</h1>
-              <p className="text-[10px] text-white/40 font-medium">Digital Learning Platform</p>
+              <p className="text-[10px] text-white/60 font-medium">Digital Learning Platform</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <Link
               href="/"
-              className="text-xs text-white/40 hover:text-white/80 transition-colors px-3 py-1.5 rounded-lg hover:bg-white/[0.04]"
+              className="text-xs text-white/60 hover:text-white/80 transition-colors px-3 py-1.5 rounded-lg hover:bg-white/[0.04]"
             >
               Home
             </Link>
@@ -195,7 +195,7 @@ export default function StudyCornerPage() {
             </span>{' '}
             Ecosystem
           </h2>
-          <p className="mt-3 text-sm text-white/40 max-w-xl leading-relaxed">
+          <p className="mt-3 text-sm text-white/60 max-w-xl leading-relaxed">
             A curated collection of learning resources with progress tracking, notes, bookmarking, and an AI-ready architecture for serious learners.
           </p>
         </motion.div>
@@ -210,7 +210,7 @@ export default function StudyCornerPage() {
         {/* Filters */}
         <div className="mb-8 space-y-4">
           <div className="relative max-w-md">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
             <input
               type="search" value={search} onChange={e => setSearch(e.target.value)}
               placeholder="Search books, authors, topics..."
@@ -234,11 +234,11 @@ export default function StudyCornerPage() {
             </div>
             <div className="flex items-center gap-1">
               <button onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-lg transition-colors ${viewMode === 'grid' ? 'bg-white/[0.06] text-white' : 'text-white/30 hover:text-white/50'}`}>
+                className={`p-2 rounded-lg transition-colors ${viewMode === 'grid' ? 'bg-white/[0.06] text-white' : 'text-white/50 hover:text-white/50'}`}>
                 <LayoutGrid className="h-3.5 w-3.5" />
               </button>
               <button onClick={() => setViewMode('list')}
-                className={`p-2 rounded-lg transition-colors ${viewMode === 'list' ? 'bg-white/[0.06] text-white' : 'text-white/30 hover:text-white/50'}`}>
+                className={`p-2 rounded-lg transition-colors ${viewMode === 'list' ? 'bg-white/[0.06] text-white' : 'text-white/50 hover:text-white/50'}`}>
                 <List className="h-3.5 w-3.5" />
               </button>
             </div>
@@ -255,9 +255,9 @@ export default function StudyCornerPage() {
               className="text-center py-20"
             >
               <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mx-auto mb-4">
-                <BookOpen className="h-6 w-6 text-white/30" />
+                <BookOpen className="h-6 w-6 text-white/50" />
               </div>
-              <p className="text-sm text-white/40">No books match your search.</p>
+              <p className="text-sm text-white/60">No books match your search.</p>
             </motion.div>
           ) : viewMode === 'grid' ? (
             <motion.div
@@ -281,16 +281,16 @@ export default function StudyCornerPage() {
                 <Link key={book.id} href={`/study-corner/read/${book.id}`}>
                   <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/[0.02] border border-transparent hover:border-white/[0.06] transition-all group">
                     <div className="w-10 h-10 rounded-xl bg-white/[0.04] flex items-center justify-center shrink-0">
-                      <FileText className="h-4 w-4 text-white/40" />
+                      <FileText className="h-4 w-4 text-white/60" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white/80 truncate">{book.title}</p>
-                      <p className="text-xs text-white/40 truncate">{book.author}</p>
+                      <p className="text-xs text-white/60 truncate">{book.author}</p>
                     </div>
                     <span className={`text-[10px] px-2 py-0.5 rounded-full border ${getCategoryBadgeColor(book.category)}`}>
                       {book.category}
                     </span>
-                    <span className="text-xs text-white/30">{book.size}</span>
+                    <span className="text-xs text-white/50">{book.size}</span>
                     <ChevronRight className="h-4 w-4 text-white/20 group-hover:text-white/50 transition-colors" />
                   </div>
                 </Link>

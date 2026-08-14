@@ -110,7 +110,7 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
                 ref={closeButtonRef}
                 onClick={onClose}
                 aria-label="Close"
-                className="p-2.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                className="p-2.5 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -161,7 +161,7 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
                 </div>
 
                 {certificate.description && (
-                  <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400 dark:text-zinc-300 leading-relaxed">
                     {certificate.description}
                   </p>
                 )}
@@ -170,7 +170,7 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
                 <dl className="grid grid-cols-2 gap-4 text-sm">
                   {certificate.issueDate && (
                     <div>
-                      <dt className="text-xs text-zinc-400 dark:text-zinc-500 flex items-center gap-1">
+                      <dt className="text-xs text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
                         <Calendar className="h-3 w-3" /> Issued
                       </dt>
                       <dd className="mt-0.5 font-medium text-zinc-800 dark:text-zinc-100">
@@ -184,7 +184,7 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
                   )}
                   {certificate.credentialId && (
                     <div>
-                      <dt className="text-xs text-zinc-400 dark:text-zinc-500">Credential ID</dt>
+                      <dt className="text-xs text-zinc-500 dark:text-zinc-400">Credential ID</dt>
                       <dd className="mt-0.5 font-medium text-zinc-800 dark:text-zinc-100 break-all">
                         {certificate.credentialId}
                       </dd>
@@ -195,7 +195,7 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
                 {/* Categories */}
                 {certificate.categories.length > 0 && (
                   <div>
-                    <p className="text-xs text-zinc-400 dark:text-zinc-500 mb-1.5">Categories</p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-1.5">Categories</p>
                     <div className="flex flex-wrap gap-1.5">
                       {certificate.categories.map((cat) => (
                         <span
@@ -212,7 +212,7 @@ export function CertificateDetailModal({ certificate, onClose }: CertificateDeta
                 {/* Skills */}
                 {certificate.skills.length > 0 && (
                   <div>
-                    <p className="text-xs text-zinc-400 dark:text-zinc-500 mb-1.5">Skills</p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-1.5">Skills</p>
                     <div className="flex flex-wrap gap-1.5">
                       {certificate.skills.map((skill) => (
                         <span

@@ -102,7 +102,7 @@ function FloatingShape({
         delay,
       }}
     >
-      <div className="w-8 h-8 rounded-2xl bg-white/10 dark:bg-white/5 backdrop-blur-sm border border-white/20 dark:border-white/10 flex items-center justify-center text-white/60 dark:text-white/40">
+      <div className="w-8 h-8 rounded-2xl bg-white/10 dark:bg-white/5 backdrop-blur-sm border border-white/20 dark:border-white/10 flex items-center justify-center text-white/60 dark:text-white/60">
         {children}
       </div>
     </motion.div>
@@ -318,7 +318,7 @@ export function Hero() {
       >
         <a
           href="#about"
-          className="flex flex-col items-center gap-1 text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+          className="flex flex-col items-center gap-1 text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
         >
           <span className="text-xs font-medium tracking-wider uppercase">Scroll</span>
           <motion.div

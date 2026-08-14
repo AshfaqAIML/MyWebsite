@@ -83,11 +83,11 @@ function AuthModal({ open, onClose }: { open: boolean; onClose: () => void }) {
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={onClose}>
       <div onClick={(e) => e.stopPropagation()} className="relative w-full max-w-sm bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl overflow-hidden p-6">
         <button onClick={onClose} className="absolute top-4 right-4 p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
-          <X className="h-4 w-4 text-zinc-500" />
+          <X className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
         </button>
         <div className="text-center mb-6">
           <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">Welcome back</h2>
-          <p className="text-sm text-zinc-500 mt-1">Sign in to continue your journey</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Sign in to continue your journey</p>
         </div>
         <form onSubmit={handleEmailSignIn} className="space-y-3.5">
           <div>
@@ -102,7 +102,7 @@ function AuthModal({ open, onClose }: { open: boolean; onClose: () => void }) {
           </div>
           <div className="flex justify-end">
             <button type="button" onClick={() => { onClose(); window.location.href = "/dashboard/login/forgot-password"; }}
-              className="text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">Forgot password?</button>
+              className="text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">Forgot password?</button>
           </div>
           {error && <p className="text-xs text-red-500">{error}</p>}
           <button type="submit" disabled={loading || !email || !password}
@@ -115,7 +115,7 @@ function AuthModal({ open, onClose }: { open: boolean; onClose: () => void }) {
             <div className="w-full border-t border-zinc-200 dark:border-zinc-700" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white dark:bg-zinc-900 px-2 text-zinc-400">Or</span>
+            <span className="bg-white dark:bg-zinc-900 px-2 text-zinc-500 dark:text-zinc-400">Or</span>
           </div>
         </div>
         <button onClick={handleGoogleSignIn} type="button"
@@ -128,7 +128,7 @@ function AuthModal({ open, onClose }: { open: boolean; onClose: () => void }) {
           </svg>
           Continue with Google
         </button>
-        <p className="text-center mt-4 text-xs text-zinc-400">
+        <p className="text-center mt-4 text-xs text-zinc-500 dark:text-zinc-400">
           Don&apos;t have an account?{" "}
           <button type="button" onClick={() => { onClose(); window.location.href = "/dashboard/login"; }}
             className="text-blue-500 hover:text-blue-600 transition-colors font-medium">Sign up</button>
@@ -221,7 +221,7 @@ function BookCard({ book, index, variant, onPay, onRead, isBookmarked, onToggleB
                     "p-1.5 rounded-md transition-colors",
                     isBookmarked
                       ? "text-amber-500"
-                      : "text-zinc-400 hover:text-amber-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                      : "text-zinc-500 dark:text-zinc-400 hover:text-amber-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                   )}
                 >
                   <Bookmark className="h-4 w-4" fill={isBookmarked ? "currentColor" : "none"} />
@@ -231,7 +231,7 @@ function BookCard({ book, index, variant, onPay, onRead, isBookmarked, onToggleB
                 <button
                   onClick={() => onShare(book)}
                   aria-label="Copy book link"
-                  className="p-1.5 rounded-md text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                  className="p-1.5 rounded-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 >
                   {copiedTitle === book.title ? (
                     <Check className="h-4 w-4 text-emerald-500" />
@@ -254,7 +254,7 @@ function BookCard({ book, index, variant, onPay, onRead, isBookmarked, onToggleB
           </div>
           <div className="flex flex-wrap gap-2 mt-auto">
             {variant === "coming-soon" ? (
-              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 text-sm font-medium cursor-default">
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 text-sm font-medium cursor-default">
                 <Clock className="h-4 w-4" />
                 Coming Soon
               </span>
@@ -370,7 +370,7 @@ function BookFilterBar({
   return (
     <div className="space-y-4 mb-10">
       <div className="relative max-w-lg mx-auto">
-        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500 dark:text-zinc-400" />
         <input
           type="text"
           value={search}
@@ -487,7 +487,7 @@ export function Books() {
             <div className="h-8 w-1 rounded-full bg-emerald-500" />
             <div>
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Islamic Library</h3>
-              <p className="text-xs text-zinc-500">Books on Islamic creed, spirituality, and jurisprudence.</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">Books on Islamic creed, spirituality, and jurisprudence.</p>
             </div>
           </div>
           {islamicList.length > 0 ? (
@@ -512,7 +512,7 @@ export function Books() {
               ))}
             </SectionGrid>
           ) : (
-            <p className="text-center text-sm text-zinc-400 dark:text-zinc-500 py-10">
+            <p className="text-center text-sm text-zinc-500 dark:text-zinc-400 py-10">
               No Islamic books match your search.
             </p>
           )}
@@ -525,7 +525,7 @@ export function Books() {
             <div className="h-8 w-1 rounded-full bg-amber-500" />
             <div>
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Technical Library — Coming Soon</h3>
-              <p className="text-xs text-zinc-500">Premium publications in development. Stay tuned.</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">Premium publications in development. Stay tuned.</p>
             </div>
           </div>
           {techList.length > 0 ? (
@@ -544,7 +544,7 @@ export function Books() {
               ))}
             </SectionGrid>
           ) : (
-            <p className="text-center text-sm text-zinc-400 dark:text-zinc-500 py-10">
+            <p className="text-center text-sm text-zinc-500 dark:text-zinc-400 py-10">
               No technical books match your search.
             </p>
           )}
@@ -557,7 +557,7 @@ export function Books() {
             <div className="h-8 w-1 rounded-full bg-blue-500" />
             <div>
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Study Corner Library</h3>
-              <p className="text-xs text-zinc-500">Curated learning resources available for reading and download.</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">Curated learning resources available for reading and download.</p>
             </div>
           </div>
           {studyList.length > 0 ? (
@@ -583,7 +583,7 @@ export function Books() {
               ))}
             </SectionGrid>
           ) : (
-            <p className="text-center text-sm text-zinc-400 dark:text-zinc-500 py-10">
+            <p className="text-center text-sm text-zinc-500 dark:text-zinc-400 py-10">
               No study resources match your search.
             </p>
           )}

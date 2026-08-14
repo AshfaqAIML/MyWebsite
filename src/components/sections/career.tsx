@@ -48,7 +48,7 @@ export function CareerPlatforms() {
       />
 
       {grouped.length === 0 && (
-        <div className="text-center py-16 text-zinc-400 dark:text-zinc-500">
+        <div className="text-center py-16 text-zinc-500 dark:text-zinc-400">
           <p className="text-sm">No platforms match your search.</p>
         </div>
       )}
@@ -64,7 +64,7 @@ export function CareerPlatforms() {
           >
             <span className="w-1 h-4 rounded-full bg-gradient-to-b from-blue-500 to-purple-500" />
             {regionName}
-            <span className="text-xs font-normal text-zinc-400 dark:text-zinc-500">
+            <span className="text-xs font-normal text-zinc-500 dark:text-zinc-400">
               ({platforms.length})
             </span>
           </motion.h3>
@@ -91,7 +91,7 @@ export function CareerPlatforms() {
                   <p className="font-medium text-xs text-zinc-700 dark:text-zinc-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {platform.name}
                   </p>
-                  <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5 line-clamp-2">
+                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5 line-clamp-2">
                     {platform.description}
                   </p>
                 </div>

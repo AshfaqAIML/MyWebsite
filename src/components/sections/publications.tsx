@@ -96,7 +96,7 @@ export function PublicationsSection() {
       />
 
       {filtered.length === 0 && (
-        <div className="text-center py-16 text-zinc-400 dark:text-zinc-500">
+        <div className="text-center py-16 text-zinc-500 dark:text-zinc-400">
           <p className="text-sm">No publications match your search.</p>
         </div>
       )}
@@ -109,7 +109,7 @@ export function PublicationsSection() {
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
                 Featured Research
               </h3>
-              <p className="text-xs text-zinc-500">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
                 Key contributions at a glance.
               </p>
             </div>
@@ -161,12 +161,12 @@ export function PublicationsSection() {
                         {pub.authors.join(", ")} · {pub.year}
                       </p>
                       {pub.journal && (
-                        <p className="text-xs text-zinc-400 dark:text-zinc-500 italic mb-1">
+                        <p className="text-xs text-zinc-500 dark:text-zinc-400 italic mb-1">
                           {pub.journal}
                         </p>
                       )}
                       {pub.conference && (
-                        <p className="text-xs text-zinc-400 dark:text-zinc-500 italic mb-1">
+                        <p className="text-xs text-zinc-500 dark:text-zinc-400 italic mb-1">
                           Presented at {pub.conference}
                         </p>
                       )}
@@ -175,7 +175,7 @@ export function PublicationsSection() {
                       </p>
                       <div className="flex items-center gap-3">
                         {pub.doi && (
-                          <span className="text-[10px] text-zinc-400 font-mono bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-md">
+                          <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-md">
                             DOI: {pub.doi}
                           </span>
                         )}
@@ -192,7 +192,7 @@ export function PublicationsSection() {
                           </a>
                         ) : (
                           pubStatus === "coming-soon" && (
-                            <span className="text-xs text-zinc-400 italic">
+                            <span className="text-xs text-zinc-500 dark:text-zinc-400 italic">
                               Publishing soon
                             </span>
                           )
@@ -263,12 +263,12 @@ export function PublicationsSection() {
                       {pub.authors.join(", ")} · {pub.year}
                     </p>
                     {pub.journal && (
-                      <p className="text-xs text-zinc-400 dark:text-zinc-500 italic mb-1 flex items-center gap-1">
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400 italic mb-1 flex items-center gap-1">
                         {pub.journal}
                       </p>
                     )}
                     {pub.conference && (
-                      <p className="text-xs text-zinc-400 dark:text-zinc-500 italic mb-1">
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400 italic mb-1">
                         Presented at {pub.conference}
                       </p>
                     )}
@@ -277,7 +277,7 @@ export function PublicationsSection() {
                     </p>
                     <div className="flex items-center gap-3">
                       {pub.doi && (
-                        <span className="text-[10px] text-zinc-400 font-mono bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-md">
+                        <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-md">
                           DOI: {pub.doi}
                         </span>
                       )}
@@ -294,7 +294,7 @@ export function PublicationsSection() {
                         </a>
                       ) : (
                         pubStatus === "coming-soon" && (
-                          <span className="text-xs text-zinc-400 italic">
+                          <span className="text-xs text-zinc-500 dark:text-zinc-400 italic">
                             Publishing soon
                           </span>
                         )

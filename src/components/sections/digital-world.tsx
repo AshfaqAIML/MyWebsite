@@ -32,7 +32,7 @@ export function DigitalWorld() {
                   <p className="font-medium text-sm text-zinc-900 dark:text-zinc-100">
                     {resource.title}
                   </p>
-                  <span className="text-xs text-zinc-400 dark:text-zinc-500 font-medium uppercase tracking-wider">
+                  <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium uppercase tracking-wider">
                     {resource.platform}
                   </span>
                 </div>

@@ -84,7 +84,7 @@ export function Expertise() {
                     <div className="text-right">
                       <div className="text-lg font-bold text-zinc-900 dark:text-zinc-50">
                         ${service.startingPrice}
-                        <span className="text-xs font-medium text-zinc-400 dark:text-zinc-500">
+                        <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
                           {" "}
                           / start
                         </span>
@@ -109,7 +109,7 @@ export function Expertise() {
                     {service.deliverables.map((item) => (
                       <div key={item} className="flex items-start gap-2">
                         <Check className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
-                        <span className="text-sm text-zinc-600 dark:text-zinc-300">{item}</span>
+                        <span className="text-sm text-zinc-600 dark:text-zinc-400 dark:text-zinc-300">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -129,7 +129,7 @@ export function Expertise() {
                       </a>
                     </Button>
                     {service.pricingModel && (
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">
+                      <span className="text-xs text-zinc-500 dark:text-zinc-400">
                         {service.pricingModel}
                       </span>
                     )}

@@ -92,7 +92,7 @@ export function Articles() {
                 </Badge>
               )}
               {article.readingTime ? (
-                <div className="flex items-center gap-1 text-xs text-zinc-400">
+                <div className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400">
                   <Clock className="h-3 w-3" />
                   {article.readingTime} min read
                 </div>
@@ -117,13 +117,13 @@ export function Articles() {
           </div>
           <div className="flex items-center justify-between mt-auto pt-3 border-t border-zinc-100 dark:border-zinc-800">
             {article.status === "coming-soon" ? (
-              <span className="text-xs text-zinc-400">Coming soon</span>
+              <span className="text-xs text-zinc-500 dark:text-zinc-400">Coming soon</span>
             ) : article.publishedAt ? (
-              <span className="text-xs text-zinc-400">
+              <span className="text-xs text-zinc-500 dark:text-zinc-400">
                 {formatDate(article.publishedAt)}
               </span>
             ) : (
-              <span className="text-xs text-zinc-400" />
+              <span className="text-xs text-zinc-500 dark:text-zinc-400" />
             )}
             {article.status !== "coming-soon" && article.status !== "in-progress" ? (
               <a
@@ -173,7 +173,7 @@ export function Articles() {
       />
 
       {!hasAny && (
-        <div className="text-center py-16 text-zinc-400 dark:text-zinc-500">
+        <div className="text-center py-16 text-zinc-500 dark:text-zinc-400">
           <p className="text-sm">No articles match your search.</p>
         </div>
       )}
@@ -186,7 +186,7 @@ export function Articles() {
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
                 Featured Articles
               </h3>
-              <p className="text-xs text-zinc-500">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
                 Handpicked deep dives worth your time.
               </p>
             </div>
@@ -205,7 +205,7 @@ export function Articles() {
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
                 All Articles
               </h3>
-              <p className="text-xs text-zinc-500">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
                 The complete library of writing.
               </p>
             </div>

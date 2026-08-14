@@ -130,7 +130,7 @@ export function ResumeSection() {
                 <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-xl mb-4">
                   {featured.description}
                 </p>
-                <div className="flex flex-wrap items-center gap-2 text-xs text-zinc-400 dark:text-zinc-500 mb-5">
+                <div className="flex flex-wrap items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 mb-5">
                   <span className="flex items-center gap-1">
                     <FileIcon className="h-3.5 w-3.5" /> PDF ·{" "}
                     {formatFileSize(featured.fileSize)}
@@ -173,8 +173,8 @@ export function ResumeSection() {
               </div>
               <div className="hidden md:flex items-center justify-center">
                 <div className="relative w-40 h-52 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-800 dark:to-zinc-900 border border-zinc-200 dark:border-zinc-700 overflow-hidden shadow-lg flex items-center justify-center">
-                  <FileText className="h-14 w-14 text-zinc-400 dark:text-zinc-600" />
-                  <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[9px] font-medium text-zinc-400 dark:text-zinc-500">
+                  <FileText className="h-14 w-14 text-zinc-500 dark:text-zinc-400 dark:text-zinc-600" />
+                  <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[9px] font-medium text-zinc-500 dark:text-zinc-400">
                     PDF
                   </span>
                 </div>
@@ -210,7 +210,7 @@ export function ResumeSection() {
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-[10px] font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
+                        <span className="text-[10px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
                           {meta.label}
                         </span>
                         {doc.featured && (
@@ -228,7 +228,7 @@ export function ResumeSection() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 text-[11px] text-zinc-400 dark:text-zinc-500 mt-3">
+                  <div className="flex items-center gap-2 text-[11px] text-zinc-500 dark:text-zinc-400 mt-3">
                     <FileIcon className="h-3 w-3" /> PDF ·{" "}
                     {formatFileSize(doc.fileSize)}
                   </div>
@@ -248,7 +248,7 @@ export function ResumeSection() {
                       <button
                         onClick={() => setPreview(doc)}
                         aria-label={`Preview ${doc.title}`}
-                        className="p-1.5 rounded-md text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                        className="p-1.5 rounded-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                       >
                         <Eye className="h-4 w-4" />
                       </button>
@@ -256,7 +256,7 @@ export function ResumeSection() {
                         href={doc.filePath}
                         download={doc.fileName}
                         aria-label={`Download ${doc.title}`}
-                        className="p-1.5 rounded-md text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                        className="p-1.5 rounded-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                       >
                         <Download className="h-4 w-4" />
                       </a>
@@ -265,7 +265,7 @@ export function ResumeSection() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Open ${doc.title}`}
-                        className="p-1.5 rounded-md text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                        className="p-1.5 rounded-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                       >
                         <ExternalLink className="h-4 w-4" />
                       </a>
@@ -276,7 +276,7 @@ export function ResumeSection() {
             })}
           </div>
         ) : (
-          <div className="text-center py-20 text-zinc-400 dark:text-zinc-500">
+          <div className="text-center py-20 text-zinc-500 dark:text-zinc-400">
             <p className="text-sm">No documents in this category yet.</p>
           </div>
         )}
@@ -362,7 +362,7 @@ function PreviewDialog({
             <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 truncate">
               {doc.title}
             </h3>
-            <p className="text-xs text-zinc-400 dark:text-zinc-500">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
               {TYPE_META[doc.type].label} · PDF ·{" "}
               {formatFileSize(doc.fileSize)}
             </p>
@@ -379,7 +379,7 @@ function PreviewDialog({
               ref={closeButtonRef}
               onClick={onClose}
               aria-label="Close"
-              className="p-2.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="p-2.5 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
             >
               <FileText className="h-5 w-5 rotate-0" />
               <span className="sr-only">Close</span>

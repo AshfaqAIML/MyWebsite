@@ -35,7 +35,7 @@ export default function ForgotPasswordPage() {
           <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
             Reset Password
           </h1>
-          <p className="text-sm text-zinc-500 mt-1">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
             Enter your email and we&apos;ll send your credentials.
           </p>
         </div>
@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
         <p className="text-center mt-6">
           <Link
             href="/dashboard/login"
-            className="text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 py-1"
+            className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 py-1"
           >
             Back to sign in
           </Link>

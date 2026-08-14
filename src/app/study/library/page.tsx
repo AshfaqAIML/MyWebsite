@@ -45,7 +45,7 @@ export default function LibraryPage() {
       <GlassCard className="p-4">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-black/30 dark:text-white/30" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-black/55 dark:text-white/50" />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -72,7 +72,7 @@ export default function LibraryPage() {
               className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
                 category === cat
                   ? "bg-black text-white dark:bg-white dark:text-black"
-                  : "text-black/50 hover:text-black/80 hover:bg-black/[0.04] dark:text-white/40 dark:hover:text-white/70 dark:hover:bg-white/[0.06]"
+                  : "text-black/50 hover:text-black/80 hover:bg-black/[0.04] dark:text-white/60 dark:hover:text-white/70 dark:hover:bg-white/[0.06]"
               }`}
             >
               {cat}
@@ -115,9 +115,9 @@ export default function LibraryPage() {
               </div>
               <div className="p-4">
                 <p className="text-sm font-medium truncate">{book.title}</p>
-                <p className="mt-0.5 text-xs text-black/40 dark:text-white/40 truncate">{book.author || "Unknown"}</p>
+                <p className="mt-0.5 text-xs text-black/60 dark:text-white/60 truncate">{book.author || "Unknown"}</p>
                 <div className="mt-3 flex items-center justify-between">
-                  <span className="text-[11px] text-black/30 dark:text-white/30">{book.fileSize ? `${(book.fileSize / 1024 / 1024).toFixed(1)} MB` : ""}</span>
+                  <span className="text-[11px] text-black/55 dark:text-white/50">{book.fileSize ? `${(book.fileSize / 1024 / 1024).toFixed(1)} MB` : ""}</span>
                   <span className="text-[11px] font-medium text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity">Open →</span>
                 </div>
               </div>
@@ -137,9 +137,9 @@ export default function LibraryPage() {
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium truncate">{book.title}</p>
-                <p className="text-xs text-black/40 dark:text-white/40">{book.author || "Unknown"}</p>
+                <p className="text-xs text-black/60 dark:text-white/60">{book.author || "Unknown"}</p>
               </div>
-              <div className="hidden sm:flex items-center gap-4 text-xs text-black/30 dark:text-white/30">
+              <div className="hidden sm:flex items-center gap-4 text-xs text-black/55 dark:text-white/50">
                 {book.category && <span>{book.category}</span>}
                 {book.fileSize && <span>{(book.fileSize / 1024 / 1024).toFixed(1)} MB</span>}
               </div>

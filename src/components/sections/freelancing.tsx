@@ -70,7 +70,7 @@ export function Platforms() {
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
                 Featured Platforms
               </h3>
-              <p className="text-xs text-zinc-500">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
                 Where I&apos;m most active.
               </p>
             </div>
@@ -101,7 +101,7 @@ export function Platforms() {
                   <p className="font-medium text-xs text-zinc-700 dark:text-zinc-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                     {platform.name}
                   </p>
-                  <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5 line-clamp-2">
+                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5 line-clamp-2">
                     {platform.description}
                   </p>
                 </div>
@@ -112,7 +112,7 @@ export function Platforms() {
       )}
 
       {filtered.length === 0 && (
-        <div className="text-center py-16 text-zinc-400 dark:text-zinc-500">
+        <div className="text-center py-16 text-zinc-500 dark:text-zinc-400">
           <p className="text-sm">No platforms match your search.</p>
         </div>
       )}
@@ -133,7 +133,7 @@ export function Platforms() {
                 >
                   <span className={`w-1 h-4 rounded-full bg-gradient-to-b ${categoryColors[cat]}`} />
                   {categoryLabels[cat]}
-                  <span className="text-xs font-normal text-zinc-400 dark:text-zinc-500">
+                  <span className="text-xs font-normal text-zinc-500 dark:text-zinc-400">
                     ({catPlatforms.length})
                   </span>
                 </motion.h3>
@@ -160,7 +160,7 @@ export function Platforms() {
                         <p className="font-medium text-xs text-zinc-700 dark:text-zinc-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                           {platform.name}
                         </p>
-                        <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5 line-clamp-2">
+                        <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5 line-clamp-2">
                           {platform.description}
                         </p>
                       </div>
@@ -195,7 +195,7 @@ export function Platforms() {
                 <p className="font-medium text-xs text-zinc-700 dark:text-zinc-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                   {platform.name}
                 </p>
-                <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5 line-clamp-2">
+                <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5 line-clamp-2">
                   {platform.description}
                 </p>
               </div>
@@ -205,7 +205,7 @@ export function Platforms() {
       )}
 
       {category !== "All" && filtered.length === 0 && (
-        <div className="text-center py-16 text-zinc-400 dark:text-zinc-500">
+        <div className="text-center py-16 text-zinc-500 dark:text-zinc-400">
           <p className="text-sm">No platforms match your search.</p>
         </div>
       )}

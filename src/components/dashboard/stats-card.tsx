@@ -19,7 +19,7 @@ export function StatsCard({ label, value, icon, trend, className }: StatsCardPro
           {label}
         </span>
         {icon && (
-          <span className="text-zinc-400 dark:text-zinc-500">{icon}</span>
+          <span className="text-zinc-500 dark:text-zinc-400">{icon}</span>
         )}
       </div>
       <div className="flex items-end justify-between">

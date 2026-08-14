@@ -292,7 +292,7 @@ export default function StudyReaderPage() {
       <div className="flex h-screen items-center justify-center bg-[#fafafa] dark:bg-[#0a0a0f]">
         <div className="text-center">
           <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-2 border-black/20 border-t-black/80 dark:border-white/20 dark:border-t-white/80" />
-          <p className="text-sm text-black/40 dark:text-white/40">Loading your book...</p>
+          <p className="text-sm text-black/60 dark:text-white/60">Loading your book...</p>
         </div>
       </div>
     );
@@ -321,8 +321,8 @@ export default function StudyReaderPage() {
             {leftSidebar ? <PanelLeftClose className="h-4 w-4" /> : <PanelLeft className="h-4 w-4" />}
           </button>
           <span className="text-sm font-medium truncate max-w-[180px]">{book?.title || "Reader"}</span>
-          <span className="hidden sm:inline text-xs text-black/30 dark:text-white/30">·</span>
-          <span className="hidden sm:inline text-xs text-black/40 dark:text-white/40 tabular-nums">{pageNum} / {totalPages}</span>
+          <span className="hidden sm:inline text-xs text-black/55 dark:text-white/50">·</span>
+          <span className="hidden sm:inline text-xs text-black/60 dark:text-white/60 tabular-nums">{pageNum} / {totalPages}</span>
         </div>
         <div className="flex items-center gap-1">
           <button onClick={() => setFocusMode(!focusMode)} className={`p-1.5 rounded-lg transition-colors ${focusMode ? "bg-blue-500/10 text-blue-600" : "hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"} `} title="Focus mode">
@@ -355,11 +355,11 @@ export default function StudyReaderPage() {
           <aside className={`w-56 border-r border-black/[0.04] dark:border-white/[0.06] bg-white/50 dark:bg-black/30 flex flex-col shrink-0 overflow-hidden ${fullscreen ? "hidden" : ""}`}>
             <div className="flex items-center justify-between px-4 py-3 border-b border-black/[0.04] dark:border-white/[0.06]">
               <div className="flex items-center gap-2">
-                <List className="h-4 w-4 text-black/40 dark:text-white/40" />
+                <List className="h-4 w-4 text-black/60 dark:text-white/60" />
                 <span className="text-xs font-medium">Chapters</span>
               </div>
               <button onClick={() => setLeftSidebar(false)} className="p-0.5 rounded hover:bg-black/[0.04] dark:hover:bg-white/[0.08]">
-                <X className="h-3.5 w-3.5 text-black/30 dark:text-white/30" />
+                <X className="h-3.5 w-3.5 text-black/55 dark:text-white/50" />
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-3 space-y-1 premium-scrollbar">
@@ -374,13 +374,13 @@ export default function StudyReaderPage() {
                   ].map(([l, v, c]) => (
                     <div key={l as string} className="rounded-lg bg-black/[0.03] dark:bg-white/[0.04] p-2 text-center">
                       <p className={`text-sm font-bold ${c}`}>{v}</p>
-                      <p className="text-[10px] text-black/30 dark:text-white/30">{l}</p>
+                      <p className="text-[10px] text-black/55 dark:text-white/50">{l}</p>
                     </div>
                   ))}
                 </div>
               </GlassCard>
               <div className="text-center pt-2">
-                <p className="text-xs text-black/30 dark:text-white/30">
+                <p className="text-xs text-black/55 dark:text-white/50">
                   Page {pageNum} · {progressPct}% complete
                 </p>
               </div>
@@ -437,7 +437,7 @@ export default function StudyReaderPage() {
               </button>
               <div className="flex items-center gap-1.5">
                 <input type="number" value={pageNum} onChange={(e) => goPage(parseInt(e.target.value) || 1)} className="w-10 text-center text-sm bg-transparent border-b border-black/[0.1] dark:border-white/[0.1] focus:outline-none tabular-nums" min={1} max={totalPages} />
-                <span className="text-xs text-black/30 dark:text-white/30">/ {totalPages}</span>
+                <span className="text-xs text-black/55 dark:text-white/50">/ {totalPages}</span>
               </div>
               <button onClick={() => goPage(pageNum + 1)} disabled={pageNum >= totalPages} className="p-1.5 rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.08] disabled:opacity-20 transition-colors">
                 <ChevronRight className="h-4 w-4" />
@@ -464,14 +464,14 @@ export default function StudyReaderPage() {
                 { id: "search" as SidebarTab, icon: Search },
               ].map(({ id, icon: Icon }) => (
                 <button key={id} onClick={() => setSidebarTab(id)}
-                  className={`flex-1 py-3 flex justify-center transition-all ${sidebarTab === id ? "bg-white dark:bg-black/40 border-b-2 border-blue-500 text-blue-600" : "hover:bg-black/[0.02] dark:hover:bg-white/[0.04] text-black/40 dark:text-white/40"}`}
+                  className={`flex-1 py-3 flex justify-center transition-all ${sidebarTab === id ? "bg-white dark:bg-black/40 border-b-2 border-blue-500 text-blue-600" : "hover:bg-black/[0.02] dark:hover:bg-white/[0.04] text-black/60 dark:text-white/60"}`}
                   title={id.charAt(0).toUpperCase() + id.slice(1)}
                 >
                   <Icon className="h-4 w-4" />
                 </button>
               ))}
               <button onClick={() => setRightSidebar(false)} className="px-2.5 py-3 hover:bg-black/[0.02] dark:hover:bg-white/[0.04] transition-colors">
-                <X className="h-3.5 w-3.5 text-black/30 dark:text-white/30" />
+                <X className="h-3.5 w-3.5 text-black/55 dark:text-white/50" />
               </button>
             </div>
 
@@ -483,10 +483,10 @@ export default function StudyReaderPage() {
                     <div key={r.id} onClick={() => r.page && goPage(r.page)} className="cursor-pointer rounded-xl p-3 border border-black/[0.04] dark:border-white/[0.06] hover:bg-white/60 dark:hover:bg-white/[0.04] transition-colors">
                       <p className="text-[11px] font-medium text-blue-600 dark:text-blue-400 mb-0.5 capitalize">{r.type}</p>
                       <p className="text-xs text-black/60 dark:text-white/60 line-clamp-2">{r.text}</p>
-                      {r.page && <p className="text-[10px] text-black/30 dark:text-white/30 mt-1">Page {r.page}</p>}
+                      {r.page && <p className="text-[10px] text-black/55 dark:text-white/50 mt-1">Page {r.page}</p>}
                     </div>
                   ))}
-                  {searchQuery.length >= 2 && searchResults.length === 0 && <p className="text-xs text-black/30 dark:text-white/30 text-center py-8">No results</p>}
+                  {searchQuery.length >= 2 && searchResults.length === 0 && <p className="text-xs text-black/55 dark:text-white/50 text-center py-8">No results</p>}
                 </div>
               )}
 
@@ -498,12 +498,12 @@ export default function StudyReaderPage() {
                     ))}
                   </div>
                   {highlights.length === 0 ? (
-                    <p className="text-xs text-black/30 dark:text-white/30 text-center py-8">Select text to highlight</p>
+                    <p className="text-xs text-black/55 dark:text-white/50 text-center py-8">Select text to highlight</p>
                   ) : (
                     highlights.map((h) => (
                       <div key={h.id} className="group rounded-xl p-3 border border-black/[0.04] dark:border-white/[0.06] hover:bg-white/60 dark:hover:bg-white/[0.04] transition-all">
                         <div className="flex items-center justify-between mb-1">
-                          <span className="text-[10px] text-black/30 dark:text-white/30">p.{h.page}</span>
+                          <span className="text-[10px] text-black/55 dark:text-white/50">p.{h.page}</span>
                           <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                             <button onClick={() => { setNotePage(h.page); setNoteHighlightId(h.id); setShowNoteModal(true); }} className="p-0.5 rounded hover:bg-black/[0.06] dark:hover:bg-white/[0.08]"><Plus className="h-3 w-3" /></button>
                             <button onClick={() => createFlashcard(h)} className="p-0.5 rounded hover:bg-black/[0.06] dark:hover:bg-white/[0.08]"><BrainCircuit className="h-3 w-3" /></button>
@@ -525,12 +525,12 @@ export default function StudyReaderPage() {
                     <Plus className="h-3.5 w-3.5" /> New Note
                   </button>
                   {notes.length === 0 ? (
-                    <p className="text-xs text-black/30 dark:text-white/30 text-center py-8">No notes yet</p>
+                    <p className="text-xs text-black/55 dark:text-white/50 text-center py-8">No notes yet</p>
                   ) : (
                     notes.map((n) => (
                       <div key={n.id} className="group rounded-xl p-3 border border-black/[0.04] dark:border-white/[0.06] hover:bg-white/60 dark:hover:bg-white/[0.04] transition-all">
                         <div className="flex items-center justify-between mb-1">
-                          <span className="text-[10px] text-black/30 dark:text-white/30">{n.page ? `p.${n.page}` : "General"}</span>
+                          <span className="text-[10px] text-black/55 dark:text-white/50">{n.page ? `p.${n.page}` : "General"}</span>
                           <button onClick={() => deleteNote(n.id)} className="p-0.5 rounded hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="h-3 w-3" /></button>
                         </div>
                         <div className="text-xs text-black/70 dark:text-white/70 leading-relaxed line-clamp-4 whitespace-pre-wrap">{n.content}</div>
@@ -543,7 +543,7 @@ export default function StudyReaderPage() {
               {sidebarTab === "bookmarks" && (
                 <div className="p-3 space-y-1">
                   {bookmarks.length === 0 ? (
-                    <p className="text-xs text-black/30 dark:text-white/30 text-center py-8">No bookmarks. Press B to add one.</p>
+                    <p className="text-xs text-black/55 dark:text-white/50 text-center py-8">No bookmarks. Press B to add one.</p>
                   ) : (
                     bookmarks.map((b) => (
                       <div key={b.id} onClick={() => goPage(b.page)} className="flex items-center justify-between p-2.5 rounded-xl hover:bg-white/60 dark:hover:bg-white/[0.04] cursor-pointer border border-transparent hover:border-black/[0.06] dark:hover:border-white/[0.08] transition-all">
@@ -551,7 +551,7 @@ export default function StudyReaderPage() {
                           <Bookmark className="h-3.5 w-3.5 text-blue-500" />
                           <div>
                             <p className="text-xs font-medium text-black/70 dark:text-white/70">{b.label || `Page ${b.page}`}</p>
-                            <p className="text-[10px] text-black/30 dark:text-white/30">p.{b.page}</p>
+                            <p className="text-[10px] text-black/55 dark:text-white/50">p.{b.page}</p>
                           </div>
                         </div>
                         <button onClick={(e) => { e.stopPropagation(); deleteBookmark(b.id); }} className="p-0.5 rounded hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-red-400"><X className="h-3 w-3" /></button>
@@ -564,12 +564,12 @@ export default function StudyReaderPage() {
               {sidebarTab === "flashcards" && (
                 <div className="p-3 space-y-2">
                   {cards.length === 0 ? (
-                    <p className="text-xs text-black/30 dark:text-white/30 text-center py-8">Create flashcards from highlights</p>
+                    <p className="text-xs text-black/55 dark:text-white/50 text-center py-8">Create flashcards from highlights</p>
                   ) : (
                     cards.map((c) => (
                       <div key={c.id} className="rounded-xl p-3 border border-black/[0.04] dark:border-white/[0.06]">
                         <p className="text-xs font-medium text-black/80 dark:text-white/80 mb-1">{c.front}</p>
-                        {c.back && <p className="text-xs text-black/40 dark:text-white/40 mt-1.5 pt-1.5 border-t border-black/[0.04] dark:border-white/[0.06]">{c.back}</p>}
+                        {c.back && <p className="text-xs text-black/60 dark:text-white/60 mt-1.5 pt-1.5 border-t border-black/[0.04] dark:border-white/[0.06]">{c.back}</p>}
                       </div>
                     ))
                   )}
@@ -589,7 +589,7 @@ export default function StudyReaderPage() {
               <button onClick={() => setShowNoteModal(false)} className="p-1 rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.08]"><X className="h-4 w-4" /></button>
             </div>
             <div className="p-5">
-              <p className="text-xs text-black/40 dark:text-white/40 mb-3">Page {notePage}</p>
+              <p className="text-xs text-black/60 dark:text-white/60 mb-3">Page {notePage}</p>
               <textarea value={noteText} onChange={(e) => setNoteText(e.target.value)} placeholder="Write your note..." className="w-full h-32 rounded-xl border border-black/[0.06] dark:border-white/[0.1] bg-transparent p-3 text-sm outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10 resize-none" />
               <div className="flex justify-end gap-2 mt-3">
                 <button onClick={() => setShowNoteModal(false)} className="px-4 py-2 rounded-xl text-xs font-medium text-black/50 hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors">Cancel</button>

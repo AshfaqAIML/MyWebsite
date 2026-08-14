@@ -66,7 +66,7 @@ export default function ProductivityPage() {
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Productivity Center</h1>
-        <p className="text-sm text-zinc-500 mt-1">Tasks, notes, and goals.</p>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Tasks, notes, and goals.</p>
       </div>
 
       {lifeos && (
@@ -77,7 +77,7 @@ export default function ProductivityPage() {
                 <Target className="h-4 w-4 text-emerald-600" />
                 Connected: LifeOS AI
               </h3>
-              <p className="text-xs text-zinc-500 mt-1 max-w-lg">{lifeos.description.slice(0, 200)}...</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 max-w-lg">{lifeos.description.slice(0, 200)}...</p>
             </div>
             <a href={lifeos.liveUrl} target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-medium hover:bg-emerald-700 transition-colors">
@@ -102,7 +102,7 @@ export default function ProductivityPage() {
         <div className="p-6 rounded-2xl border border-zinc-200/50 dark:border-zinc-700/50 bg-white dark:bg-zinc-900">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Tasks</h2>
-            <div className="flex items-center gap-2 text-xs text-zinc-500">
+            <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
               <span className="text-green-500">{completedTasks} done</span>
               <span>·</span>
               <span>{pendingTasks} pending</span>
@@ -129,13 +129,13 @@ export default function ProductivityPage() {
                 ) : (
                   <Circle className="h-4 w-4 text-zinc-300 dark:text-zinc-600 shrink-0" />
                 )}
-                <span className={`text-sm ${task.done ? "line-through text-zinc-400" : "text-zinc-700 dark:text-zinc-300"}`}>
+                <span className={`text-sm ${task.done ? "line-through text-zinc-500 dark:text-zinc-400" : "text-zinc-700 dark:text-zinc-300"}`}>
                   {task.text}
                 </span>
               </button>
             ))}
             {tasks.length === 0 && (
-              <p className="text-center py-8 text-zinc-400 text-sm">No tasks yet. Add one above.</p>
+              <p className="text-center py-8 text-zinc-500 dark:text-zinc-400 text-sm">No tasks yet. Add one above.</p>
             )}
           </div>
         </div>

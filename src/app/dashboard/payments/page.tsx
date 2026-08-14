@@ -78,7 +78,7 @@ export default function PaymentsPage() {
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Payments</h1>
-        <p className="text-sm text-zinc-500 mt-1">Verify payments and access downloads.</p>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Verify payments and access downloads.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -108,8 +108,8 @@ export default function PaymentsPage() {
                 <div className="flex items-center justify-between gap-4">
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">{p.bookTitle}</p>
-                    <p className="text-xs text-zinc-500 font-mono mt-0.5">Txn: {p.txnId}</p>
-                    <p className="text-[10px] text-zinc-400">{new Date(p.date).toLocaleString()}</p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 font-mono mt-0.5">Txn: {p.txnId}</p>
+                    <p className="text-[10px] text-zinc-500 dark:text-zinc-400">{new Date(p.date).toLocaleString()}</p>
                   </div>
                   <div className="flex gap-2 shrink-0">
                     <button onClick={() => handleApprove(p.bookTitle)}
@@ -136,12 +136,12 @@ export default function PaymentsPage() {
             <Shield className="h-4 w-4 text-emerald-500" />
             Payment Verification
           </h2>
-          <p className="text-xs text-zinc-500 mb-4">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-4">
             After making a UPI payment, enter your transaction ID to verify and unlock download access.
           </p>
 
           <div className="bg-zinc-50 dark:bg-zinc-800/50 rounded-xl p-4 mb-4">
-            <p className="text-xs text-zinc-500 mb-1">Pay via UPI</p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Pay via UPI</p>
             <p className="text-sm font-mono font-semibold text-zinc-800 dark:text-zinc-200 bg-white dark:bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 inline-block select-all">
               {UPI_ID}
             </p>
@@ -186,7 +186,7 @@ export default function PaymentsPage() {
             Verified Payments
           </h2>
           {verifiedPayments.length === 0 ? (
-            <p className="text-xs text-zinc-400 text-center py-8">No payments verified yet.</p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 text-center py-8">No payments verified yet.</p>
           ) : (
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {verifiedPayments.map((p, i) => (
@@ -195,8 +195,8 @@ export default function PaymentsPage() {
                     <span className="text-xs font-medium text-zinc-700 dark:text-zinc-300 truncate">{p.bookTitle}</span>
                     <span className="text-[10px] text-emerald-600 flex items-center gap-0.5"><CheckCircle className="h-3 w-3" /> Verified</span>
                   </div>
-                  <p className="text-[10px] text-zinc-400 font-mono">{p.txnId}</p>
-                  <p className="text-[10px] text-zinc-400">{new Date(p.date).toLocaleDateString()}</p>
+                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">{p.txnId}</p>
+                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400">{new Date(p.date).toLocaleDateString()}</p>
                 </div>
               ))}
             </div>
@@ -211,7 +211,7 @@ export default function PaymentsPage() {
             Downloads
           </h2>
           <div className="relative max-w-xs">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-500 dark:text-zinc-400" />
             <input type="search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search books..."
               className="w-full pl-9 pr-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-xs" />
           </div>
@@ -222,16 +222,16 @@ export default function PaymentsPage() {
               <div className="flex items-center justify-between gap-4">
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <FileText className="h-4 w-4 text-zinc-400 shrink-0" />
+                    <FileText className="h-4 w-4 text-zinc-500 dark:text-zinc-400 shrink-0" />
                     <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">{book.title}</h3>
                     {book.version && (
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-500">v{book.version}</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400">v{book.version}</span>
                     )}
                   </div>
-                  <p className="text-xs text-zinc-500 line-clamp-1">{book.description}</p>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-1">{book.description}</p>
                   <div className="flex items-center gap-3 mt-1">
-                    <span className="text-[10px] text-zinc-400">{book.category}</span>
-                    {book.pages && <span className="text-[10px] text-zinc-400">{book.pages} pages</span>}
+                    <span className="text-[10px] text-zinc-500 dark:text-zinc-400">{book.category}</span>
+                    {book.pages && <span className="text-[10px] text-zinc-500 dark:text-zinc-400">{book.pages} pages</span>}
                   </div>
                 </div>
                 <div className="flex gap-2 shrink-0">
@@ -251,7 +251,7 @@ export default function PaymentsPage() {
             </div>
           ))}
           {filteredBooks.length === 0 && (
-            <p className="text-center py-8 text-xs text-zinc-400">No books match your search.</p>
+            <p className="text-center py-8 text-xs text-zinc-500 dark:text-zinc-400">No books match your search.</p>
           )}
         </div>
       </div>
