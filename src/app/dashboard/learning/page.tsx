@@ -13,12 +13,12 @@ interface LearnItem {
   date: string;
 }
 
-const codeverseCourses: LearnItem[] = [
-  { id: "cv-web", title: "Full Stack Web Development", type: "course", status: "completed", platform: "CodeVerse Academy", date: "2025-06-01" },
-  { id: "cv-ds", title: "Data Science & Analytics", type: "course", status: "reading", platform: "CodeVerse Academy", date: "2025-12-01" },
-  { id: "cv-ai", title: "AI & Machine Learning", type: "course", status: "reading", platform: "CodeVerse Academy", date: "2025-11-15" },
-  { id: "cv-interview", title: "Interview Preparation Masterclass", type: "course", status: "planned", platform: "CodeVerse Academy", date: "2026-01-10" },
-  { id: "cv-cert", title: "Full Stack Certification", type: "certification", status: "completed", platform: "CodeVerse Academy", date: "2025-08-15" },
+const codemasteryCourses: LearnItem[] = [
+  { id: "cv-web", title: "Full Stack Web Development", type: "course", status: "completed", platform: "CodeMastery", date: "2025-06-01" },
+  { id: "cv-ds", title: "Data Science & Analytics", type: "course", status: "reading", platform: "CodeMastery", date: "2025-12-01" },
+  { id: "cv-ai", title: "AI & Machine Learning", type: "course", status: "reading", platform: "CodeMastery", date: "2025-11-15" },
+  { id: "cv-interview", title: "Interview Preparation Masterclass", type: "course", status: "planned", platform: "CodeMastery", date: "2026-01-10" },
+  { id: "cv-cert", title: "Full Stack Certification", type: "certification", status: "completed", platform: "CodeMastery", date: "2025-08-15" },
 ];
 
 export default function LearningPage() {
@@ -26,7 +26,7 @@ export default function LearningPage() {
   const [showForm, setShowForm] = React.useState(false);
   const [form, setForm] = React.useState({ title: "", type: "book" as LearnItem["type"], status: "planned" as LearnItem["status"], platform: "" });
 
-  const codeverse = React.useMemo(() => getProjects().find((p) => p.title === "CodeVerse Academy"), []);
+  const codemastery = React.useMemo(() => getProjects().find((p) => p.title === "CodeMastery"), []);
 
   React.useEffect(() => {
     const stored = localStorage.getItem("dashboard-learning");
@@ -34,8 +34,8 @@ export default function LearningPage() {
       if (stored) {
         setItems(JSON.parse(stored) as LearnItem[]);
       } else {
-        setItems(codeverseCourses);
-        localStorage.setItem("dashboard-learning", JSON.stringify(codeverseCourses));
+        setItems(codemasteryCourses);
+        localStorage.setItem("dashboard-learning", JSON.stringify(codemasteryCourses));
       }
     }, 0);
     return () => clearTimeout(t);
@@ -70,27 +70,27 @@ export default function LearningPage() {
         </button>
       </div>
 
-      {codeverse && (
+      {codemastery && (
         <div className="p-5 mb-6 rounded-2xl border border-blue-200/50 dark:border-blue-700/30 bg-blue-50/50 dark:bg-blue-900/10">
           <div className="flex items-start justify-between">
             <div>
               <h3 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                 <BookOpen className="h-4 w-4 text-blue-600" />
-                Connected: CodeVerse Academy
+                Connected: CodeMastery
               </h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 max-w-lg">{codeverse.description.slice(0, 200)}...</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 max-w-lg">{codemastery.description.slice(0, 200)}...</p>
             </div>
-            <a href={codeverse.liveUrl} target="_blank" rel="noopener noreferrer"
+            <a href={codemastery.liveUrl} target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition-colors">
               Open App <ExternalLink className="h-3 w-3" />
             </a>
           </div>
           <div className="flex gap-3 mt-3">
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
-              {codeverseCourses.filter((c) => c.status === "completed").length} courses completed
+              {codemasteryCourses.filter((c) => c.status === "completed").length} courses completed
             </span>
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400">
-              {codeverseCourses.filter((c) => c.status === "reading").length} in progress
+              {codemasteryCourses.filter((c) => c.status === "reading").length} in progress
             </span>
           </div>
         </div>

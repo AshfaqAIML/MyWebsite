@@ -1,10 +1,10 @@
 [
   {
-    "title": "CodeVerse Academy",
+    "title": "CodeMastery",
     "description": "A premium Next.js learning platform for web development, data science, AI/ML, interview prep, practice work, certificates, blogs, and guided reading. Features interactive code playground, AI revision assistant, certificate studio, and comprehensive tutorial books.",
     "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "MongoDB", "Express", "Monaco Editor", "Recharts", "Chart.js"],
-    "liveUrl": "https://code-verse-academy.vercel.app",
-    "githubUrl": "https://github.com/DarAshfaqDev/Code-Verse_Academy"
+    "liveUrl": "https://code-mastery-inky.vercel.app",
+    "githubUrl": "https://github.com/AshfaqAIML/CodeMastery"
   },
   {
     "title": "LifeOS AI",

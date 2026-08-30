@@ -295,10 +295,10 @@ export function Hero() {
                   YouTube Dev
                 </Button>
               </a>
-              <a href="https://code-verse-academy.vercel.app" target="_blank" rel="noopener noreferrer">
+              <a href="https://code-mastery-inky.vercel.app" target="_blank" rel="noopener noreferrer">
                 <Button variant="default" size="lg" className="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white border-0">
                   <BookOpen className="mr-2 h-4 w-4" />
-                  CodeVerse Academy
+                  CodeMastery
                 </Button>
               </a>
               <a href="https://ai-and-ml-portfolio.vercel.app" target="_blank" rel="noopener noreferrer">

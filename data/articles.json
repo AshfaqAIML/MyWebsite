@@ -53,7 +53,7 @@
     "publishedAt": "2026-03-01",
     "readingTime": 14,
     "status": "published",
-    "externalUrl": "https://code-verse-academy.vercel.app/blog/how-to-learn-javascript-without-tutorial-fatigue"
+    "externalUrl": "https://code-mastery-inky.vercel.app/blog/how-to-learn-javascript-without-tutorial-fatigue"
   },
   {
     "title": "SQL Interview Patterns Every Analyst Should Know",
@@ -66,7 +66,7 @@
     "readingTime": 16,
     "status": "published",
     "featured": true,
-    "externalUrl": "https://code-verse-academy.vercel.app/blog/sql-interview-patterns-every-analyst-should-know"
+    "externalUrl": "https://code-mastery-inky.vercel.app/blog/sql-interview-patterns-every-analyst-should-know"
   },
   {
     "title": "A Practical Roadmap for Machine Learning Projects",
@@ -79,7 +79,7 @@
     "readingTime": 16,
     "status": "published",
     "featured": true,
-    "externalUrl": "https://code-verse-academy.vercel.app/blog/a-practical-roadmap-for-machine-learning-projects"
+    "externalUrl": "https://code-mastery-inky.vercel.app/blog/a-practical-roadmap-for-machine-learning-projects"
   },
   {
     "title": "Accessibility Checks Before You Ship a Frontend",
@@ -91,7 +91,7 @@
     "publishedAt": "2026-03-15",
     "readingTime": 19,
     "status": "published",
-    "externalUrl": "https://code-verse-academy.vercel.app/blog/accessibility-checks-before-you-ship-a-frontend"
+    "externalUrl": "https://code-mastery-inky.vercel.app/blog/accessibility-checks-before-you-ship-a-frontend"
   },
   {
     "title": "Building Scalable APIs with FastAPI and PostgreSQL",
@@ -125,6 +125,6 @@
     "publishedAt": "2026-04-01",
     "readingTime": 9,
     "status": "published",
-    "externalUrl": "https://code-verse-academy.vercel.app/blog/3-powerful-tools-that-reduce-llm-token-usage"
+    "externalUrl": "https://code-mastery-inky.vercel.app/blog/3-powerful-tools-that-reduce-llm-token-usage"
   }
 ]
